@@ -8,5 +8,4 @@ def get_config(config_path: str):
 	with open(config_path, 'r') as file:
 		cfg = json.load(file)
 		config_g.update(cfg["programs"])
-		print(config_g)
 

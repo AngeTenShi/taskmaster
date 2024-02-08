@@ -8,48 +8,48 @@ from config import config_g
 
 pids = defaultdict(list)
 
-def worker(name):
+def worker(name, config):
 	global pids
-	global config_g
 	"""
 	This is the worker function that will run a process
 	"""
-	if "umask" in config_g:
-		os.umask(int(config_g["umask"], 8))
+	if "umask" in config:
+		os.umask(int(config["umask"], 8))
 
-	with open(config_g["stdout"], "a") as stdout, open(config_g["stderr"], "a") as stderr:
-		for _ in range(config_g["startretries"]):
+	with open(config["stdout"], "a") as stdout, open(config["stderr"], "a") as stderr:
+		for _ in range(config["startretries"]):
 			# Run process
 			try:
 				process = subprocess.Popen(
-					config_g["cmd"].split(" "),
-					cwd = config_g["workingdir"],
+					config["cmd"].split(" "),
+					cwd = config["workingdir"],
 					stdin = subprocess.DEVNULL,
 					stdout=stdout,
 					stderr=stderr,
-					env = config_g["env"])
+					env = config["env"])
 				pids[name].append(process.pid)
 				break
 			except:
 				continue
 
 def exec_program(program: str):
-	expected_fields = set(["cmd", "numprocs", "autostart", "autorestart", "exitcodes", "startretries", "starttime", "stoptime", "stdout", "stderr", "workingdir"])
 	global config_g
 
+	expected_fields = set(["cmd", "numprocs", "autostart", "autorestart", "exitcodes", "startretries", "starttime", "stoptime", "stdout", "stderr", "workingdir"])
+
 	config = config_g[program]
-	if not config_g:
+	if not config:
 		raise ValueError(f"Program '{program}' has no configuration")
 
 	if "env" not in config:
 		config["env"] = {}
 
-	if missing_fields := expected_fields - set(config[program]):
+	if missing_fields := expected_fields - set(config):
 			raise ValueError(f"Missing fields ({', '.join(missing_fields)}) in program '{program}'")
 
 	ths = []
 
-	for i in range(config_g["numprocs"]):
+	for i in range(config["numprocs"]):
 		print(f"Starting process {i} for program '{program}'")
 		th = Thread(target=worker, args=(program, config))
 		th.start()
@@ -92,7 +92,7 @@ def delete_pid(signum, frame):
 
 def run_all_programs():
 	global config_g
-	print(config_g)
+
 	for program in config_g:
 		if config_g[program]["autostart"]:
 			exec_program(program)
