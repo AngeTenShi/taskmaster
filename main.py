@@ -7,23 +7,32 @@ def worker(config: dict):
 	"""
 	This is the worker process that will be forked by the taskmaster
 	"""
-	os.umask(int(config["umask"], 8))
-	with open(config["stdout"], "a") as stdout, open(config["stderr"], "a") as stderr:
-		while True:
-			process = subprocess.Popen(
-				config["cmd"].split(" "),
-				cwd = config["workingdir"],
-				stdin = subprocess.DEVNULL,
-				stdout=stdout,
-				stderr=stderr,
-				env = config["env"])
+	if "umask" in config:
+		os.umask(int(config["umask"], 8))
 
-			#check process exit code
+	exitcode = -1
+
+	with open(config["stdout"], "a") as stdout, open(config["stderr"], "a") as stderr:
+		for _ in range(config["startretries"]):
+			# Run process
+			try:
+				process = subprocess.Popen(
+					config["cmd"].split(" "),
+					cwd = config["workingdir"],
+					stdin = subprocess.DEVNULL,
+					stdout=stdout,
+					stderr=stderr,
+					env = config["env"])
+			except:
+				continue
+
+			# Check process exit code
 			process.wait()
 			exitcode = process.returncode
 			if config["autorestart"] == False or (config["autorestart"] == "unexpected" and exitcode in config["exitcodes"]):
 				break
 
+	return exitcode
 
 def exec_program(program: str, config : dict):
 	expected_fields = set(["cmd", "numprocs", "autostart", "autorestart", "exitcodes", "startretries", "starttime", "stoptime", "stdout", "stderr", "workingdir"])
@@ -34,9 +43,6 @@ def exec_program(program: str, config : dict):
 	if "env" not in config:
 		config["env"] = {}
 
-	if "umask" not in config:
-		config["umask"] = "022"
-
 	if missing_fields := expected_fields - set(config):
 			raise ValueError(f"Missing fields ({', '.join(missing_fields)}) in program '{program}'")
 
@@ -46,16 +52,25 @@ def exec_program(program: str, config : dict):
 		env.update(config["env"])
 		fils = os.fork()
 		if fils == 0:
-			worker(config)
-			exit(0)
+			exit(worker(config))
 		else:
 			print(f"Process {i} started for program '{program}'")
+
+# Andrea
+def shell():
+	while True:
+		pass
+
+def stop_program(program: str):
+    pass
+
+def main_program():
+	pass
 
 def taskmaster_main(config_path: str):
 	"""
 	This is the entrypoint of the taskmaster
 	"""
-
 	with open(config_path, 'r') as file:
 		cfg = json.load(file)
 
@@ -64,6 +79,8 @@ def taskmaster_main(config_path: str):
 	for program in programs:
 		if programs[program]["autostart"]:
 			exec_program(program, programs[program])
+
+	shell()
 	return 0
 
 

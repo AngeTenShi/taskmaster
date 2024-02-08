@@ -3,6 +3,15 @@
 # Change log quotidien
 
 ## 08/02:
+### 13:54
+Mandatory part:
+Also makejson elements non-mandatory (exitcodes when not restarting for example)
+We still have to handle the stopwaitsecs (stoptime), startsecs (starttime), startretries is only for starting, not restarting
+We need interprocess communication (semaphores???, subprocess.Communicate???) for children to report their status to the main shell when queried?
+
+Bonuses:
+Not started yet
+
 ## 09/02:
 ## 10/02:
 ### PUSH
