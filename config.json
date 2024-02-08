@@ -9,7 +9,7 @@
 			"exitcodes": [
 				0
 			],
-			"startretries": 1,
+			"startretries": 5,
 			"starttime":0,
 			"stopsignal": "USR1",
 			"stoptime": 10,
