@@ -86,7 +86,7 @@ def taskmaster_main(config_path: str):
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser()
-	parser.add_argument('-c', '--configfile', type=str, default='./config.json', help='Path to the configuration file')
+	parser.add_argument('-c', '--configfile', type=str, help='Path to the configuration file')
 	args = parser.parse_args()
 	#try:
 	taskmaster_main(args.configfile)
