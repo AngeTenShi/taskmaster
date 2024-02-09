@@ -5,6 +5,7 @@ import subprocess
 import signal
 from threading import Thread
 from config import config_g
+import functools
 
 pids = defaultdict(list)
 
@@ -69,27 +70,52 @@ def stop_program(program: str):
 	for pid in pids[program]:
 		getit = getattr(signal, f"SIG{config['stopsignal']}")
 		os.kill(pid, getit)
-		pids[program].remove(pid)
-
-	for pid in pids[program]:
 		check = os.waitpid(pid, os.WNOHANG)
-		if check is None:
-			os.kill(pid, signal.SIGKILL)
+		force_kill_pid(pid)
+
+
 
 	# Remove from pid list
 	del pids[program]
 
 
+def force_kill_pid(pid):
+	os.kill(pid, signal.SIGKILL)
+
+# We received a sigchild, get terminated child and restart it if needed
 def delete_pid(signum, frame):
 	global pids
 	global config_g
 
+	pid, exit_code = os.waitpid(-1, os.WNOHANG)
+	to_restart = ""
 	for program in pids:
-		for pid in pids[program]:
-			check = os.waitpid(pid, os.WNOHANG)
-			if check is not None:
-				pids[program].remove(pid)
+		if pid in pids[program]:
+			to_restart = program
+			break
+	pids[program].remove(pid)
+	if to_restart:
+		if exit_code not in config_g[program]["exitcodes"] and config_g[program]["autorestart"] == "unexpected":
+			worker(program, config_g[program])
+		elif config_g[program]["autorestart"] == True:
+			worker(program, config_g[program])
 
+	# Create a copy of the dictionary to avoid "dictionary changed size during iteration" error
+	"""
+	pids_copy = pids.copy()
+
+	for program in pids_copy:
+		for pid in pids_copy[program]:
+			try:
+				signal.signal(signal.SIGALRM, functools.partial(force_kill_pid, pid))
+				signal.alarm(config_g[program]["stoptime"])
+				_, status = os.waitpid(pid, 0)
+				pids[program].remove(pid)
+			except OSError:
+				pass
+			finally:
+				signal.alarm(0)
+	"""
 def run_all_programs():
 	global config_g
 

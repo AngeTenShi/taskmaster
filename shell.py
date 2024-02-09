@@ -1,5 +1,3 @@
-# System imports
-from copy import deepcopy
 
 # Local imports
 import program
@@ -10,9 +8,9 @@ from config import config_g
 def stop_all():
 	global pids
 
-	cpy = deepcopy(pids.keys())
-	for p in program.pids:
-		program.stop_program(p, config_g[p])
+	cpy = pids.copy()
+	for p in cpy:
+		program.stop_program(p)
 
 def run_all():
 	program.run_all_programs(config_g)
@@ -44,10 +42,11 @@ def shell():
 				if argv[0] == "start":
 					pass
 				elif argv[0] == "stop":
-					pass
+					p = argv[1]
+					program.stop_program(p)
 				elif argv[0] == "restart":
 					p = argv[1]
-					program.stop_program(p, config_g[p])
+					program.stop_program(p)
 					program.worker(p)
 				else:
 					print(f"Unknown command {argv[0]}, does it have the right number of arguments?")

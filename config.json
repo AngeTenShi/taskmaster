@@ -16,6 +16,23 @@
 			"stdout": "/home/ange/Dev/42/TaskMaister/std.out",
 			"stderr": "/home/ange/Dev/42/TaskMaister/std.err"
 
+		},
+		"hacker": {
+			"cmd": "/usr/bin/python3 timee.py",
+			"numprocs": 3,
+			"workingdir": "/tmp",
+			"autostart": true,
+			"autorestart": true,
+			"exitcodes": [
+				0
+			],
+			"startretries": 5,
+			"starttime":0,
+			"stopsignal": "USR1",
+			"stoptime": 3,
+			"stdout": "/home/ange/Dev/42/TaskMaister/std.out",
+			"stderr": "/home/ange/Dev/42/TaskMaister/std.err"
+
 		}
 	}
 }
