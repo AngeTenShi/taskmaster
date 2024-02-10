@@ -8,8 +8,8 @@ import os
 import json
 
 class Daemon:
-	def __init__(self, command_queue: CommandQueue):
-		self.command_queue = command_queue
+	def __init__(self):
+		self.command_queue = None
 		self.program_by_pid = {}
 		self.pids_by_program = defaultdict(list)
 		self.config = None

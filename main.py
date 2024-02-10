@@ -12,7 +12,7 @@ from daemon import daemon_entry
 from common import *
 
 # Command queue for communicating with the daemon, up to 50 pending instructions, by default thread safe
-q: CommandQueue = CommandQueue(maxsize=50)
+q: CommandQueue = Queue(maxsize=50)
 
 
 def taskmaster_main(configfile: str):
