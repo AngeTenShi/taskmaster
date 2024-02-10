@@ -139,6 +139,7 @@ def daemon_loop(daemon: Daemon):
 		abort = commands[cmd.id](cmd.args)
 		daemon.command_queue.task_done()
 	
+	signal.signal(signal.SIGCHLD, signal.SIG_DFL)
 	# TODO: Stop all programs
 
 
