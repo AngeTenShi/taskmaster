@@ -10,16 +10,15 @@
 				0
 			],
 			"startretries": 5,
-			"starttime":0,
+			"starttime": 0,
 			"stopsignal": "USR1",
 			"stoptime": 10,
-			"stdout": "/home/ange/Dev/42/TaskMaister/std.out",
-			"stderr": "/home/ange/Dev/42/TaskMaister/std.err"
-
+			"stdout": "/home/a/Workspace/42/TaskMaister/std.out",
+			"stderr": "/home/a/Workspace/42/TaskMaister/std.err"
 		},
 		"hacker": {
-			"cmd": "/usr/bin/python3 timee.py",
-			"numprocs": 3,
+			"cmd": "/usr/bin/python3 time.py",
+			"numprocs": 8,
 			"workingdir": "/tmp",
 			"autostart": true,
 			"autorestart": true,
@@ -27,12 +26,11 @@
 				0
 			],
 			"startretries": 5,
-			"starttime":0,
+			"starttime": 0,
 			"stopsignal": "USR1",
 			"stoptime": 3,
-			"stdout": "/home/ange/Dev/42/TaskMaister/std.out",
-			"stderr": "/home/ange/Dev/42/TaskMaister/std.err"
-
+			"stdout": "/home/a/Workspace/42/TaskMaister/std.out",
+			"stderr": "/home/a/Workspace/42/TaskMaister/std.err"
 		}
 	}
 }

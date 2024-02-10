@@ -11,8 +11,13 @@ We need interprocess communication (semaphores???, subprocess.Communicate???) fo
 
 Bonuses:
 Not started yet
-
 ## 09/02:
+### 15:45
+Mandatory part:
+Flemme d'ecrire en brr
+
+Bonuses:
+Not started yet
 ## 10/02:
 ### PUSH
 

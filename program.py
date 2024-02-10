@@ -88,20 +88,17 @@ def delete_pid(signum, frame):
 	global config_g
 
 	pid, exit_code = os.waitpid(-1, os.WNOHANG)
-	to_restart = ""
-	for program in pids:
-		if pid in pids[program]:
-			to_restart = program
-			break
-	pids[program].remove(pid)
-	if to_restart:
-		if exit_code not in config_g[program]["exitcodes"] and config_g[program]["autorestart"] == "unexpected":
-			worker(program, config_g[program])
-		elif config_g[program]["autorestart"] == True:
-			worker(program, config_g[program])
+	program_name = next((program for program in pids if pid in pids[program]), "")
+	if program_name:
+		pids[program_name].remove(pid)
+		config = config_g[program_name]
+		if config["autorestart"] == True:
+			worker(program_name, config)
+		elif exit_code not in config["exitcodes"] and config["autorestart"] == "unexpected":
+			worker(program_name, config)
 
-	# Create a copy of the dictionary to avoid "dictionary changed size during iteration" error
 	"""
+	# Create a copy of the dictionary to avoid "dictionary changed size during iteration" error
 	pids_copy = pids.copy()
 
 	for program in pids_copy:
