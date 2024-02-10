@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional, List
+from typing import  List
 
 from queue import Queue
 
