@@ -138,6 +138,8 @@ def daemon_loop(daemon: Daemon):
 		cmd = daemon.command_queue.get()
 		abort = commands[cmd.id](cmd.args)
 		daemon.command_queue.task_done()
+	
+	# TODO: Stop all programs
 
 
 def daemon_entry(q: CommandQueue):
