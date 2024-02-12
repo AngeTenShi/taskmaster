@@ -20,6 +20,17 @@ class Daemon:
 		self.program_by_pid = {}
 		self.pids_by_program = defaultdict(list)
 		self.config = None
+		self.programs = None
+
+class Program:
+	def __init__(self, name : str, config : Dict[str, str]):
+		self.name = name
+		self.config = config
+		self.pid = None
+		self.start_time = None
+		self.exit_code = None
+		self.start_retries = 0
+
 daemon = Daemon()
 
 ####
@@ -27,8 +38,6 @@ daemon = Daemon()
 	Processus:
 		STATE 1: Taille (4 octets)
 		STATE 2: Command (taille octets)
-
-
 """
 
 def socket_thread(daemon):
@@ -41,9 +50,6 @@ def socket_thread(daemon):
 
 	read_state = "SIZE"
 	read_size = None
-	"""
-
-	"""
 
 	while True:
 		r_list, w_list = select.select(fd_set, [], [], 1.0)
@@ -69,6 +75,7 @@ def socket_thread(daemon):
 				data = pickle.dumps(daemon.output_queue.get_nowait())
 				size = len(data).to_bytes(4, "little")
 				write_buf.append(size + data)
+				daemon.output_queue.task_done()
 			## send data
 			sended_size = socket.send(write_buf)
 			write_buf = write_buf[sended_size:]
@@ -122,21 +129,50 @@ def start_program(d: Daemon, programs: List[str]):
 	"""
 	Starts a program
 	"""
-	pass
+	config = d.config
+	for program in programs:
+		c = config[program]
+		if "umask" in c:
+			os.umask(c["umask"])
+		with open(c["stdout"], "w") as stdout, open(c["stderr"], "w") as stderr:
+			for i in range(c["numprocs"]):
+				for _ in range(c["startretries"]):
+					try:
+						process = subprocess.Popen(
+							c["cmd"].split(" "),
+							cwd = c["workingdir"],
+							stdin = subprocess.DEVNULL,
+							stdout=stdout,
+							stderr=stderr,
+							env = c["env"])
+						d.pids_by_program[program].append(process.pid)
+						d.program_by_pid[process.pid] = program
+						break
+					except:
+						continue
+
 
 @at_least_one_arg
 def stop_program(d: Daemon, programs: List[str]):
 	"""
 	Stops a program
 	"""
-	pass
+	config = d.config
+	for program in programs:
+		c = config[program]
+		for pid in d.pids_by_program[program]:
+			getit = getattr(signal, f"SIG{c['stopsignal']}")
+			os.kill(pid, getit)
+			if not check:
+				os.kill(pid, signal.SIGKILL)
 
 @at_least_one_arg
 def restart_program(d: Daemon, programs: List[str]):
 	"""
 	Restarts a program
 	"""
-	pass
+	stop_program(d, programs)
+	start_program(d, programs)
 
 @one_arg
 def reload_config(d: Daemon, config_content: str):
@@ -146,17 +182,22 @@ def reload_config(d: Daemon, config_content: str):
 	# One already running, we need to stop everything first
 	if d.config != None:
 		# TODO: Stop all programs, make sure they are not restarted by the sigchld handler
-		pass
-
+		stop_program(d, list(d.config.keys()))
 	d.config = json.loads(config_content)
-	pass
+	d.programs = {name: Program(name, config["programs"][program]) for name, config in d.config.items()}
 
 @one_arg
 def internal_start_proc(d: Daemon, program: str):
 	"""
 	Start a program "proc"
 	"""
-	pass
+
+
+@one_arg
+def internal_stop_proc(d: Daemon, program: str):
+	"""
+	Stop a program "proc"
+	"""
 
 def handle_sigchld(d: Daemon):
 	"""
@@ -187,6 +228,7 @@ def daemon_loop(daemon: Daemon):
 		CommandType.STOP_PROGRAM: stop_program,
 		CommandType.RESTART_PROGRAM: restart_program,
 		CommandType.INTERNAL_START_PROC: internal_start_proc,
+		CommandType.INTERNAL_STOP_PROC: internal_stop_proc,
 		CommandType.STATUS: status,
 		CommandType.ABORT: lambda: True
 	}
@@ -210,44 +252,29 @@ def daemon_entry():
 	# TODO: Make sure the signals arrive to this thread?
 	signal.signal(signal.SIGCHLD, lambda s,f: handle_sigchld(daemon))
 
-	socket_thread = threading.Thread(target=socket_thread, args=(daemon,));
-	socket_thread.start()
+	socket_th = threading.Thread(target=socket_thread, args=(daemon,));
+	socket_th.start()
 
 	# Process commands
 	daemon_loop(daemon)
 
-	socket_thread.join()
+	socket_th.join()
 
+from daemonize import Daemonize
+import logging
 
-
-import select
-import socket
-
-# List of Unix domain sockets to monitor
-sockets = []
-
-# Add each socket to the list
-for i in range(5):
-    s = socket.socket(socket.AF_UNIX)
-    s.bind('/tmp/mysocket{}'.format(i))
-    s.listen()
-    sockets.append(s)
-
-# Convert the list of sockets into a sequence of file descriptors
-fd_set = [s.fileno() for s in sockets]
-
-# Continuously monitor the sockets for activity
-while True:
-    rlist, wlist, xlist = select.select(fd_set, [], [], 1.0)
-
-    for fd in rlist:
-        s = None
-        for sock in sockets:
-            if sock.fileno() == fd:
-                s = sock
-                break
-
-        if s is not None:
-            conn, addr = s.accept()
-            print('Connected!', addr)
-
+if __name__ == "__main__":
+	#th = Thread(target=daemon_entry, daemon=True)
+	#th.start()
+	#th.join()
+	"""
+	logger= logging.getLogger(__name__)
+	logger.setLevel(logging.DEBUG)
+	logger.propagate = False
+	fh = logging.FileHandler('/tmp/daemon.log')
+	fh.setLevel(logging.DEBUG)
+	logger.addHandler(fh)
+	daemon = Daemonize(app="bigniggaballs",action=daemon_entry, pid='/tmp/mydaemon.pid')
+	daemon.start()
+	"""
+	daemon_entry()
