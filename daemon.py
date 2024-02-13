@@ -12,6 +12,7 @@ import pickle
 import socket
 import select
 import subprocess
+import time
 
 from queue import Queue
 
@@ -27,26 +28,34 @@ class Status(Enum):
 
 class Daemon:
 	def __init__(self):
-		self.command_queue = Queue(maxsize=10)
-		self.output_queue = Queue(maxsize=10)
+		self.command_queue = Queue(maxsize=30)
+		self.output_queue = Queue(maxsize=30)
 		self.config = None
 		self.programs = Dict[str, List[Program]]
+		self.alarm_by_pid = {}
 
 class Program:
-	def __init__(self, name : str, config : Dict[str, str]):
+	def __init__(self, name : str, config):
 		self.name = name
 		self.config = config
 		self.pid = None
 		self.start_time = None
+		self.stop_time = None
 		self.exit_code = None
 		self.start_retries = 0
 		self.status = Status.STOPPED
+		self.force_restart = False
+
+	def should_auto_restart(self, exitcode):
+		return self.force_restart or self.config["autorestart"] == True or (self.config["autorestart"] == "unexpected" and exitcode not in self.config["exitcodes"])
 
 	def clear(self):
 		self.pid = None
 		self.start_time = None
+		self.stop_time = None
 		self.exit_code = None
 		self.start_retries = 0
+		self.force_restart = False
 		self.status = Status.STOPPED
 
 daemon = Daemon()
@@ -61,7 +70,7 @@ daemon = Daemon()
 def socket_thread(daemon):
 	s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 	try:
-		os.remove("/tmp/daemon.sock")
+		os.unlink("/tmp/daemon.sock")
 	except OSError:
 		pass
 	s.bind("/tmp/daemon.sock")
@@ -152,22 +161,23 @@ def status():
 @at_least_one_arg
 def start_program(d: Daemon, programs: List[str]):
 	"""
-	Starts a program
+	Starts whole programs (all processes)
 	"""
-	for program_list in d.programs.values():
-		for program in program_list:
-			d.command_queue.put_nowait(Command(CommandType.INTERNAL_START_PROC, program))
+	for to_start in programs:
+		for program_list in d.programs[to_start]:
+			for proc in program_list:
+				d.command_queue.put_nowait(Command(CommandType.INTERNAL_START_PROC, proc))
 
 
 @at_least_one_arg
 def stop_program(d: Daemon, programs: List[str]):
 	"""
-	Stops a program
-	getit = getattr(signal, f"SIG{c['stopsignal']}")
+	Stops whole programs (all processes)
 	"""
-	for program_list in d.programs.values():
-		for program in program_list:
-			d.command_queue.put_nowait(Command(CommandType.INTERNAL_STOP_PROC, program))
+	for to_start in programs:
+		for program_list in d.programs[to_start]:
+			for proc in program_list:
+				d.command_queue.put_nowait(Command(CommandType.INTERNAL_STOP_PROC, proc))
 
 @at_least_one_arg
 def restart_program(d: Daemon, programs: List[str]):
@@ -183,9 +193,9 @@ def reload_config(d: Daemon, config_content: str):
 	Reloads the configuration
 	"""
 	# One already running, we need to stop everything first
+	# TODO: Figure out how to wait for the stop before restarting
 	if d.config != None:
-		# TODO: Stop all programs, make sure they are not restarted by the sigchld handler
-		stop_program(d, list(d.config.keys()))
+		stop_program(d, list(d.config["programs"].keys()))
 
 	d.config = json.loads(config_content)
 	d.programs = {}
@@ -211,25 +221,50 @@ def internal_start_proc(d: Daemon, program: Program):
 				stdin = subprocess.DEVNULL,
 				stdout=stdout,
 				stderr=stderr,
-				env = program.config["env"])
+				env = os.environ.copy() + program.config["env"])
+
+			program.pid = process.pid
+			program.status = Status.STARTING
+			program.start_retries += 1 
+			program.start_time = time.time()
+			#TODO: Setup signal handler in case it takes too long
 		except:
 			pass
+	
 
 	os.umask(old_umask)
 
 
 @one_arg
-def internal_stop_proc(d: Daemon, program: str):
+def internal_stop_proc(d: Daemon, program: Program):
 	"""
 	Stop a program "proc"
 	"""
+	signal = getattr(signal, f"SIG{program.config['stopsignal']}")
+
+	program.stop_time = time.time()
+	program.status = Status.STOPPING
+	
+	os.kill(program.pid, signal)
+	#TODO: Setup signal handler in case it takes too long
 	pass
+
+def handle_sigalrm(d: Daemon):
+	"""
+	Called when we are monitoring the start or the end of a process
+	"""
+
+
+def set_alrm():
+	pass
+
 
 def handle_sigchld(d: Daemon):
 	"""
 	Handles the stop a process managed by the daemon, task to restart is scheduled to make sure this function executes as fast as possible.
 	Maybe make it smaller if it keeps missing SIGCHLD?
 	"""
+	#TODO: Wait all of them that stopped, WNOHANG until exception
 	# Get pid, exit_code, needed informations
 	pid, exit_code = os.waitpid(-1, os.WNOHANG)
 	elprograma : Program = None
@@ -239,13 +274,30 @@ def handle_sigchld(d: Daemon):
 				elprograma = p
 				break
 
-
+	# Restart handling
 	if elprograma != None:
-		# Update our data structures containing our currently running programs
-		# Does it have to restart ?
 		config = elprograma.config
-		if config["autorestart"] == True or (exit_code not in config["exitcodes"] and config["autorestart"] == "unexpected"):
-			d.command_queue.put_nowait(Command(CommandType.INTERNAL_START_PROC, elprograma))
+		# It was tried to be started
+		if elprograma.status == Status.STARTING and elprograma.should_auto_restart(exit_code):
+			if elprograma.start_retries < config["startretries"]:
+				elprograma.status = Status.BACKOFF
+				d.command_queue.put_nowait(Command(CommandType.INTERNAL_START_PROC, elprograma))
+			else:
+				elprograma.status = Status.FATAL
+				elprograma.exit_code = exit_code
+			elprograma.pid = None
+
+		# It was running and exited itself
+		elif elprograma.status == Status.RUNNING:
+			elprograma.clear()
+			elprograma.status == Status.EXITED
+			elprograma.exit_code = exit_code
+			if elprograma.should_auto_restart(exit_code):
+				d.command_queue.put_nowait(Command(CommandType.INTERNAL_START_PROC, elprograma))
+
+		# We stopped it		
+		elif elprograma.status == Status.STOPPING:
+			elprograma.clear()
 
 
 
@@ -275,7 +327,6 @@ def daemon_entry():
 	It receives the configuration and orders from the main thread and performs accordingly
 	"""
 	# Initialize signals
-	# TODO: Make sure the signals arrive to this thread?
 	signal.signal(signal.SIGCHLD, lambda s,f: handle_sigchld(daemon))
 
 	socket_th = threading.Thread(target=socket_thread, args=(daemon,));
