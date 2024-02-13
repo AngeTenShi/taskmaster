@@ -14,13 +14,12 @@ class CommandType(Enum):
 	RESTART_PROGRAM = 3,
 	STATUS = 4,
 	ABORT = 5,
-	INTERNAL_START_PROC = 6
-
-type CommandArgs = List[str]
+	INTERNAL_START_PROC = 6,
+	INTERNAL_STOP_PROC = 7
 
 @dataclass
 class Command:
 	id: CommandType
-	args: CommandArgs
+	args: List
 
 type CommandQueue = Queue[Command]
