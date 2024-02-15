@@ -44,10 +44,15 @@ class Program:
 		self.exit_code = None
 		self.start_retries = 0
 		self.status = Status.STOPPED
-		self.force_restart = False
+		self.exit_timer = None
+		self.start_timer = None
 
 	def should_auto_restart(self, exitcode):
-		return self.force_restart or self.config["autorestart"] == True or (self.config["autorestart"] == "unexpected" and exitcode not in self.config["exitcodes"])
+		return self.config["autorestart"] == True or (self.config["autorestart"] == "unexpected" and exitcode not in self.config["exitcodes"])
+	
+	# This little hack might have bugs
+	def set_running(self):
+		self.status = Status.RUNNING
 
 	def clear(self):
 		self.pid = None
@@ -55,8 +60,13 @@ class Program:
 		self.stop_time = None
 		self.exit_code = None
 		self.start_retries = 0
-		self.force_restart = False
 		self.status = Status.STOPPED
+		if self.exit_timer:
+			self.exit_timer.cancel()
+		self.exit_timer = None
+		if self.start_timer:
+			self.start_timer.cancel()
+		self.start_timer = None
 
 daemon = Daemon()
 
@@ -208,7 +218,11 @@ def internal_start_proc(d: Daemon, program: Program):
 			program.status = Status.STARTING
 			program.start_retries += 1
 			program.start_time = time.time()
-			#TODO: Setup signal handler in case it takes too long
+			if program.config["starttime"] != 0:
+				program.start_timer = threading.Timer(program.config["starttime"], lambda: program.set_running())
+			else:
+				program.set_running = True
+			program.start_timer.start()
 		except:
 			pass
 
@@ -227,48 +241,66 @@ def internal_stop_proc(d: Daemon, program: Program):
 	program.status = Status.STOPPING
 
 	os.kill(program.pid, signal)
+
 	program.status = Status.STOPPING
-	Threading.Timer(program.config["stoptimeout"], lambda: os.kill(program.pid, signal.SIGKILL)).start()
+	program.exit_timer = threading.Timer(program.config["stoptime"], lambda: os.kill(program.pid, signal.SIGKILL))
+	program.exit_timer.start()
 
 def handle_sigchld(d: Daemon):
 	"""
 	Handles the stop a process managed by the daemon, task to restart is scheduled to make sure this function executes as fast as possible.
 	Maybe make it smaller if it keeps missing SIGCHLD?
 	"""
-	#TODO: Wait all of them that stopped, WNOHANG until exception
-	# Get pid, exit_code, needed informations
-	pid, exit_code = os.waitpid(-1, os.WNOHANG)
-	elprograma : Program = None
-	for program in d.programs:
-		for p in program:
-			if p.pid == pid:
-				elprograma = p
-				break
+	stopped = []
 
-	# Restart handling
-	if elprograma != None:
-		config = elprograma.config
-		# It was tried to be started
-		if elprograma.status == Status.STARTING and elprograma.should_auto_restart(exit_code):
-			if elprograma.start_retries < config["startretries"]:
-				elprograma.status = Status.BACKOFF
-				d.command_queue.put_nowait(Command(CommandType.INTERNAL_START_PROC, elprograma))
-			else:
-				elprograma.status = Status.FATAL
+	# Wait all of processes that stopped
+	while True:
+		try:
+			stopped.append(os.waitpid(-1, os.WNOHANG))
+		except:
+			break
+
+	# Restart handling for all of them
+	for pid, exit_code in stopped:
+		# Find the right program
+		elprograma : Program = None
+		for program in d.programs:
+			for p in program:
+				if p.pid == pid:
+					elprograma = p
+					break
+
+		# Handle what needs to be done next after its stop 
+		if elprograma != None:
+			config = elprograma.config
+			# It was tried to be started
+			if elprograma.status == Status.STARTING:
+				elprograma.pid = None
+				# We should restart it
+				if elprograma.should_auto_restart(exit_code):
+					if elprograma.start_retries < config["startretries"]:
+						elprograma.status = Status.BACKOFF
+						d.command_queue.put_nowait(Command(CommandType.INTERNAL_START_PROC, elprograma))
+					else:
+						elprograma.status = Status.FATAL
+						elprograma.exit_code = exit_code
+				# Nahh, its over buddy :/
+				else:
+					elprograma.clear()
+					elprograma.status = Status.FATAL
+					elprograma.exit_code = exit_code
+
+			# It was running and exited itself
+			elif elprograma.status == Status.RUNNING:
+				elprograma.clear()
+				elprograma.status == Status.EXITED
 				elprograma.exit_code = exit_code
-			elprograma.pid = None
+				if elprograma.should_auto_restart(exit_code):
+					d.command_queue.put_nowait(Command(CommandType.INTERNAL_START_PROC, elprograma))
 
-		# It was running and exited itself
-		elif elprograma.status == Status.RUNNING:
-			elprograma.clear()
-			elprograma.status == Status.EXITED
-			elprograma.exit_code = exit_code
-			if elprograma.should_auto_restart(exit_code):
-				d.command_queue.put_nowait(Command(CommandType.INTERNAL_START_PROC, elprograma))
-
-		# We stopped it
-		elif elprograma.status == Status.STOPPING:
-			elprograma.clear()
+			# We stopped it
+			elif elprograma.status == Status.STOPPING:
+				elprograma.clear()
 
 
 
