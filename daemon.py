@@ -74,45 +74,26 @@ def socket_thread(daemon):
 	except OSError:
 		pass
 	s.bind("/tmp/daemon.sock")
-	fd_set = [s.fileno()]
-
-	read_buf = []
+	s.listen(1)
 	write_buf = []
 
-	read_state = "SIZE"
-	read_size = None
 	data = None
 	while True:
-		r_list, w_list, _ = select.select(fd_set, [], [], 1.0)
-		if s.fileno() in r_list:
-			try :
-				data = s.recv(1024)
-			except:
-				pass
-			if data:
-				read_buf.append(data)
+		conn, addr = s.accept()
+		data = conn.recv(4)
+		size = int.from_bytes(data, "little")
+		data = conn.recv(size)
+		command = pickle.loads(data)
+		daemon.command_queue.put_nowait(command)
 
-				if read_state == "SIZE":
-					if len(read_buf) >= 4:
-						read_size = int.from_bytes(read_buf[:4], "little")
-						read_buf = read_buf[4:]
-						read_state = "DATA"
-
-				elif read_state == "DATA":
-					if len(read_buf) >= read_size:
-						data = pickle.loads(read_buf[:read_size])
-						read_buf = read_buf[read_size:]
-						read_state = "SIZE"
-						daemon.command_queue.put_nowait(data)
-		if s.fileno() in w_list:
-			while daemon.output_queue.qsize() > 0:
-				data = pickle.dumps(daemon.output_queue.get_nowait())
-				size = len(data).to_bytes(4, "little")
-				write_buf.append(size + data)
-				daemon.output_queue.task_done()
-			## send data
-			sended_size = s.send(write_buf)
-			write_buf = write_buf[sended_size:]
+		while daemon.output_queue.qsize() > 0:
+			data = pickle.dumps(daemon.output_queue.get_nowait())
+			size = len(data).to_bytes(4, "little")
+			s.sendto(size + data, addr)
+			daemon.output_queue.task_done()
+		## send data
+	s.close()
+	os.unlink("/tmp/daemon.sock")
 
 def at_least_one_arg(f):
 	"""
@@ -225,12 +206,12 @@ def internal_start_proc(d: Daemon, program: Program):
 
 			program.pid = process.pid
 			program.status = Status.STARTING
-			program.start_retries += 1 
+			program.start_retries += 1
 			program.start_time = time.time()
 			#TODO: Setup signal handler in case it takes too long
 		except:
 			pass
-	
+
 
 	os.umask(old_umask)
 
@@ -244,20 +225,10 @@ def internal_stop_proc(d: Daemon, program: Program):
 
 	program.stop_time = time.time()
 	program.status = Status.STOPPING
-	
+
 	os.kill(program.pid, signal)
-	#TODO: Setup signal handler in case it takes too long
-	pass
-
-def handle_sigalrm(d: Daemon):
-	"""
-	Called when we are monitoring the start or the end of a process
-	"""
-
-
-def set_alrm():
-	pass
-
+	program.status = Status.STOPPING
+	Threading.Timer(program.config["stoptimeout"], lambda: os.kill(program.pid, signal.SIGKILL)).start()
 
 def handle_sigchld(d: Daemon):
 	"""
@@ -295,7 +266,7 @@ def handle_sigchld(d: Daemon):
 			if elprograma.should_auto_restart(exit_code):
 				d.command_queue.put_nowait(Command(CommandType.INTERNAL_START_PROC, elprograma))
 
-		# We stopped it		
+		# We stopped it
 		elif elprograma.status == Status.STOPPING:
 			elprograma.clear()
 
@@ -354,4 +325,5 @@ if __name__ == "__main__":
 	daemon = Daemonize(app="bigniggaballs",action=daemon_entry, pid='/tmp/mydaemon.pid')
 	daemon.start()
 	"""
+	# Daemonize(app="supervisord", action=daemon_entry, pid='/tmp/daemon.pid').start()
 	daemon_entry()

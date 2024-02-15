@@ -16,6 +16,7 @@ class CommandType(Enum):
 	ABORT = 5,
 	INTERNAL_START_PROC = 6,
 	INTERNAL_STOP_PROC = 7
+	INTERNAL_RESTART_PROC = 8
 
 @dataclass
 class Command:
