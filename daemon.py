@@ -125,7 +125,7 @@ def one_arg(f):
 
 	def wrapper(command_args):
 		if len(command_args) == 1:
-			f(daemon, command_args)
+			f(daemon, *command_args)
 			return False
 	return wrapper
 
@@ -155,9 +155,8 @@ def start_program(d: Daemon, programs: List[str]):
 	Starts whole programs (all processes)
 	"""
 	for to_start in programs:
-		for program_list in d.programs[to_start]:
-			for proc in program_list:
-				d.command_queue.put_nowait(Command(CommandType.INTERNAL_START_PROC, proc))
+		for proc in d.programs[to_start]:
+			d.command_queue.put_nowait(Command(CommandType.INTERNAL_START_PROC, [proc]))
 
 
 @at_least_one_arg
@@ -166,9 +165,8 @@ def stop_program(d: Daemon, programs: List[str]):
 	Stops whole programs (all processes)
 	"""
 	for to_start in programs:
-		for program_list in d.programs[to_start]:
-			for proc in program_list:
-				d.command_queue.put_nowait(Command(CommandType.INTERNAL_STOP_PROC, proc))
+		for proc in d.programs[to_start]:
+			d.command_queue.put_nowait(Command(CommandType.INTERNAL_STOP_PROC, [proc]))
 
 @at_least_one_arg
 def restart_program(d: Daemon, programs: List[str]):
@@ -189,11 +187,11 @@ def reload_config(d: Daemon, config_content: str):
 		stop_program(d, list(d.config["programs"].keys()))
 
 	d.config = json.loads(config_content)
-	d.programs = {}
-	for program_name, config in d.config.items():
-		for _ in range(config["numprocs"]):
-			d.programs[program_name].append(Program(program_name, config))
-	start_program(d, list(d.config["programs"].keys()))
+	d.programs = defaultdict(list)
+	for program_name, program_config in d.config["programs"].items():
+		for _ in range(program_config["numprocs"]):
+			d.programs[program_name].append(Program(program_name, program_config))
+	d.command_queue.put_nowait(Command(CommandType.START_PROGRAM, [name for name, conf in d.config["programs"].items() if conf["autostart"] == True]))
 
 @one_arg
 def internal_start_proc(d: Daemon, program: Program):
@@ -212,7 +210,7 @@ def internal_start_proc(d: Daemon, program: Program):
 				stdin = subprocess.DEVNULL,
 				stdout=stdout,
 				stderr=stderr,
-				env = os.environ.copy() + program.config["env"])
+				env = os.environ.copy() | (program.config["env"] if "env" in program.config else {}))
 
 			program.pid = process.pid
 			program.status = Status.STARTING
@@ -220,10 +218,11 @@ def internal_start_proc(d: Daemon, program: Program):
 			program.start_time = time.time()
 			if program.config["starttime"] != 0:
 				program.start_timer = threading.Timer(program.config["starttime"], lambda: program.set_running())
+				program.start_timer.start()
 			else:
-				program.set_running = True
-			program.start_timer.start()
-		except:
+				program.set_running()
+		except Exception as e:
+			print(e)
 			pass
 
 

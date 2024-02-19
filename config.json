@@ -4,7 +4,7 @@
 			"cmd": "/bin/ls -la",
 			"numprocs": 3,
 			"workingdir": "/tmp",
-			"autostart": true,
+			"autostart": false,
 			"autorestart": false,
 			"exitcodes": [
 				0
@@ -16,7 +16,7 @@
 			"stdout": "/home/a/Workspace/42/TaskMaister/std.out",
 			"stderr": "/home/a/Workspace/42/TaskMaister/std.err"
 		},
-		"hacker": {
+		"idle": {
 			"cmd": "/usr/bin/python3 time.py",
 			"numprocs": 8,
 			"workingdir": "/tmp",

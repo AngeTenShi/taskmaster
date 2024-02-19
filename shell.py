@@ -33,11 +33,11 @@ def get_command_type(command: str, args: List) -> Command:
 	else:
 		return Command(CommandType.UNKNOWN, command)
 
-def send_command(program_name: str, command: str):
+def send_command(args, command_name: str):
 	s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 	try:
 		s.connect("/tmp/daemon.sock")
-		command = get_command_type(command, program_name)
+		command = get_command_type(command_name, args)
 		data = pickle.dumps(command)
 		size = len(data).to_bytes(4, "little")
 		s.send(size + data)
@@ -50,15 +50,12 @@ def send_command(program_name: str, command: str):
 		return 1
 
 def shell():
-
 	while True:
 		try:
 			argv = input(">> ").split(" ")
 
 			if len(argv) == 1 and len(argv[0]):
-				if argv[0] == "reload":
-					send_command("all", "reload")
-				elif argv[0] == "status":
+				if argv[0] == "status":
 					pass
 				elif argv[0] =="exit":
 					send_command("all", "stop")
@@ -76,6 +73,11 @@ def shell():
 					send_command(argv[1], "stop")
 				elif argv[0] == "restart":
 					send_command(argv[1], "restart")
+				elif argv[0] == "reload":
+					try:
+						send_command([open(argv[1], 'r').read()], "reload")
+					except:
+						print(f"Could not open config {argv[1]}")
 				else:
 					print(f"Unknown command {argv[0]}, does it have the right number of arguments?")
 
