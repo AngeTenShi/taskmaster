@@ -13,6 +13,7 @@ import socket
 import select
 import subprocess
 import time
+from copy import copy
 
 from queue import Queue
 
@@ -32,15 +33,12 @@ class Daemon:
 		self.output_queue = Queue(maxsize=30)
 		self.config = None
 		self.programs = Dict[str, List[Program]]
-		self.alarm_by_pid = {}
 
 class Program:
 	def __init__(self, name : str, config):
 		self.name = name
 		self.config = config
 		self.pid = None
-		self.start_time = None
-		self.stop_time = None
 		self.exit_code = None
 		self.start_retries = 0
 		self.status = Status.STOPPED
@@ -49,15 +47,13 @@ class Program:
 
 	def should_auto_restart(self, exitcode):
 		return self.config["autorestart"] == True or (self.config["autorestart"] == "unexpected" and exitcode not in self.config["exitcodes"])
-	
+
 	# This little hack might have bugs
 	def set_running(self):
 		self.status = Status.RUNNING
 
 	def clear(self):
 		self.pid = None
-		self.start_time = None
-		self.stop_time = None
 		self.exit_code = None
 		self.start_retries = 0
 		self.status = Status.STOPPED
@@ -143,11 +139,12 @@ def no_arg(f):
 
 
 @no_arg
-def status():
+def status(d: Daemon):
 	"""
 	Shows the status of all the programs
 	"""
-	pass
+	p = [program for program in d.programs]
+	d.output_queue.put_nowait([{"name" : program.name, "status" : program.status, "pid": program.pid, "exit_code": program.exit_code} for program in p])
 
 @at_least_one_arg
 def start_program(d: Daemon, programs: List[str]):
@@ -164,8 +161,8 @@ def stop_program(d: Daemon, programs: List[str]):
 	"""
 	Stops whole programs (all processes)
 	"""
-	for to_start in programs:
-		for proc in d.programs[to_start]:
+	for to_stop in programs:
+		for proc in d.programs[to_stop]:
 			d.command_queue.put_nowait(Command(CommandType.INTERNAL_STOP_PROC, [proc]))
 
 @at_least_one_arg
@@ -173,7 +170,7 @@ def restart_program(d: Daemon, programs: List[str]):
 	"""
 	Restarts a program
 	"""
-	stop_program(d, programs)
+	stop_program(d, programs, d.programs)
 	start_program(d, programs)
 
 @one_arg
@@ -184,7 +181,8 @@ def reload_config(d: Daemon, config_content: str):
 	# One already running, we need to stop everything first
 	# TODO: Figure out how to wait for the stop before restarting
 	if d.config != None:
-		stop_program(d, list(d.config["programs"].keys()))
+		copy_programs = copy(d.programs)
+		stop_program(d, list(d.config["programs"].keys()), copy(d.programs))
 
 	d.config = json.loads(config_content)
 	d.programs = defaultdict(list)
@@ -198,6 +196,8 @@ def internal_start_proc(d: Daemon, program: Program):
 	"""
 	Start a program "proc"
 	"""
+
+	# TODO: Restrict starting when stopping
 	old_umask = os.umask(0)
 	if "umask" in program.config:
 		os.umask(program.config["umask"])
@@ -215,7 +215,6 @@ def internal_start_proc(d: Daemon, program: Program):
 			program.pid = process.pid
 			program.status = Status.STARTING
 			program.start_retries += 1
-			program.start_time = time.time()
 			if program.config["starttime"] != 0:
 				program.start_timer = threading.Timer(program.config["starttime"], lambda: program.set_running())
 				program.start_timer.start()
@@ -236,11 +235,7 @@ def internal_stop_proc(d: Daemon, program: Program):
 	"""
 	signal = getattr(signal, f"SIG{program.config['stopsignal']}")
 
-	program.stop_time = time.time()
-	program.status = Status.STOPPING
-
 	os.kill(program.pid, signal)
-
 	program.status = Status.STOPPING
 	program.exit_timer = threading.Timer(program.config["stoptime"], lambda: os.kill(program.pid, signal.SIGKILL))
 	program.exit_timer.start()
@@ -251,7 +246,6 @@ def handle_sigchld(d: Daemon):
 	Maybe make it smaller if it keeps missing SIGCHLD?
 	"""
 	stopped = []
-
 	# Wait all of processes that stopped
 	while True:
 		try:
@@ -269,7 +263,7 @@ def handle_sigchld(d: Daemon):
 					elprograma = p
 					break
 
-		# Handle what needs to be done next after its stop 
+		# Handle what needs to be done next after its stop
 		if elprograma != None:
 			config = elprograma.config
 			# It was tried to be started
@@ -283,7 +277,7 @@ def handle_sigchld(d: Daemon):
 					else:
 						elprograma.status = Status.FATAL
 						elprograma.exit_code = exit_code
-				# Nahh, its over buddy :/
+				# Nahh, its over
 				else:
 					elprograma.clear()
 					elprograma.status = Status.FATAL
@@ -331,7 +325,7 @@ def daemon_entry():
 	# Initialize signals
 	signal.signal(signal.SIGCHLD, lambda s,f: handle_sigchld(daemon))
 
-	socket_th = threading.Thread(target=socket_thread, args=(daemon,));
+	socket_th = threading.Thread(target=socket_thread, args=(daemon,))
 	socket_th.start()
 
 	# Process commands
