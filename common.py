@@ -19,8 +19,15 @@ class CommandType(Enum):
 	INTERNAL_RESTART_PROC = 8
 
 @dataclass
-class Command:
-	id: CommandType
+class CommandRequest:
+	cmd_type: CommandType
 	args: List
+	id: int
 
-type CommandQueue = Queue[Command]
+@dataclass
+class CommandResponse:
+	cmd_type: CommandType
+	response: any
+	id: int
+
+type CommandQueue = Queue[CommandRequest | CommandResponse]

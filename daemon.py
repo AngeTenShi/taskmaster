@@ -1,4 +1,4 @@
-from common import Command, CommandType, CommandQueue
+from common import CommandRequest, CommandResponse, CommandType, CommandQueue
 from typing import List, Dict
 from enum import Enum
 
@@ -10,10 +10,8 @@ import json
 import threading
 import pickle
 import socket
-import select
+import sys
 import subprocess
-import time
-from copy import copy
 
 from queue import Queue
 
@@ -32,7 +30,7 @@ class Daemon:
 		self.command_queue = Queue(maxsize=30)
 		self.output_queue = Queue(maxsize=30)
 		self.config = None
-		self.programs = Dict[str, List[Program]]
+		self.programs : Dict[str, List[Program]] = {}
 
 class Program:
 	def __init__(self, name : str, config):
@@ -73,6 +71,73 @@ daemon = Daemon()
 		STATE 2: Command (taille octets)
 """
 
+class ClientConnection():
+	
+	def __init__(self, conn, addr):
+		self.conn : socket.socket = conn
+		self.conn.setblocking(False)
+		self.conn.settimeout(0.1)
+		self.addr = addr
+
+		self.recv_buf = bytearray()
+		self.recv_state = "SIZE"
+		self.recv_size = 4
+
+		self.send_buf = bytearray()
+
+		print(f"client just joined", file=sys.stderr)
+
+	def close(self):
+		print(f"client just left", file=sys.stderr)
+		self.conn.close()
+
+	def __del__(self):
+		print("destructor")
+		if self.conn:
+			self.close()
+
+	def recv_from_client(self):
+		global daemon
+
+		try:
+			self.recv_buf += self.conn.recv(1024)
+		except:	
+			pass
+
+		data_size = 0
+		while len(self.recv_buf) >= self.recv_size:
+			cmd = None
+			data_size = self.recv_size
+
+			if self.recv_state == "SIZE":
+				self.recv_state = "PAYLOAD"
+				self.recv_size = int.from_bytes(self.recv_buf[:data_size], "little")
+
+			elif self.recv_state == "PAYLOAD":
+				self.recv_state = "SIZE"
+				self.recv_size = 4
+				cmd = pickle.loads(self.recv_buf[:data_size])
+
+			self.recv_buf = self.recv_buf[data_size:]
+
+			if cmd:
+				daemon.command_queue.put_nowait(cmd)
+
+	def send_to_client(self):
+		global daemon
+
+		while daemon.output_queue.qsize() > 0:
+			data = pickle.dumps(daemon.output_queue.get_nowait())
+			size = len(data).to_bytes(4, "little")
+			self.send_buf += size + data
+			daemon.output_queue.task_done()
+		
+		if len(self.send_buf):
+			len_sent = self.conn.send(self.send_buf)
+			self.send_buf = self.send_buf[len_sent:]
+
+
+
 def socket_thread(daemon):
 	s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 	try:
@@ -81,23 +146,23 @@ def socket_thread(daemon):
 		pass
 	s.bind("/tmp/daemon.sock")
 	s.listen(1)
-	write_buf = []
-
-	data = None
+	
+	# Main loop, accept only one client, and then process its commands, until it disconnects, then do it again
 	while True:
-		conn, addr = s.accept()
-		data = conn.recv(4)
-		size = int.from_bytes(data, "little")
-		data = conn.recv(size)
-		command = pickle.loads(data)
-		daemon.command_queue.put_nowait(command)
+		conn = ClientConnection(*s.accept())
 
-		while daemon.output_queue.qsize() > 0:
-			data = pickle.dumps(daemon.output_queue.get_nowait())
-			size = len(data).to_bytes(4, "little")
-			s.sendto(size + data, addr)
-			daemon.output_queue.task_done()
-		## send data
+		try:
+			while True:
+				conn.recv_from_client()
+				conn.send_to_client()
+		except KeyboardInterrupt:
+			conn.close()
+			break 
+		#except Exception as e:
+		#	print(e)
+		#	conn.close()
+		#	continue 
+
 	s.close()
 	os.unlink("/tmp/daemon.sock")
 
@@ -109,8 +174,8 @@ def at_least_one_arg(f):
 
 	def wrapper(command_args):
 		if len(command_args) > 0:
-			f(daemon, command_args)
-			return False
+			return False, f(daemon, command_args)
+		return False, "Invalid args"
 	return wrapper
 
 def one_arg(f):
@@ -121,8 +186,8 @@ def one_arg(f):
 
 	def wrapper(command_args):
 		if len(command_args) == 1:
-			f(daemon, *command_args)
-			return False
+			return False, f(daemon, *command_args)
+		return False, "Invalid args"
 	return wrapper
 
 def no_arg(f):
@@ -133,8 +198,8 @@ def no_arg(f):
 
 	def wrapper(command_args):
 		if len(command_args) == 0:
-			f(daemon)
-			return False
+			return False, f(daemon)
+		return False, "Invalid args"
 	return wrapper
 
 
@@ -143,17 +208,24 @@ def status(d: Daemon):
 	"""
 	Shows the status of all the programs
 	"""
-	p = [program for program in d.programs]
-	d.output_queue.put_nowait([{"name" : program.name, "status" : program.status, "pid": program.pid, "exit_code": program.exit_code} for program in p])
+	return [{"name" : program.name, "status" : program.status, "pid": program.pid, "exit_code": program.exit_code} for program in [p for p in d.programs]]
 
 @at_least_one_arg
 def start_program(d: Daemon, programs: List[str]):
 	"""
 	Starts whole programs (all processes)
 	"""
+	ret = {}
 	for to_start in programs:
+		ret[to_start] = {"starting": False}
+		if not all([proc.status == Status.STOPPED for proc in d.programs[to_start]]):
+			continue
+		if any(proc.status == Status.STARTING or proc.status == Status.RUNNING for proc in d.programs[to_start]):
+			continue
 		for proc in d.programs[to_start]:
-			d.command_queue.put_nowait(Command(CommandType.INTERNAL_START_PROC, [proc]))
+			d.command_queue.put_nowait(CommandRequest(CommandType.INTERNAL_START_PROC, [proc], -1))
+		ret[to_start]["starting"] = True
+	return ret
 
 
 @at_least_one_arg
@@ -161,17 +233,29 @@ def stop_program(d: Daemon, programs: List[str]):
 	"""
 	Stops whole programs (all processes)
 	"""
+	ret = {}
 	for to_stop in programs:
+		ret[to_stop] = {"stopping": False}
+		if not any(proc.status == Status.STOPPING for proc in d.programs[to_stop]):
+			continue
+		elif all(proc.status == Status.STOPPED for proc in d.programs[to_stop]):
+			continue
 		for proc in d.programs[to_stop]:
-			d.command_queue.put_nowait(Command(CommandType.INTERNAL_STOP_PROC, [proc]))
+			d.command_queue.put_nowait(CommandRequest(CommandType.INTERNAL_STOP_PROC, [proc], -1))
+		ret[to_stop]["stopping"] = True
+	return ret
 
 @at_least_one_arg
 def restart_program(d: Daemon, programs: List[str]):
 	"""
 	Restarts a program
 	"""
-	stop_program(d, programs, d.programs)
-	start_program(d, programs)
+	"""
+	for to_restart in programs:
+		for proc in d.programs[to_restart]:
+			d.command_queue.put_nowait(Command(CommandType.INTERNAL_RESTART_PROC, [proc]))
+	"""
+	return "Not implemented"
 
 @one_arg
 def reload_config(d: Daemon, config_content: str):
@@ -181,15 +265,15 @@ def reload_config(d: Daemon, config_content: str):
 	# One already running, we need to stop everything first
 	# TODO: Figure out how to wait for the stop before restarting
 	if d.config != None:
-		copy_programs = copy(d.programs)
-		stop_program(d, list(d.config["programs"].keys()), copy(d.programs))
+		stop_program(d, list(d.config["programs"].keys()))
 
 	d.config = json.loads(config_content)
 	d.programs = defaultdict(list)
 	for program_name, program_config in d.config["programs"].items():
 		for _ in range(program_config["numprocs"]):
 			d.programs[program_name].append(Program(program_name, program_config))
-	d.command_queue.put_nowait(Command(CommandType.START_PROGRAM, [name for name, conf in d.config["programs"].items() if conf["autostart"] == True]))
+	d.command_queue.put_nowait(CommandRequest(CommandType.START_PROGRAM, [name for name, conf in d.config["programs"].items() if conf["autostart"] == True], -1))
+	return "Return value not implemented"
 
 @one_arg
 def internal_start_proc(d: Daemon, program: Program):
@@ -197,7 +281,6 @@ def internal_start_proc(d: Daemon, program: Program):
 	Start a program "proc"
 	"""
 
-	# TODO: Restrict starting when stopping
 	old_umask = os.umask(0)
 	if "umask" in program.config:
 		os.umask(program.config["umask"])
@@ -257,10 +340,10 @@ def handle_sigchld(d: Daemon):
 	for pid, exit_code in stopped:
 		# Find the right program
 		elprograma : Program = None
-		for program in d.programs:
-			for p in program:
-				if p.pid == pid:
-					elprograma = p
+		for program_list in d.programs.values():
+			for proc in program_list:
+				if proc.pid == pid:
+					elprograma = proc
 					break
 
 		# Handle what needs to be done next after its stop
@@ -273,11 +356,11 @@ def handle_sigchld(d: Daemon):
 				if elprograma.should_auto_restart(exit_code):
 					if elprograma.start_retries < config["startretries"]:
 						elprograma.status = Status.BACKOFF
-						d.command_queue.put_nowait(Command(CommandType.INTERNAL_START_PROC, elprograma))
+						d.command_queue.put_nowait(CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1))
 					else:
 						elprograma.status = Status.FATAL
 						elprograma.exit_code = exit_code
-				# Nahh, its over
+				# Nahh, its over (never even started, negative canthal tilt)
 				else:
 					elprograma.clear()
 					elprograma.status = Status.FATAL
@@ -289,7 +372,7 @@ def handle_sigchld(d: Daemon):
 				elprograma.status == Status.EXITED
 				elprograma.exit_code = exit_code
 				if elprograma.should_auto_restart(exit_code):
-					d.command_queue.put_nowait(Command(CommandType.INTERNAL_START_PROC, elprograma))
+					d.command_queue.put_nowait(CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1))
 
 			# We stopped it
 			elif elprograma.status == Status.STOPPING:
@@ -307,13 +390,17 @@ def daemon_loop(daemon: Daemon):
 		CommandType.INTERNAL_START_PROC: internal_start_proc,
 		CommandType.INTERNAL_STOP_PROC: internal_stop_proc,
 		CommandType.STATUS: status,
-		CommandType.ABORT: lambda: True
+		CommandType.ABORT: lambda: (True, "")
 	}
 
 	abort = False
 	while not abort:
 		cmd = daemon.command_queue.get()
-		abort = commands[cmd.id](cmd.args)
+		if cmd.cmd_type not in commands.keys():
+			continue
+		abort, response = commands[cmd.cmd_type](cmd.args)
+		if cmd.id != -1: # Internal ID used for commands issued by the daemon itself
+			daemon.output_queue.put_nowait(CommandResponse(cmd.cmd_type, response, cmd.id))
 		daemon.command_queue.task_done()
 
 
