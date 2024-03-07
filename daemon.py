@@ -72,7 +72,7 @@ daemon = Daemon()
 """
 
 class ClientConnection():
-	
+
 	def __init__(self, conn, addr):
 		self.conn : socket.socket = conn
 		self.conn.setblocking(False)
@@ -101,7 +101,7 @@ class ClientConnection():
 
 		try:
 			self.recv_buf += self.conn.recv(1024)
-		except:	
+		except:
 			pass
 
 		data_size = 0
@@ -131,7 +131,7 @@ class ClientConnection():
 			size = len(data).to_bytes(4, "little")
 			self.send_buf += size + data
 			daemon.output_queue.task_done()
-		
+
 		if len(self.send_buf):
 			len_sent = self.conn.send(self.send_buf)
 			self.send_buf = self.send_buf[len_sent:]
@@ -146,7 +146,7 @@ def socket_thread(daemon):
 		pass
 	s.bind("/tmp/daemon.sock")
 	s.listen(1)
-	
+
 	# Main loop, accept only one client, and then process its commands, until it disconnects, then do it again
 	while True:
 		conn = ClientConnection(*s.accept())
@@ -157,11 +157,11 @@ def socket_thread(daemon):
 				conn.send_to_client()
 		except KeyboardInterrupt:
 			conn.close()
-			break 
+			break
 		#except Exception as e:
 		#	print(e)
 		#	conn.close()
-		#	continue 
+		#	continue
 
 	s.close()
 	os.unlink("/tmp/daemon.sock")
@@ -208,7 +208,7 @@ def status(d: Daemon):
 	"""
 	Shows the status of all the programs
 	"""
-	return [{"name" : program.name, "status" : program.status, "pid": program.pid, "exit_code": program.exit_code} for program in [p for p in d.programs]]
+	return {name: [proc.status.name for proc in procs] for name, procs in d.programs.items()}
 
 @at_least_one_arg
 def start_program(d: Daemon, programs: List[str]):
@@ -216,8 +216,12 @@ def start_program(d: Daemon, programs: List[str]):
 	Starts whole programs (all processes)
 	"""
 	ret = {}
+	# remove duplicates in programs ex : start ls ls should only start ls
+	programs = list(set(programs))
 	for to_start in programs:
 		ret[to_start] = {"starting": False}
+		if to_start not in d.programs:
+			continue
 		if not all([proc.status == Status.STOPPED for proc in d.programs[to_start]]):
 			continue
 		if any(proc.status == Status.STARTING or proc.status == Status.RUNNING for proc in d.programs[to_start]):
@@ -228,7 +232,7 @@ def start_program(d: Daemon, programs: List[str]):
 	return ret
 
 
-@at_least_one_arg
+@one_arg
 def stop_program(d: Daemon, programs: List[str]):
 	"""
 	Stops whole programs (all processes)
@@ -257,7 +261,7 @@ def restart_program(d: Daemon, programs: List[str]):
 	"""
 	return "Not implemented"
 
-@one_arg
+@at_least_one_arg
 def reload_config(d: Daemon, config_content: str):
 	"""
 	Reloads the configuration
@@ -265,12 +269,12 @@ def reload_config(d: Daemon, config_content: str):
 	# One already running, we need to stop everything first
 	# TODO: Figure out how to wait for the stop before restarting
 	if d.config != None:
-		stop_program(d, list(d.config["programs"].keys()))
-
-	d.config = json.loads(config_content)
+		stop_program(list(d.config["programs"].keys()))
+	d.config = json.loads(config_content[0])
 	d.programs = defaultdict(list)
 	for program_name, program_config in d.config["programs"].items():
 		for _ in range(program_config["numprocs"]):
+			print(f"Creating program {program_name}")
 			d.programs[program_name].append(Program(program_name, program_config))
 	d.command_queue.put_nowait(CommandRequest(CommandType.START_PROGRAM, [name for name, conf in d.config["programs"].items() if conf["autostart"] == True], -1))
 	return "Return value not implemented"
@@ -323,21 +327,33 @@ def internal_stop_proc(d: Daemon, program: Program):
 	program.exit_timer = threading.Timer(program.config["stoptime"], lambda: os.kill(program.pid, signal.SIGKILL))
 	program.exit_timer.start()
 
+stopped = []
+def get_all_stopped_pids(d: Daemon):
+	global stopped
+	while True:
+		try:
+			pid, _ = os.wait()
+			if pid == 0:
+				break
+			stopped.append((pid, os.WEXITSTATUS(_)))
+		except:
+			break
+
 def handle_sigchld(d: Daemon):
 	"""
 	Handles the stop a process managed by the daemon, task to restart is scheduled to make sure this function executes as fast as possible.
 	Maybe make it smaller if it keeps missing SIGCHLD?
 	"""
-	stopped = []
 	# Wait all of processes that stopped
-	while True:
-		try:
-			stopped.append(os.waitpid(-1, os.WNOHANG))
-		except:
-			break
-
+	global stopped
+	th = threading.Thread(target=get_all_stopped_pids, args=(d,))
+	th.start()
+	th.join() # test if this is blocking
 	# Restart handling for all of them
+	treated_pid = []
 	for pid, exit_code in stopped:
+		if pid in treated_pid:
+			continue
 		# Find the right program
 		elprograma : Program = None
 		for program_list in d.programs.values():
@@ -378,9 +394,6 @@ def handle_sigchld(d: Daemon):
 			elif elprograma.status == Status.STOPPING:
 				elprograma.clear()
 
-
-
-
 def daemon_loop(daemon: Daemon):
 	commands = {
 		CommandType.RELOAD_CONFIG: reload_config,
@@ -398,6 +411,7 @@ def daemon_loop(daemon: Daemon):
 		cmd = daemon.command_queue.get()
 		if cmd.cmd_type not in commands.keys():
 			continue
+		print(f"Received command {cmd.cmd_type.name} with args {cmd.args}")
 		abort, response = commands[cmd.cmd_type](cmd.args)
 		if cmd.id != -1: # Internal ID used for commands issued by the daemon itself
 			daemon.output_queue.put_nowait(CommandResponse(cmd.cmd_type, response, cmd.id))
@@ -411,7 +425,6 @@ def daemon_entry():
 	"""
 	# Initialize signals
 	signal.signal(signal.SIGCHLD, lambda s,f: handle_sigchld(daemon))
-
 	socket_th = threading.Thread(target=socket_thread, args=(daemon,))
 	socket_th.start()
 
