@@ -327,33 +327,27 @@ def internal_stop_proc(d: Daemon, program: Program):
 	program.exit_timer = threading.Timer(program.config["stoptime"], lambda: os.kill(program.pid, signal.SIGKILL))
 	program.exit_timer.start()
 
-stopped = []
-def get_all_stopped_pids(d: Daemon):
-	global stopped
-	while True:
-		try:
-			pid, _ = os.wait()
-			if pid == 0:
-				break
-			stopped.append((pid, os.WEXITSTATUS(_)))
-		except:
-			break
-
 def handle_sigchld(d: Daemon):
 	"""
 	Handles the stop a process managed by the daemon, task to restart is scheduled to make sure this function executes as fast as possible.
 	Maybe make it smaller if it keeps missing SIGCHLD?
 	"""
+	stopped = []
+
 	# Wait all of processes that stopped
-	global stopped
-	th = threading.Thread(target=get_all_stopped_pids, args=(d,))
-	th.start()
-	th.join() # test if this is blocking
+	while True:
+		try:
+			pid, _ = os.waitpid(-1, os.WNOHANG)
+			if (pid, _) == (0, 0):
+				break
+			stopped.append((pid, os.WEXITSTATUS(_)))
+		except:
+			break
+
 	# Restart handling for all of them
-	treated_pid = []
 	for pid, exit_code in stopped:
-		if pid in treated_pid:
-			continue
+		print(pid, exit_code)
+
 		# Find the right program
 		elprograma : Program = None
 		for program_list in d.programs.values():
