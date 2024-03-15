@@ -258,10 +258,10 @@ def restart_program(d: Daemon, programs: List[str]):
 	for to_restart in programs:
 		ret[to_restart] = {"restarting": False}
 		if to_restart not in d.programs:
+			print(f"Program {to_restart} not found")
 			continue
-		if not all([proc.status == Status.STOPPED for proc in d.programs[to_restart]]):
-			continue
-		if any(proc.status == Status.STARTING or proc.status == Status.RUNNING for proc in d.programs[to_restart]):
+		if any(proc.status == Status.STARTING for proc in d.programs[to_restart]):
+			print(f"Program {to_restart} is already starting")
 			continue
 		for proc in d.programs[to_restart]:
 			d.command_queue.put_nowait(CommandRequest(CommandType.INTERNAL_START_PROC, [proc], -1))
@@ -277,6 +277,7 @@ def reload_config(d: Daemon, config_content: str):
 	# One already running, we need to stop everything first
 	# TODO: Figure out how to wait for the stop before restarting
 	if d.config != None:
+		print("Reloading config and stopping everything first")
 		stop_program(list(d.config["programs"].keys()))
 	d.config = json.loads(config_content[0])
 	d.programs = defaultdict(list)
@@ -292,6 +293,9 @@ def internal_start_proc(d: Daemon, program: Program):
 	"""
 	Start a program "proc"
 	"""
+	if program.status != Status.STOPPED:
+		print(f"Program {program.name} is not stopped sending big SIGKILL")
+		os.kill(program.pid, signal.SIGKILL)
 
 	old_umask = os.umask(0)
 	if "umask" in program.config:
