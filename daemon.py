@@ -254,12 +254,20 @@ def restart_program(d: Daemon, programs: List[str]):
 	"""
 	Restarts a program
 	"""
-	"""
+	ret = {}
 	for to_restart in programs:
+		ret[to_restart] = {"restarting": False}
+		if to_restart not in d.programs:
+			continue
+		if not all([proc.status == Status.STOPPED for proc in d.programs[to_restart]]):
+			continue
+		if any(proc.status == Status.STARTING or proc.status == Status.RUNNING for proc in d.programs[to_restart]):
+			continue
 		for proc in d.programs[to_restart]:
-			d.command_queue.put_nowait(Command(CommandType.INTERNAL_RESTART_PROC, [proc]))
-	"""
-	return "Not implemented"
+			d.command_queue.put_nowait(CommandRequest(CommandType.INTERNAL_START_PROC, [proc], -1))
+		ret[to_restart]["restarting"] = True
+	return ret
+
 
 @at_least_one_arg
 def reload_config(d: Daemon, config_content: str):
@@ -277,7 +285,7 @@ def reload_config(d: Daemon, config_content: str):
 			print(f"Creating program {program_name}")
 			d.programs[program_name].append(Program(program_name, program_config))
 	d.command_queue.put_nowait(CommandRequest(CommandType.START_PROGRAM, [name for name, conf in d.config["programs"].items() if conf["autostart"] == True], -1))
-	return "Return value not implemented"
+	return "Config reloaded"
 
 @one_arg
 def internal_start_proc(d: Daemon, program: Program):
