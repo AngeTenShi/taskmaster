@@ -311,6 +311,7 @@ def internal_start_proc(d: Daemon, program: Program):
 				stderr=stderr,
 				env = os.environ.copy() | (program.config["env"] if "env" in program.config else {}))
 
+			print(f"program {program.pid}: {program.status} will start", program.start_retries, program.config["startretries"], file=sys.stderr)
 			program.pid = process.pid
 			program.status = Status.STARTING
 			program.start_retries += 1
@@ -320,7 +321,7 @@ def internal_start_proc(d: Daemon, program: Program):
 			else:
 				program.set_running()
 		except Exception as e:
-			print(e)
+			print("failed to even subprocess.Popen(): ", e)
 			pass
 
 
@@ -358,8 +359,6 @@ def handle_sigchld(d: Daemon):
 
 	# Restart handling for all of them
 	for pid, exit_code in stopped:
-		print(pid, exit_code)
-
 		# Find the right program
 		elprograma : Program = None
 		for program_list in d.programs.values():
@@ -374,15 +373,10 @@ def handle_sigchld(d: Daemon):
 			# It was tried to be started
 			if elprograma.status == Status.STARTING:
 				elprograma.pid = None
-				# We should restart it
-				if elprograma.should_auto_restart(exit_code):
-					if elprograma.start_retries < config["startretries"]:
-						elprograma.status = Status.BACKOFF
-						d.command_queue.put_nowait(CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1))
-					else:
-						elprograma.status = Status.FATAL
-						elprograma.exit_code = exit_code
-				# Nahh, its over (never even started, negative canthal tilt)
+				# We should restart it if it did not exceed startretries
+				if elprograma.start_retries < config["startretries"]:
+					elprograma.status = Status.BACKOFF
+					d.command_queue.put_nowait(CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1))
 				else:
 					elprograma.clear()
 					elprograma.status = Status.FATAL
