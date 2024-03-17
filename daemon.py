@@ -141,10 +141,10 @@ class ClientConnection():
 def socket_thread(daemon):
 	s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 	try:
-		os.unlink("/tmp/daemon.sock")
+		os.unlink("/tmp/taskmaster.sock")
 	except OSError:
 		pass
-	s.bind("/tmp/daemon.sock")
+	s.bind("/tmp/taskmaster.sock")
 	s.listen(1)
 
 	# Main loop, accept only one client, and then process its commands, until it disconnects, then do it again
@@ -164,7 +164,7 @@ def socket_thread(daemon):
 		#	continue
 
 	s.close()
-	os.unlink("/tmp/daemon.sock")
+	os.unlink("/tmp/taskmaster.sock")
 
 def at_least_one_arg(f):
 	"""
@@ -429,6 +429,10 @@ def daemon_entry():
 	This is the entry point for the daemon thread, the one responsible of scheduling and handling the processes.
 	It receives the configuration and orders from the main thread and performs accordingly
 	"""
+	# Create pid file
+	with open("/tmp/taskmaster.pid", "w") as f:
+		f.write(str(os.getpid()))
+
 	# Initialize signals
 	signal.signal(signal.SIGCHLD, lambda s,f: handle_sigchld(daemon))
 	socket_th = threading.Thread(target=socket_thread, args=(daemon,))
@@ -438,6 +442,18 @@ def daemon_entry():
 	daemon_loop(daemon)
 
 	socket_th.join()
+
+def check_and_print_if_already_running():
+	"""
+	Checks if the daemon is already running
+	"""
+	try:
+		with open("/tmp/taskmaster.pid", "r") as f:
+			pid = int(f.read())
+			print(f"Taskmaster daemon already running (pid={pid}), exiting...", file=sys.stderr)
+			return True
+	except:
+		return False
 
 from daemonize import Daemonize
 import logging
@@ -457,4 +473,11 @@ if __name__ == "__main__":
 	daemon.start()
 	"""
 	# Daemonize(app="supervisord", action=daemon_entry, pid='/tmp/daemon.pid').start()
-	daemon_entry()
+	if not check_and_print_if_already_running():
+		try:
+			daemon_entry()
+		except Exception as e:
+			print(e)
+			pass
+		finally:
+			os.unlink("/tmp/taskmaster.pid")

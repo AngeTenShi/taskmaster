@@ -13,7 +13,7 @@ class DaemonConnection():
 
 	def __init__(self):
 		self.sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-		self.sock.connect("/tmp/daemon.sock")
+		self.sock.connect("/tmp/taskmaster.sock")
 		self.last_id = 0
 	
 	def __del__(self):
@@ -132,7 +132,8 @@ def shell():
 		except DaemonConnection.TimeoutError:
 			print("Shell did not receive a response in time, please check the daemon status and retry.")
 			return 1
-		except (EOFError, KeyboardInterrupt, ShouldExit)  as e:
+		except (EOFError, KeyboardInterrupt, ShouldExit):
+			print("exiting...")
 			return
 		except:
 			print("unhandled exception, please retry.")
