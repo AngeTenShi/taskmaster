@@ -293,10 +293,8 @@ def internal_start_proc(d: Daemon, program: Program):
 	"""
 	Start a program "proc"
 	"""
-	if program.status != Status.STOPPED:
-		print(f"Program {program.name} is not stopped sending big SIGKILL")
+	if program.status != Status.STOPPED and program.status != Status.BACKOFF:
 		os.kill(program.pid, signal.SIGKILL)
-
 	old_umask = os.umask(0)
 	if "umask" in program.config:
 		os.umask(program.config["umask"])
@@ -311,10 +309,10 @@ def internal_start_proc(d: Daemon, program: Program):
 				stderr=stderr,
 				env = os.environ.copy() | (program.config["env"] if "env" in program.config else {}))
 
-			print(f"program {program.pid}: {program.status} will start", program.start_retries, program.config["startretries"], file=sys.stderr)
 			program.pid = process.pid
 			program.status = Status.STARTING
 			program.start_retries += 1
+			print(f"program {program.pid}: {program.status} will start", program.start_retries, program.config["startretries"], file=sys.stderr)
 			if program.config["starttime"] != 0:
 				program.start_timer = threading.Timer(program.config["starttime"], lambda: program.set_running())
 				program.start_timer.start()
@@ -348,6 +346,7 @@ def handle_sigchld(d: Daemon):
 	stopped = []
 
 	# Wait all of processes that stopped
+	print("SIGCHLD received")
 	while True:
 		try:
 			pid, _ = os.waitpid(-1, os.WNOHANG)
@@ -356,7 +355,7 @@ def handle_sigchld(d: Daemon):
 			stopped.append((pid, os.WEXITSTATUS(_)))
 		except:
 			break
-
+	print(f"Pid : {pid}, exit code : {_}")
 	# Restart handling for all of them
 	for pid, exit_code in stopped:
 		# Find the right program
@@ -366,26 +365,30 @@ def handle_sigchld(d: Daemon):
 				if proc.pid == pid:
 					elprograma = proc
 					break
-
+		print(f"Program {elprograma.name} exited with code {exit_code}", file=sys.stderr)
+		print(f"Start retries: {elprograma.start_retries} , Statuts : {elprograma.status}", file=sys.stderr)
 		# Handle what needs to be done next after its stop
 		if elprograma != None:
 			config = elprograma.config
 			# It was tried to be started
-			if elprograma.status == Status.STARTING:
-				elprograma.pid = None
+			if elprograma.status == Status.STARTING or exit_code not in config["exitcodes"]:
 				# We should restart it if it did not exceed startretries
+				elprograma.status = Status.STOPPED
 				if elprograma.start_retries < config["startretries"]:
+					print(f"program {elprograma.pid}: {elprograma.status} will restart", elprograma.start_retries, config["startretries"], file=sys.stderr)
 					elprograma.status = Status.BACKOFF
 					d.command_queue.put_nowait(CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1))
+					return 
 				else:
 					elprograma.clear()
 					elprograma.status = Status.FATAL
 					elprograma.exit_code = exit_code
+					return
 
 			# It was running and exited itself
 			elif elprograma.status == Status.RUNNING:
 				elprograma.clear()
-				elprograma.status == Status.EXITED
+				elprograma.status = Status.EXITED
 				elprograma.exit_code = exit_code
 				if elprograma.should_auto_restart(exit_code):
 					d.command_queue.put_nowait(CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1))
