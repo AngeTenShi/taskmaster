@@ -26,7 +26,7 @@
 				0
 			],
 			"startretries": 5,
-			"starttime": 0,
+			"starttime": 3,
 			"stopsignal": "USR1",
 			"stoptime": 3,
 			"stdout": "/home/a/Workspace/42/TaskMaister/std.out",

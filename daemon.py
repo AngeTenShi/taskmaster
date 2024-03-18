@@ -73,7 +73,9 @@ daemon = Daemon()
 
 class ClientConnection():
 
-	def __init__(self, conn, addr):
+	def __init__(self, daemon, conn, addr):
+		self.daemon = daemon
+
 		self.conn : socket.socket = conn
 		self.conn.setblocking(False)
 		self.conn.settimeout(0.1)
@@ -97,11 +99,9 @@ class ClientConnection():
 			self.close()
 
 	def recv_from_client(self):
-		global daemon
-
 		try:
 			self.recv_buf += self.conn.recv(1024)
-		except:
+		except TimeoutError:
 			pass
 
 		data_size = 0
@@ -121,16 +121,14 @@ class ClientConnection():
 			self.recv_buf = self.recv_buf[data_size:]
 
 			if cmd:
-				daemon.command_queue.put_nowait(cmd)
+				self.daemon.command_queue.put_nowait(cmd)
 
 	def send_to_client(self):
-		global daemon
-
-		while daemon.output_queue.qsize() > 0:
-			data = pickle.dumps(daemon.output_queue.get_nowait())
+		while self.daemon.output_queue.qsize() > 0:
+			data = pickle.dumps(self.daemon.output_queue.get_nowait())
 			size = len(data).to_bytes(4, "little")
 			self.send_buf += size + data
-			daemon.output_queue.task_done()
+			self.daemon.output_queue.task_done()
 
 		if len(self.send_buf):
 			len_sent = self.conn.send(self.send_buf)
@@ -140,6 +138,8 @@ class ClientConnection():
 
 def socket_thread(daemon):
 	s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+
+	# try deleting the socket if it already exists, before creating it
 	try:
 		os.unlink("/tmp/taskmaster.sock")
 	except OSError:
@@ -148,20 +148,23 @@ def socket_thread(daemon):
 	s.listen(1)
 
 	# Main loop, accept only one client, and then process its commands, until it disconnects, then do it again
+	# TODO: Fix: does not detect when connection is closed on client side, probably because of non blocking sockets
 	while True:
-		conn = ClientConnection(*s.accept())
+		conn = ClientConnection(daemon, *s.accept())
 
 		try:
 			while True:
+				#print("before")
 				conn.recv_from_client()
 				conn.send_to_client()
+				#print("after")
 		except KeyboardInterrupt:
 			conn.close()
 			break
-		#except Exception as e:
-		#	print(e)
-		#	conn.close()
-		#	continue
+		except Exception as e:
+			print(e, type(e))
+			conn.close()
+			continue
 
 	s.close()
 	os.unlink("/tmp/taskmaster.sock")
@@ -345,8 +348,8 @@ def handle_sigchld(d: Daemon):
 	"""
 	stopped = []
 
+	#print("SIGCHLD received")
 	# Wait all of processes that stopped
-	print("SIGCHLD received")
 	while True:
 		try:
 			pid, _ = os.waitpid(-1, os.WNOHANG)
@@ -355,7 +358,8 @@ def handle_sigchld(d: Daemon):
 			stopped.append((pid, os.WEXITSTATUS(_)))
 		except:
 			break
-	print(f"Pid : {pid}, exit code : {_}")
+	#print(f"Pid : {pid}, exit code : {_}")
+
 	# Restart handling for all of them
 	for pid, exit_code in stopped:
 		# Find the right program
@@ -365,15 +369,16 @@ def handle_sigchld(d: Daemon):
 				if proc.pid == pid:
 					elprograma = proc
 					break
-		print(f"Program {elprograma.name} exited with code {exit_code}", file=sys.stderr)
-		print(f"Start retries: {elprograma.start_retries} , Statuts : {elprograma.status}", file=sys.stderr)
+
+		#print(f"Program {elprograma.name} exited with code {exit_code}", file=sys.stderr)
+		#print(f"Start retries: {elprograma.start_retries} , Statuts : {elprograma.status}", file=sys.stderr)
 		# Handle what needs to be done next after its stop
 		if elprograma != None:
 			config = elprograma.config
-			# It was tried to be started
-			if elprograma.status == Status.STARTING or exit_code not in config["exitcodes"]:
+
+			# It was tried to be started, did not run for long enough to be considered running
+			if elprograma.status == Status.STARTING:
 				# We should restart it if it did not exceed startretries
-				elprograma.status = Status.STOPPED
 				if elprograma.start_retries < config["startretries"]:
 					print(f"program {elprograma.pid}: {elprograma.status} will restart", elprograma.start_retries, config["startretries"], file=sys.stderr)
 					elprograma.status = Status.BACKOFF
@@ -393,7 +398,7 @@ def handle_sigchld(d: Daemon):
 				if elprograma.should_auto_restart(exit_code):
 					d.command_queue.put_nowait(CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1))
 
-			# We stopped it
+			# It was running and we stopped it
 			elif elprograma.status == Status.STOPPING:
 				elprograma.clear()
 
