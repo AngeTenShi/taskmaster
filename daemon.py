@@ -12,6 +12,7 @@ import pickle
 import socket
 import sys
 import subprocess
+import select
 
 from queue import Queue
 
@@ -46,7 +47,6 @@ class Program:
 	def should_auto_restart(self, exitcode):
 		return self.config["autorestart"] == True or (self.config["autorestart"] == "unexpected" and exitcode not in self.config["exitcodes"])
 
-	# This little hack might have bugs
 	def set_running(self):
 		self.status = Status.RUNNING
 
@@ -64,21 +64,12 @@ class Program:
 
 daemon = Daemon()
 
-####
-"""
-	Processus:
-		STATE 1: Taille (4 octets)
-		STATE 2: Command (taille octets)
-"""
-
 class ClientConnection():
-
-	def __init__(self, daemon, conn, addr):
-		self.daemon = daemon
+	def __init__(self, daemon, client_id, conn, addr):
+		self.daemon : Daemon = daemon
+		self.id = client_id
 
 		self.conn : socket.socket = conn
-		self.conn.setblocking(False)
-		self.conn.settimeout(0.1)
 		self.addr = addr
 
 		self.recv_buf = bytearray()
@@ -87,22 +78,23 @@ class ClientConnection():
 
 		self.send_buf = bytearray()
 
-		print(f"client just joined", file=sys.stderr)
-
-	def close(self):
-		print(f"client just left", file=sys.stderr)
+	def disconnect(self):
 		self.conn.close()
+		self.conn = None
 
 	def __del__(self):
-		print("destructor")
 		if self.conn:
-			self.close()
+			self.disconnect()
 
-	def recv_from_client(self):
-		try:
-			self.recv_buf += self.conn.recv(1024)
-		except TimeoutError:
-			pass
+	def recv(self):
+		if not self.conn:
+			return
+
+		r = self.conn.recv(1024)
+		if not len(r):
+			raise Exception("Connection closed")
+		
+		self.recv_buf += r
 
 		data_size = 0
 		while len(self.recv_buf) >= self.recv_size:
@@ -121,53 +113,128 @@ class ClientConnection():
 			self.recv_buf = self.recv_buf[data_size:]
 
 			if cmd:
-				self.daemon.command_queue.put_nowait(cmd)
+				self.daemon.command_queue.put_nowait((self.id, cmd))
 
-	def send_to_client(self):
-		while self.daemon.output_queue.qsize() > 0:
-			data = pickle.dumps(self.daemon.output_queue.get_nowait())
-			size = len(data).to_bytes(4, "little")
-			self.send_buf += size + data
-			self.daemon.output_queue.task_done()
+	def prepare_send(self, buf):
+		self.send_buf += buf
+
+	def send(self):
+		if not self.conn:
+			return
 
 		if len(self.send_buf):
 			len_sent = self.conn.send(self.send_buf)
+			if not len_sent:
+				raise Exception("Connection closed")
 			self.send_buf = self.send_buf[len_sent:]
 
+class SocketServer():
+	def __init__(self, daemon):
+		self.server_sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+		self.daemon = daemon
 
+		# Try deleting the socket if it already exists, before creating it
+		try:
+			os.unlink("/tmp/taskmaster.sock")
+		except OSError:
+			pass
+
+		# Await connections on the socket
+		self.server_sock.bind("/tmp/taskmaster.sock")
+		self.server_sock.listen(3)
+
+		self.client_id = 0
+		self.clients_by_sock = {}
+
+
+	def __del__(self):
+		self.server_sock.close()
+		os.unlink("/tmp/taskmaster.sock")
+
+	def add_client(self, conn, addr):
+		self.clients_by_sock[conn] = ClientConnection(self.daemon, self.client_id, conn, addr)
+		print(f"New client {self.client_id} connected")
+		self.client_id += 1
+	
+	def remove_client(self, client):
+		del self.clients_by_sock[client.conn]
+		client.disconnect()
+		print(f"Client {client.id} disconnected")
+
+	def get_client_by_id(self, client_id):
+		return next((c for c in self.clients_by_sock.values() if c.id == client_id), None)
+
+	def get_client_by_sock(self, sock):
+		return self.clients_by_sock.get(sock, None)
+
+	def get_socks(self):
+		return [c.conn for c in self.clients_by_sock.values()]
+
+	def binarize_responses(self):
+		while self.daemon.output_queue.qsize() > 0:
+			client_id, response = self.daemon.output_queue.get_nowait()
+
+			c = self.get_client_by_id(client_id)
+			if c:
+				data = pickle.dumps(response)
+				size = len(data).to_bytes(4, "little")
+				c.prepare_send(size + data)
+
+			daemon.output_queue.task_done()
+		
+	def handle_recvs(self, r):
+		for sock in r:
+			if sock == self.server_sock:
+				self.add_client(*self.server_sock.accept())
+
+			else:
+				client = self.get_client_by_sock(sock)
+				if client:
+					try:
+						client.recv()
+					except:
+						self.remove_client(client)
+						return False
+
+		return True
+	
+	def handle_sends(self, w):
+		for sock in w:
+			client = self.get_client_by_sock(sock)
+			if client:
+				try:
+					client.send()
+				except:
+					self.remove_client(client)
+					return False
+
+		return True
+
+
+	
+	def loop(self):
+		while True:
+			self.binarize_responses()
+
+			# Handle all clients and new connections
+			socks = self.get_socks()
+			r, w, __ = select.select([self.server_sock] + socks, socks, [], 1)
+
+			# Handle recvs and sends, if any client disconnected, we need to restart the loop, to not process events of old clients
+			if not self.handle_recvs(r):
+				continue 	
+			if not self.handle_sends(w):
+				continue
 
 def socket_thread(daemon):
-	s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 
-	# try deleting the socket if it already exists, before creating it
 	try:
-		os.unlink("/tmp/taskmaster.sock")
-	except OSError:
-		pass
-	s.bind("/tmp/taskmaster.sock")
-	s.listen(1)
-
-	# Main loop, accept only one client, and then process its commands, until it disconnects, then do it again
-	# TODO: Fix: does not detect when connection is closed on client side, probably because of non blocking sockets
-	while True:
-		conn = ClientConnection(daemon, *s.accept())
-
-		try:
-			while True:
-				#print("before")
-				conn.recv_from_client()
-				conn.send_to_client()
-				#print("after")
-		except KeyboardInterrupt:
-			conn.close()
-			break
-		except Exception as e:
-			print(e, type(e))
-			conn.close()
-			continue
-
-	s.close()
-	os.unlink("/tmp/taskmaster.sock")
+		server = SocketServer(daemon)
+		server.loop()
+	except KeyboardInterrupt:
+		print("SOCKET SERVER INTERRUPTED")
+	except Exception as e:
+		print("SOCKET SERVER ERROR: ", e)
 
 def at_least_one_arg(f):
 	"""
@@ -230,7 +297,7 @@ def start_program(d: Daemon, programs: List[str]):
 		if any(proc.status == Status.STARTING or proc.status == Status.RUNNING for proc in d.programs[to_start]):
 			continue
 		for proc in d.programs[to_start]:
-			d.command_queue.put_nowait(CommandRequest(CommandType.INTERNAL_START_PROC, [proc], -1))
+			d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [proc], -1)))
 		ret[to_start]["starting"] = True
 	return ret
 
@@ -248,7 +315,7 @@ def stop_program(d: Daemon, programs: List[str]):
 		elif all(proc.status == Status.STOPPED for proc in d.programs[to_stop]):
 			continue
 		for proc in d.programs[to_stop]:
-			d.command_queue.put_nowait(CommandRequest(CommandType.INTERNAL_STOP_PROC, [proc], -1))
+			d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_STOP_PROC, [proc], -1)))
 		ret[to_stop]["stopping"] = True
 	return ret
 
@@ -267,7 +334,7 @@ def restart_program(d: Daemon, programs: List[str]):
 			print(f"Program {to_restart} is already starting")
 			continue
 		for proc in d.programs[to_restart]:
-			d.command_queue.put_nowait(CommandRequest(CommandType.INTERNAL_START_PROC, [proc], -1))
+			d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [proc], -1)))
 		ret[to_restart]["restarting"] = True
 	return ret
 
@@ -288,7 +355,7 @@ def reload_config(d: Daemon, config_content: str):
 		for _ in range(program_config["numprocs"]):
 			print(f"Creating program {program_name}")
 			d.programs[program_name].append(Program(program_name, program_config))
-	d.command_queue.put_nowait(CommandRequest(CommandType.START_PROGRAM, [name for name, conf in d.config["programs"].items() if conf["autostart"] == True], -1))
+	d.command_queue.put_nowait((-1, CommandRequest(CommandType.START_PROGRAM, [name for name, conf in d.config["programs"].items() if conf["autostart"] == True], -1)))
 	return "Config reloaded"
 
 @one_arg
@@ -302,6 +369,7 @@ def internal_start_proc(d: Daemon, program: Program):
 	if "umask" in program.config:
 		os.umask(program.config["umask"])
 
+	#TODO: Fix bug where the timer happens anyway, and programs go RUNNING after startsecs, even when in FATAL/EXITED
 	with open(program.config["stdout"], "w") as stdout, open(program.config["stderr"], "w") as stderr:
 		try:
 			process = subprocess.Popen(
@@ -382,7 +450,7 @@ def handle_sigchld(d: Daemon):
 				if elprograma.start_retries < config["startretries"]:
 					print(f"program {elprograma.pid}: {elprograma.status} will restart", elprograma.start_retries, config["startretries"], file=sys.stderr)
 					elprograma.status = Status.BACKOFF
-					d.command_queue.put_nowait(CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1))
+					d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1)))
 					return 
 				else:
 					elprograma.clear()
@@ -396,7 +464,7 @@ def handle_sigchld(d: Daemon):
 				elprograma.status = Status.EXITED
 				elprograma.exit_code = exit_code
 				if elprograma.should_auto_restart(exit_code):
-					d.command_queue.put_nowait(CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1))
+					d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1)))
 
 			# It was running and we stopped it
 			elif elprograma.status == Status.STOPPING:
@@ -416,13 +484,13 @@ def daemon_loop(daemon: Daemon):
 
 	abort = False
 	while not abort:
-		cmd = daemon.command_queue.get()
+		client_id, cmd = daemon.command_queue.get()
 		if cmd.cmd_type not in commands.keys():
 			continue
 		print(f"Received command {cmd.cmd_type.name} with args {cmd.args}")
 		abort, response = commands[cmd.cmd_type](cmd.args)
-		if cmd.id != -1: # Internal ID used for commands issued by the daemon itself
-			daemon.output_queue.put_nowait(CommandResponse(cmd.cmd_type, response, cmd.id))
+		if client_id != -1 and cmd.id != -1: # Internal ID used for commands issued by the daemon itself
+			daemon.output_queue.put_nowait((client_id, CommandResponse(cmd.cmd_type, response, cmd.id)))
 		daemon.command_queue.task_done()
 
 

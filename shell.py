@@ -112,16 +112,16 @@ def shell():
 
 	try:
 		conn = DaemonConnection()
-	except:
+	except Exception as e:
 		print("Could not connect to socket, is the daemon running ?")
 		return 1
 
 	while True:
 		try:
-			type, args = get_text_command()
-			if not type:
+			t, args = get_text_command()
+			if not t:
 				continue
-			result, message = conn.send_command(type, args)
+			result, message = conn.send_command(t, args)
 			if not result:
 				print(f"`{message}` error while sending command, please retry...")
 				continue
