@@ -13,6 +13,7 @@ import socket
 import sys
 import subprocess
 import select
+import logging
 
 from queue import Queue
 
@@ -32,7 +33,7 @@ class Daemon:
 		self.output_queue = Queue(maxsize=30)
 		self.config = None
 		self.programs : Dict[str, List[Program]] = {}
-
+		self.logger = None
 class Program:
 	def __init__(self, name : str, config):
 		self.name = name
@@ -48,7 +49,8 @@ class Program:
 		return self.config["autorestart"] == True or (self.config["autorestart"] == "unexpected" and exitcode not in self.config["exitcodes"])
 
 	def set_running(self):
-		self.status = Status.RUNNING
+		if self.status == Status.STARTING:
+			self.status = Status.RUNNING
 
 	def clear(self):
 		self.pid = None
@@ -63,6 +65,15 @@ class Program:
 		self.start_timer = None
 
 daemon = Daemon()
+logger = logging.getLogger('my_daemon')
+logger.setLevel(logging.INFO)
+file_handler = logging.FileHandler('daemon.log')
+file_handler.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
+logger.info('Daemon started')
+daemon.logger = logger
 
 class ClientConnection():
 	def __init__(self, daemon, client_id, conn, addr):
@@ -153,13 +164,11 @@ class SocketServer():
 
 	def add_client(self, conn, addr):
 		self.clients_by_sock[conn] = ClientConnection(self.daemon, self.client_id, conn, addr)
-		print(f"New client {self.client_id} connected")
 		self.client_id += 1
 	
 	def remove_client(self, client):
 		del self.clients_by_sock[client.conn]
 		client.disconnect()
-		print(f"Client {client.id} disconnected")
 
 	def get_client_by_id(self, client_id):
 		return next((c for c in self.clients_by_sock.values() if c.id == client_id), None)
@@ -232,9 +241,9 @@ def socket_thread(daemon):
 		server = SocketServer(daemon)
 		server.loop()
 	except KeyboardInterrupt:
-		print("SOCKET SERVER INTERRUPTED")
+		daemon.logger.info("SOCKET SERVER INTERRUPTED")
 	except Exception as e:
-		print("SOCKET SERVER ERROR: ", e)
+		daemon.logger.info("SOCKET SERVER ERROR: ", e)
 
 def at_least_one_arg(f):
 	"""
@@ -325,15 +334,18 @@ def restart_program(d: Daemon, programs: List[str]):
 	Restarts a program
 	"""
 	ret = {}
+	d.logger.info(programs)
 	for to_restart in programs:
 		ret[to_restart] = {"restarting": False}
 		if to_restart not in d.programs:
-			print(f"Program {to_restart} not found")
+			d.logger.info(f"Program {to_restart} not found")
 			continue
 		if any(proc.status == Status.STARTING for proc in d.programs[to_restart]):
-			print(f"Program {to_restart} is already starting")
+			d.logger.info(f"Program {to_restart} is already starting")
 			continue
+		d.logger.info(f"Program {to_restart} is restarting and programs are {d.programs}")
 		for proc in d.programs[to_restart]:
+			d.logger.info(f"Restarting program {to_restart}")
 			d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [proc], -1)))
 		ret[to_restart]["restarting"] = True
 	return ret
@@ -345,15 +357,14 @@ def reload_config(d: Daemon, config_content: str):
 	Reloads the configuration
 	"""
 	# One already running, we need to stop everything first
-	# TODO: Figure out how to wait for the stop before restarting
 	if d.config != None:
-		print("Reloading config and stopping everything first")
+		d.logger.info("Reloading config and stopping everything first")
 		stop_program(list(d.config["programs"].keys()))
 	d.config = json.loads(config_content[0])
 	d.programs = defaultdict(list)
 	for program_name, program_config in d.config["programs"].items():
 		for _ in range(program_config["numprocs"]):
-			print(f"Creating program {program_name}")
+			d.logger.info(f"Creating program {program_name}")
 			d.programs[program_name].append(Program(program_name, program_config))
 	d.command_queue.put_nowait((-1, CommandRequest(CommandType.START_PROGRAM, [name for name, conf in d.config["programs"].items() if conf["autostart"] == True], -1)))
 	return "Config reloaded"
@@ -363,37 +374,43 @@ def internal_start_proc(d: Daemon, program: Program):
 	"""
 	Start a program "proc"
 	"""
-	if program.status != Status.STOPPED and program.status != Status.BACKOFF:
-		os.kill(program.pid, signal.SIGKILL)
+	if program is None:
+		return
+	if program.status is not None:
+		if program.status != Status.BACKOFF and program.status != Status.STOPPED and program.status != Status.EXITED and program.status != Status.FATAL:
+			os.kill(program.pid, signal.SIGKILL)
 	old_umask = os.umask(0)
 	if "umask" in program.config:
 		os.umask(program.config["umask"])
 
 	#TODO: Fix bug where the timer happens anyway, and programs go RUNNING after startsecs, even when in FATAL/EXITED
-	with open(program.config["stdout"], "w") as stdout, open(program.config["stderr"], "w") as stderr:
-		try:
-			process = subprocess.Popen(
-				program.config["cmd"].split(" "),
-				cwd = program.config["workingdir"],
-				stdin = subprocess.DEVNULL,
-				stdout=stdout,
-				stderr=stderr,
-				env = os.environ.copy() | (program.config["env"] if "env" in program.config else {}))
+	try :
+		with open(program.config["stdout"], "w") as stdout, open(program.config["stderr"], "w") as stderr:
+			try:
+				process = subprocess.Popen(
+					program.config["cmd"].split(" "),
+					cwd = program.config["workingdir"],
+					stdin = subprocess.DEVNULL,
+					stdout=stdout,
+					stderr=stderr,
+					env = os.environ.copy() | (program.config["env"] if "env" in program.config else {}))
 
-			program.pid = process.pid
-			program.status = Status.STARTING
-			program.start_retries += 1
-			print(f"program {program.pid}: {program.status} will start", program.start_retries, program.config["startretries"], file=sys.stderr)
-			if program.config["starttime"] != 0:
-				program.start_timer = threading.Timer(program.config["starttime"], lambda: program.set_running())
-				program.start_timer.start()
-			else:
-				program.set_running()
-		except Exception as e:
-			print("failed to even subprocess.Popen(): ", e)
-			pass
-
-
+				program.pid = process.pid
+				program.status = Status.STARTING
+				program.start_retries += 1
+				d.logger.info(f"program {program.pid}: {program.status} will start")
+				if program.config["starttime"] != 0:
+					program.start_timer = threading.Timer(program.config["starttime"], lambda: program.set_running())
+					program.start_timer.start()
+				else:
+					program.set_running()
+			except Exception as e:
+				program.status = Status.FATAL
+				d.logger.info("failed to even subprocess.Popen()")
+				pass
+	except Exception as e:
+		program.status = Status.FATAL
+		d.logger.info("failed to open stdout/stderr")
 	os.umask(old_umask)
 
 
@@ -416,7 +433,6 @@ def handle_sigchld(d: Daemon):
 	"""
 	stopped = []
 
-	#print("SIGCHLD received")
 	# Wait all of processes that stopped
 	while True:
 		try:
@@ -426,7 +442,6 @@ def handle_sigchld(d: Daemon):
 			stopped.append((pid, os.WEXITSTATUS(_)))
 		except:
 			break
-	#print(f"Pid : {pid}, exit code : {_}")
 
 	# Restart handling for all of them
 	for pid, exit_code in stopped:
@@ -437,9 +452,6 @@ def handle_sigchld(d: Daemon):
 				if proc.pid == pid:
 					elprograma = proc
 					break
-
-		#print(f"Program {elprograma.name} exited with code {exit_code}", file=sys.stderr)
-		#print(f"Start retries: {elprograma.start_retries} , Statuts : {elprograma.status}", file=sys.stderr)
 		# Handle what needs to be done next after its stop
 		if elprograma != None:
 			config = elprograma.config
@@ -448,7 +460,7 @@ def handle_sigchld(d: Daemon):
 			if elprograma.status == Status.STARTING:
 				# We should restart it if it did not exceed startretries
 				if elprograma.start_retries < config["startretries"]:
-					print(f"program {elprograma.pid}: {elprograma.status} will restart", elprograma.start_retries, config["startretries"], file=sys.stderr)
+					d.logger.info(f"program {elprograma.pid}: {elprograma.status} will restart")
 					elprograma.status = Status.BACKOFF
 					d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1)))
 					return 
@@ -481,13 +493,11 @@ def daemon_loop(daemon: Daemon):
 		CommandType.STATUS: status,
 		CommandType.ABORT: lambda: (True, "")
 	}
-
 	abort = False
 	while not abort:
 		client_id, cmd = daemon.command_queue.get()
 		if cmd.cmd_type not in commands.keys():
 			continue
-		print(f"Received command {cmd.cmd_type.name} with args {cmd.args}")
 		abort, response = commands[cmd.cmd_type](cmd.args)
 		if client_id != -1 and cmd.id != -1: # Internal ID used for commands issued by the daemon itself
 			daemon.output_queue.put_nowait((client_id, CommandResponse(cmd.cmd_type, response, cmd.id)))
@@ -513,41 +523,26 @@ def daemon_entry():
 
 	socket_th.join()
 
-def check_and_print_if_already_running():
+def check_and_logger_debug_if_already_running():
 	"""
 	Checks if the daemon is already running
 	"""
 	try:
-		with open("/tmp/taskmaster.pid", "r") as f:
-			pid = int(f.read())
-			print(f"Taskmaster daemon already running (pid={pid}), exiting...", file=sys.stderr)
+		if (os.path.exists("/tmp/taskmaster.pid")):
+			logger.info(f"Taskmaster daemon already running exiting...")
 			return True
 	except:
 		return False
 
 from daemonize import Daemonize
-import logging
 
 if __name__ == "__main__":
-	#th = Thread(target=daemon_entry, daemon=True)
-	#th.start()
-	#th.join()
-	"""
-	logger= logging.getLogger(__name__)
-	logger.setLevel(logging.DEBUG)
-	logger.propagate = False
-	fh = logging.FileHandler('/tmp/daemon.log')
-	fh.setLevel(logging.DEBUG)
-	logger.addHandler(fh)
-	daemon = Daemonize(app="bigniggaballs",action=daemon_entry, pid='/tmp/mydaemon.pid')
-	daemon.start()
-	"""
-	# Daemonize(app="supervisord", action=daemon_entry, pid='/tmp/daemon.pid').start()
-	if not check_and_print_if_already_running():
-		try:
-			daemon_entry()
+	if not check_and_logger_debug_if_already_running():
+		try :
+			d = Daemonize(app="supervisord", action=daemon_entry, pid="/tmp/taskmaster.pid", foreground=True)
+			d.start()
 		except Exception as e:
-			print(e)
+			logger.info("Daemon entry error: ", e)
 			pass
-		finally:
-			os.unlink("/tmp/taskmaster.pid")
+		finally : 
+			d.exit()
