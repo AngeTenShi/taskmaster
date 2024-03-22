@@ -49,8 +49,7 @@ class Program:
 		return self.config["autorestart"] == True or (self.config["autorestart"] == "unexpected" and exitcode not in self.config["exitcodes"])
 
 	def set_running(self):
-		if self.status == Status.STARTING:
-			self.status = Status.RUNNING
+		self.status = Status.RUNNING
 
 	def clear(self):
 		self.pid = None
@@ -442,7 +441,7 @@ def handle_sigchld(d: Daemon):
 			stopped.append((pid, os.WEXITSTATUS(_)))
 		except:
 			break
-
+	
 	# Restart handling for all of them
 	for pid, exit_code in stopped:
 		# Find the right program
@@ -454,21 +453,22 @@ def handle_sigchld(d: Daemon):
 					break
 		# Handle what needs to be done next after its stop
 		if elprograma != None:
+			#print(elprograma)
 			config = elprograma.config
 
 			# It was tried to be started, did not run for long enough to be considered running
 			if elprograma.status == Status.STARTING:
+				elprograma.start_timer.cancel()
+
 				# We should restart it if it did not exceed startretries
 				if elprograma.start_retries < config["startretries"]:
-					d.logger.info(f"program {elprograma.pid}: {elprograma.status} will restart")
+					#d.logger.info(f"program {elprograma.pid}: {elprograma.status} will restart")
 					elprograma.status = Status.BACKOFF
 					d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1)))
-					return 
 				else:
 					elprograma.clear()
 					elprograma.status = Status.FATAL
 					elprograma.exit_code = exit_code
-					return
 
 			# It was running and exited itself
 			elif elprograma.status == Status.RUNNING:
@@ -539,10 +539,12 @@ from daemonize import Daemonize
 if __name__ == "__main__":
 	if not check_and_logger_debug_if_already_running():
 		try :
-			d = Daemonize(app="supervisord", action=daemon_entry, pid="/tmp/taskmaster.pid", foreground=True)
-			d.start()
+			#d = Daemonize(app="supervisord", action=daemon_entry, pid="/tmp/taskmaster.pid", foreground=True)
+			#d.start()
+			daemon_entry()
 		except Exception as e:
 			logger.info("Daemon entry error: ", e)
 			pass
 		finally : 
-			d.exit()
+			os.unlink("/tmp/taskmaster.pid")
+			#d.exit()
