@@ -14,8 +14,9 @@ import sys
 import subprocess
 import select
 import logging
+import time 
 
-from queue import Queue
+from queue import Queue, PriorityQueue
 
 class Status(Enum):
 	STOPPED = 1
@@ -235,7 +236,6 @@ class SocketServer():
 				continue
 
 def socket_thread(daemon):
-
 	try:
 		server = SocketServer(daemon)
 		server.loop()
@@ -243,6 +243,47 @@ def socket_thread(daemon):
 		daemon.logger.info("SOCKET SERVER INTERRUPTED")
 	except Exception as e:
 		daemon.logger.info("SOCKET SERVER ERROR: ", e)
+
+
+### TIMED EVENTS ##
+evs = PriorityQueue()	
+
+class ScheduledEvent:
+	def __init__(self, ts, func):
+		self.ts = ts
+		self.func = func
+		self.defused = False
+
+	def __lt__(self, other):
+		return self.ts < other.ts
+
+	def timestamp(self):
+		return self.ts
+
+	def cancel(self):
+		self.defused = True
+
+	def exec(self):
+		if not self.defused:
+			print("scheduled event was executed", self.ts, time.time())
+			self.func()
+
+def schedule_event(s, func):
+	e = ScheduledEvent(time.time() + s, func)
+	evs.put(e)
+	return e
+
+def scheduler_thread():
+	# Wait for every event to happen and perform its logic, off by miliseconds errors are OK here.
+	while True:
+		event = evs.get()
+
+		if time.time() < event.timestamp():
+			time.sleep(event.timestamp() - time.time())
+		event.exec()
+
+		evs.task_done()
+
 
 def at_least_one_arg(f):
 	"""
@@ -382,8 +423,7 @@ def internal_start_proc(d: Daemon, program: Program):
 	if "umask" in program.config:
 		os.umask(program.config["umask"])
 
-	#TODO: Fix bug where the timer happens anyway, and programs go RUNNING after startsecs, even when in FATAL/EXITED
-	try :
+	try:
 		with open(program.config["stdout"], "w") as stdout, open(program.config["stderr"], "w") as stderr:
 			try:
 				process = subprocess.Popen(
@@ -397,19 +437,18 @@ def internal_start_proc(d: Daemon, program: Program):
 				program.pid = process.pid
 				program.status = Status.STARTING
 				program.start_retries += 1
-				d.logger.info(f"program {program.pid}: {program.status} will start")
+				print(f"program {program.pid}: {program.status} ({program.start_retries}th retry) will start")
+
 				if program.config["starttime"] != 0:
-					program.start_timer = threading.Timer(program.config["starttime"], lambda: program.set_running())
-					program.start_timer.start()
+					program.start_timer = schedule_event(program.config["starttime"], lambda: program.set_running())
 				else:
 					program.set_running()
 			except Exception as e:
 				program.status = Status.FATAL
-				d.logger.info("failed to even subprocess.Popen()")
-				pass
+				print("failed to even subprocess.Popen()")
 	except Exception as e:
 		program.status = Status.FATAL
-		d.logger.info("failed to open stdout/stderr")
+		print("failed to open stdout/stderr")
 	os.umask(old_umask)
 
 
@@ -422,8 +461,7 @@ def internal_stop_proc(d: Daemon, program: Program):
 
 	os.kill(program.pid, signal)
 	program.status = Status.STOPPING
-	program.exit_timer = threading.Timer(program.config["stoptime"], lambda: os.kill(program.pid, signal.SIGKILL))
-	program.exit_timer.start()
+	program.exit_timer = schedule_event(program.config["stoptime"], lambda: os.kill(program.pid, signal.SIGKILL))
 
 def handle_sigchld(d: Daemon):
 	"""
@@ -464,7 +502,7 @@ def handle_sigchld(d: Daemon):
 				if elprograma.start_retries < config["startretries"]:
 					#d.logger.info(f"program {elprograma.pid}: {elprograma.status} will restart")
 					elprograma.status = Status.BACKOFF
-					d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1)))
+					schedule_event(elprograma.start_retries, lambda: d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1))))
 				else:
 					elprograma.clear()
 					elprograma.status = Status.FATAL
@@ -515,13 +553,20 @@ def daemon_entry():
 
 	# Initialize signals
 	signal.signal(signal.SIGCHLD, lambda s,f: handle_sigchld(daemon))
+
+	# Start socket thread
 	socket_th = threading.Thread(target=socket_thread, args=(daemon,))
 	socket_th.start()
+
+	# Start scheduler
+	scheduler = threading.Thread(target=scheduler_thread)
+	scheduler.start()
 
 	# Process commands
 	daemon_loop(daemon)
 
 	socket_th.join()
+	scheduler.join()
 
 def check_and_logger_debug_if_already_running():
 	"""
