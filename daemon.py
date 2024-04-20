@@ -47,7 +47,20 @@ class Program:
 		self.status = Status.STOPPED
 		self.exit_timer = None
 		self.start_timer = None
+		self.process = None
+		self.stack = None
 
+	def copy(self):
+		p = Program(self.name, self.config)
+		p.pid = self.pid
+		p.exit_code = self.exit_code
+		p.start_retries = self.start_retries
+		p.status = self.status
+		p.exit_timer = self.exit_timer
+		p.start_timer = self.start_timer
+		p.process = self.process
+		p.stack = self.stack
+		return p
 	def should_auto_restart(self, exitcode):
 		return self.config["autorestart"] == True or (self.config["autorestart"] == "unexpected" and exitcode not in self.config["exitcodes"])
 
@@ -56,6 +69,9 @@ class Program:
 
 	def set_pid(self, pid):
 		self.pid = pid
+
+	def set_process(self, process):
+		self.process = process
 
 	def clear(self):
 		self.pid = None
@@ -67,7 +83,7 @@ class Program:
 		self.exit_timer = None
 		if self.start_timer:
 			self.start_timer.cancel()
-		self.start_timer = None
+		# self.start_timer = None
 
 daemon = Daemon()
 logger = logging.getLogger('my_daemon')
@@ -270,13 +286,15 @@ class ScheduledEvent:
 
 	def exec(self):
 		if not self.defused:
-			print("scheduled event was executed", self.ts, time.time())
 			self.func()
 
 has_new_event = threading.Event()
 new_event = None
 
 def schedule_event(s, func):
+	t = threading.Timer(s, func)
+	t.start()
+	return t
 	global new_event
 	global has_new_event
 
@@ -362,7 +380,9 @@ def block_signals(siglist):
 	def decorator(f):
 		def wrapper(*args, **kwargs):
 			signal.pthread_sigmask(signal.SIG_BLOCK, siglist)
+			signal.signal(signal.SIGCHLD, signal.SIG_IGN)
 			res = f(*args, **kwargs)
+			signal.signal(signal.SIGCHLD, lambda s,f: handle_sigchld(daemon))
 			signal.pthread_sigmask(signal.SIG_UNBLOCK, siglist)
 			return res
 		return wrapper
@@ -461,7 +481,8 @@ def internal_start_proc(d: Daemon, program: Program):
 	"""
 	Start a program "proc"
 	"""
-	os.write(1, bytes(f"in internal start proc\n", "utf-8"))
+	os.write(1, bytes(f"in internal start proc BEGIN\n", "utf-8"))
+	# os.write(1, bytes(f"in internal start proc {program.stack}\n", "utf-8"))
 	if program is None:
 		return
 	if program.status is not None:
@@ -490,7 +511,7 @@ def internal_start_proc(d: Daemon, program: Program):
 				program.pid = process.pid
 				program.status = Status.STARTING
 				program.start_retries += 1
-				os.write(1, bytes(f"program {program.pid}: {program.status} ({program.start_retries}th retry) will start ({id(program)})\n", "utf-8"))
+				program.set_process(process)
 
 				if program.config["starttime"] != 0:
 					program.start_timer = schedule_event(program.config["starttime"], lambda: program.set_running())
@@ -505,6 +526,7 @@ def internal_start_proc(d: Daemon, program: Program):
 		print("failed to open stdout/stderr")
 
 	os.umask(old_umask)
+	os.write(1, bytes(f"in internal start proc END\n", "utf-8"))
 
 
 @one_arg
@@ -523,65 +545,56 @@ def handle_sigchld(d: Daemon):
 	Handles the stop a process managed by the daemon, task to restart is scheduled to make sure this function executes as fast as possible.
 	Maybe make it smaller if it keeps missing SIGCHLD?
 	"""
+	os.write(1, bytes("SIGCHLD\n", "utf-8"))
 	stopped = []
 
 	# Wait all of processes that stopped
 	count = 0
-	while True:
-		try:
-			pid, exitcode= os.waitpid(-1, os.WNOHANG)
-			if (pid, exitcode) == (0, 0) or os.WIFSIGNALED(exitcode):
-				break
-			stopped.append((pid, os.WEXITSTATUS(exitcode)))
-			count += 1
-		except:
-			break
 	
-	# Restart handling for all of them
-	for pid, exit_code in stopped:
-		os.write(1, bytes(f"stopped {count} {pid} {exitcode}: ", "utf-8"))
-		# Find the right program
-		elprograma : Program = None
-		for program_list in d.programs.values():
-			for proc in program_list:
-				if proc.pid == pid:
-					elprograma = proc
-					break
+	for program in d.programs.values():
+		for proc in program:
+			proc.process.poll()
+			if proc.process.returncode is not None:
+				elprograma = proc
+				exit_code = elprograma.process.returncode
+				if elprograma != None:
+					# os.write(1, bytes(f"found in programs ({id(elprograma)})\n", "utf-8"))
+					elprograma.start_timer.cancel()
+					config = elprograma.config
+					# It was tried to be started, did not run for long enough to be considered running
+					if elprograma.status == Status.STARTING:
+						# We should restart it if it did not exceed startretries
+						if elprograma.start_retries < config["startretries"]:
+							#d.logger.info(f"program {elprograma.pid}: {elprograma.status} will restart")
+							elprograma.status = Status.BACKOFF
+							os.write(1, bytes(f"program {id(elprograma)} was {elprograma.status}\n", "utf-8"))
+							elprograma.stack = "".join(traceback.format_stack())
+							new_program = elprograma.copy()
+							d.programs[elprograma.name].append(new_program)
+							time.sleep(0.2)
+							schedule_event(elprograma.start_retries, lambda: d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [new_program], -1))))
+							d.programs[elprograma.name].remove(elprograma)
+							elprograma.clear()
+						else:
+							elprograma.clear()
+							elprograma.status = Status.FATAL
+							elprograma.exit_code = exit_code
 
-		# Handle what needs to be done next after its stop
-		if elprograma != None:
-			os.write(1, bytes(f"found in programs ({id(elprograma)})\n", "utf-8"))
-			elprograma.start_timer.cancel()
-			#print(elprograma)
-			config = elprograma.config
+					# It was running and exited itself
+					elif elprograma.status == Status.RUNNING:
+						elprograma.clear()
+						elprograma.status = Status.EXITED
+						elprograma.exit_code = exit_code
+						if elprograma.should_auto_restart(exit_code):
+							os.write(1, bytes(f"program {elprograma.pid} was {elprograma.status}\n", "utf-8"))
+							elprograma.stack = "".join(traceback.format_stack())
+							d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1)))
 
-			# It was tried to be started, did not run for long enough to be considered running
-			if elprograma.status == Status.STARTING:
-				# We should restart it if it did not exceed startretries
-				os.write(1, bytes(f"startretries: {config["startretries"]}\n", "utf-8"))
-				if elprograma.start_retries < config["startretries"]:
-					#d.logger.info(f"program {elprograma.pid}: {elprograma.status} will restart")
-					elprograma.status = Status.BACKOFF
-					schedule_event(elprograma.start_retries, lambda: d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1))))
+					# It was running and we stopped it
+					elif elprograma.status == Status.STOPPING:
+						elprograma.clear()
 				else:
-					elprograma.clear()
-					elprograma.status = Status.FATAL
-					elprograma.exit_code = exit_code
-
-			# It was running and exited itself
-			elif elprograma.status == Status.RUNNING:
-				elprograma.clear()
-				elprograma.status = Status.EXITED
-				elprograma.exit_code = exit_code
-				if elprograma.should_auto_restart(exit_code):
-					os.write(1, bytes(f"program {elprograma.pid} was {elprograma.status}\n", "utf-8"))
-					d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1)))
-
-			# It was running and we stopped it
-			elif elprograma.status == Status.STOPPING:
-				elprograma.clear()
-		else:
-			os.write(1, bytes(f"was not found in programs\n", "utf-8"))
+					os.write(1, bytes(f"was not found in programs\n", "utf-8"))
 
 def daemon_loop(daemon: Daemon):
 	commands = {

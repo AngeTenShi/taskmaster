@@ -1,36 +1,20 @@
 {
 	"programs": {
-		"ls": {
-			"cmd": "/bin/ls -la",
-			"numprocs": 3,
-			"workingdir": "/tmp",
-			"autostart": false,
-			"autorestart": false,
-			"exitcodes": [
-				0
-			],
-			"startretries": 5,
-			"starttime": 0,
-			"stopsignal": "USR1",
-			"stoptime": 10,
-			"stdout": "/home/a/Workspace/42/TaskMaister/std.out",
-			"stderr": "/home/a/Workspace/42/TaskMaister/std.err"
-		},
 		"idle": {
 			"cmd": "/usr/bin/python3 time.py",
-			"numprocs": 8,
+			"numprocs": 7,
 			"workingdir": "/tmp",
 			"autostart": true,
 			"autorestart": true,
 			"exitcodes": [
 				0
 			],
-			"startretries": 5,
+			"startretries": 2,
 			"starttime": 3,
 			"stopsignal": "USR1",
 			"stoptime": 3,
-			"stdout": "/home/a/Workspace/42/TaskMaister/std.out",
-			"stderr": "/home/a/Workspace/42/TaskMaister/std.err"
+			"stdout": "/tmp/idle.log",
+			"stderr": "/tmp/idle.err"
 		}
 	}
 }
