@@ -1,0 +1,1792 @@
+2024-03-20 16:39:27,673 - my_daemon - INFO - Daemon started
+2024-03-20 16:39:27,675 - my_daemon - INFO - Taskmaster daemon already running exiting...
+2024-03-20 16:40:30,109 - my_daemon - INFO - Daemon started
+2024-03-20 16:41:32,434 - my_daemon - INFO - Creating program ls
+2024-03-20 16:41:32,434 - my_daemon - INFO - Creating program ls
+2024-03-20 16:41:32,434 - my_daemon - INFO - Creating program ls
+2024-03-20 16:41:32,434 - my_daemon - INFO - Creating program idle
+2024-03-20 16:41:32,434 - my_daemon - INFO - Creating program idle
+2024-03-20 16:41:32,434 - my_daemon - INFO - Creating program idle
+2024-03-20 16:41:32,434 - my_daemon - INFO - Creating program idle
+2024-03-20 16:41:32,434 - my_daemon - INFO - Creating program idle
+2024-03-20 16:41:32,434 - my_daemon - INFO - Creating program idle
+2024-03-20 16:41:32,434 - my_daemon - INFO - Creating program idle
+2024-03-20 16:41:32,434 - my_daemon - INFO - Creating program idle
+2024-03-20 16:41:32,435 - my_daemon - INFO - program 284183: Status.STARTING will start
+2024-03-20 16:41:32,436 - my_daemon - INFO - program 284185: Status.STARTING will start
+2024-03-20 16:41:32,436 - my_daemon - INFO - program 284187: Status.STARTING will start
+2024-03-20 16:41:32,437 - my_daemon - INFO - program 284189: Status.STARTING will start
+2024-03-20 16:41:32,439 - my_daemon - INFO - program 284191: Status.STARTING will start
+2024-03-20 16:41:32,439 - my_daemon - INFO - program 284193: Status.STARTING will start
+2024-03-20 16:41:32,461 - my_daemon - INFO - failed to even subprocess.Popen()
+2024-03-20 16:41:32,462 - my_daemon - INFO - program 284196: Status.STARTING will start
+2024-03-20 16:47:43,799 - my_daemon - INFO - Daemon started
+2024-03-20 16:47:51,436 - my_daemon - INFO - Creating program ls
+2024-03-20 16:47:51,436 - my_daemon - INFO - Creating program ls
+2024-03-20 16:47:51,436 - my_daemon - INFO - Creating program ls
+2024-03-20 16:47:51,436 - my_daemon - INFO - Creating program idle
+2024-03-20 16:47:51,436 - my_daemon - INFO - Creating program idle
+2024-03-20 16:47:51,436 - my_daemon - INFO - Creating program idle
+2024-03-20 16:47:51,436 - my_daemon - INFO - Creating program idle
+2024-03-20 16:47:51,436 - my_daemon - INFO - Creating program idle
+2024-03-20 16:47:51,436 - my_daemon - INFO - Creating program idle
+2024-03-20 16:47:51,436 - my_daemon - INFO - Creating program idle
+2024-03-20 16:47:51,436 - my_daemon - INFO - Creating program idle
+2024-03-20 16:47:51,437 - my_daemon - INFO - program 288679: Status.STARTING will start
+2024-03-20 16:47:51,438 - my_daemon - INFO - program 288681: Status.STARTING will start
+2024-03-20 16:47:51,439 - my_daemon - INFO - program 288683: Status.STARTING will start
+2024-03-20 16:47:51,440 - my_daemon - INFO - program 288685: Status.STARTING will start
+2024-03-20 16:47:51,442 - my_daemon - INFO - program 288687: Status.STARTING will start
+2024-03-20 16:47:51,444 - my_daemon - INFO - program 288689: Status.STARTING will start
+2024-03-20 16:47:51,445 - my_daemon - INFO - failed to even subprocess.Popen()
+2024-03-20 16:47:51,446 - my_daemon - INFO - failed to open stdout/stderr
+2024-03-20 16:47:51,449 - my_daemon - INFO - program 288691: Status.STARTING will start
+2024-03-20 16:48:03,719 - my_daemon - INFO - Daemon started
+2024-03-20 16:48:08,800 - my_daemon - INFO - Creating program ls
+2024-03-20 16:48:08,800 - my_daemon - INFO - Creating program ls
+2024-03-20 16:48:08,800 - my_daemon - INFO - Creating program ls
+2024-03-20 16:48:08,800 - my_daemon - INFO - Creating program idle
+2024-03-20 16:48:08,800 - my_daemon - INFO - Creating program idle
+2024-03-20 16:48:08,800 - my_daemon - INFO - Creating program idle
+2024-03-20 16:48:08,800 - my_daemon - INFO - Creating program idle
+2024-03-20 16:48:08,800 - my_daemon - INFO - Creating program idle
+2024-03-20 16:48:08,800 - my_daemon - INFO - Creating program idle
+2024-03-20 16:48:08,800 - my_daemon - INFO - Creating program idle
+2024-03-20 16:48:08,800 - my_daemon - INFO - Creating program idle
+2024-03-20 16:48:08,801 - my_daemon - INFO - program 288801: Status.STARTING will start
+2024-03-20 16:48:08,802 - my_daemon - INFO - program 288803: Status.STARTING will start
+2024-03-20 16:48:08,802 - my_daemon - INFO - program 288805: Status.STARTING will start
+2024-03-20 16:48:08,803 - my_daemon - INFO - program 288807: Status.STARTING will start
+2024-03-20 16:48:08,803 - my_daemon - INFO - program 288809: Status.STARTING will start
+2024-03-20 16:48:08,804 - my_daemon - INFO - program 288811: Status.STARTING will start
+2024-03-20 16:48:08,804 - my_daemon - INFO - program 288813: Status.STARTING will start
+2024-03-20 16:48:08,805 - my_daemon - INFO - program 288815: Status.STARTING will start
+2024-03-20 16:48:08,811 - my_daemon - INFO - program 288803: Status.STARTING will restart
+2024-03-20 16:48:08,812 - my_daemon - INFO - program 288811: Status.STARTING will restart
+2024-03-20 16:48:08,815 - my_daemon - INFO - program 288801: Status.STARTING will restart
+2024-03-20 16:48:08,815 - my_daemon - INFO - program 288809: Status.STARTING will restart
+2024-03-20 16:48:08,816 - my_daemon - INFO - program 288817: Status.STARTING will start
+2024-03-20 16:48:08,816 - my_daemon - INFO - program 288819: Status.STARTING will start
+2024-03-20 16:48:08,816 - my_daemon - INFO - program 288821: Status.STARTING will start
+2024-03-20 16:48:08,817 - my_daemon - INFO - program 288823: Status.STARTING will start
+2024-03-20 16:48:08,830 - my_daemon - INFO - program 288817: Status.STARTING will restart
+2024-03-20 16:48:08,831 - my_daemon - INFO - program 288825: Status.STARTING will start
+2024-03-20 16:48:08,836 - my_daemon - INFO - program 288821: Status.STARTING will restart
+2024-03-20 16:48:08,837 - my_daemon - INFO - program 288819: Status.STARTING will restart
+2024-03-20 16:48:08,837 - my_daemon - INFO - program 288823: Status.STARTING will restart
+2024-03-20 16:48:08,838 - my_daemon - INFO - program 288827: Status.STARTING will start
+2024-03-20 16:48:08,839 - my_daemon - INFO - program 288829: Status.STARTING will start
+2024-03-20 16:48:08,840 - my_daemon - INFO - program 288831: Status.STARTING will start
+2024-03-20 16:48:08,852 - my_daemon - INFO - program 288825: Status.STARTING will restart
+2024-03-20 16:48:08,853 - my_daemon - INFO - program 288833: Status.STARTING will start
+2024-03-20 16:48:08,858 - my_daemon - INFO - program 288827: Status.STARTING will restart
+2024-03-20 16:48:08,859 - my_daemon - INFO - program 288835: Status.STARTING will start
+2024-03-20 16:48:08,860 - my_daemon - INFO - program 288829: Status.STARTING will restart
+2024-03-20 16:48:08,861 - my_daemon - INFO - program 288831: Status.STARTING will restart
+2024-03-20 16:48:08,861 - my_daemon - INFO - program 288837: Status.STARTING will start
+2024-03-20 16:48:08,862 - my_daemon - INFO - program 288839: Status.STARTING will start
+2024-03-20 16:48:08,873 - my_daemon - INFO - program 288833: Status.STARTING will restart
+2024-03-20 16:48:08,875 - my_daemon - INFO - program 288841: Status.STARTING will start
+2024-03-20 16:48:08,880 - my_daemon - INFO - program 288835: Status.STARTING will restart
+2024-03-20 16:48:08,881 - my_daemon - INFO - program 288837: Status.STARTING will restart
+2024-03-20 16:48:08,882 - my_daemon - INFO - program 288839: Status.STARTING will restart
+2024-03-20 16:48:08,883 - my_daemon - INFO - program 288843: Status.STARTING will start
+2024-03-20 16:48:08,884 - my_daemon - INFO - program 288845: Status.STARTING will start
+2024-03-20 16:48:08,886 - my_daemon - INFO - program 288847: Status.STARTING will start
+2024-03-20 16:49:54,923 - my_daemon - INFO - Daemon started
+2024-03-20 16:49:58,625 - my_daemon - INFO - Creating program ls
+2024-03-20 16:49:58,625 - my_daemon - INFO - Creating program ls
+2024-03-20 16:49:58,625 - my_daemon - INFO - Creating program ls
+2024-03-20 16:49:58,625 - my_daemon - INFO - Creating program idle
+2024-03-20 16:49:58,625 - my_daemon - INFO - Creating program idle
+2024-03-20 16:49:58,625 - my_daemon - INFO - Creating program idle
+2024-03-20 16:49:58,625 - my_daemon - INFO - Creating program idle
+2024-03-20 16:49:58,625 - my_daemon - INFO - Creating program idle
+2024-03-20 16:49:58,625 - my_daemon - INFO - Creating program idle
+2024-03-20 16:49:58,625 - my_daemon - INFO - Creating program idle
+2024-03-20 16:49:58,625 - my_daemon - INFO - Creating program idle
+2024-03-20 16:49:58,626 - my_daemon - INFO - program 289499: Status.STARTING will start
+2024-03-20 16:49:58,627 - my_daemon - INFO - program 289501: Status.STARTING will start
+2024-03-20 16:49:58,628 - my_daemon - INFO - program 289503: Status.STARTING will start
+2024-03-20 16:49:58,628 - my_daemon - INFO - program 289505: Status.STARTING will start
+2024-03-20 16:49:58,629 - my_daemon - INFO - program 289507: Status.STARTING will start
+2024-03-20 16:49:58,630 - my_daemon - INFO - program 289509: Status.STARTING will start
+2024-03-20 16:49:58,630 - my_daemon - INFO - program 289511: Status.STARTING will start
+2024-03-20 16:49:58,635 - my_daemon - INFO - program 289513: Status.STARTING will start
+2024-03-20 16:49:58,637 - my_daemon - INFO - program 289507: Status.STARTING will restart
+2024-03-20 16:49:58,646 - my_daemon - INFO - program 289501: Status.STARTING will restart
+2024-03-20 16:49:58,647 - my_daemon - INFO - program 289515: Status.STARTING will start
+2024-03-20 16:49:58,647 - my_daemon - INFO - program 289517: Status.STARTING will start
+2024-03-20 16:49:58,648 - my_daemon - INFO - program 289519: Status.STARTING will start
+2024-03-20 16:49:58,648 - my_daemon - INFO - program 289521: Status.STARTING will start
+2024-03-20 16:49:58,649 - my_daemon - INFO - program 289523: Status.STARTING will start
+2024-03-20 16:49:58,660 - my_daemon - INFO - program 289515: Status.STARTING will restart
+2024-03-20 16:49:58,661 - my_daemon - INFO - program 289525: Status.STARTING will start
+2024-03-20 16:49:58,661 - my_daemon - INFO - program 289523: Status.STARTING will restart
+2024-03-20 16:49:58,663 - my_daemon - INFO - program 289519: Status.STARTING will restart
+2024-03-20 16:49:58,664 - my_daemon - INFO - program 289527: Status.STARTING will start
+2024-03-20 16:49:58,665 - my_daemon - INFO - program 289529: Status.STARTING will start
+2024-03-20 16:49:58,666 - my_daemon - INFO - program 289517: Status.STARTING will restart
+2024-03-20 16:49:58,672 - my_daemon - INFO - program 289531: Status.STARTING will start
+2024-03-20 16:49:58,678 - my_daemon - INFO - program 289533: Status.STARTING will start
+2024-03-20 16:51:10,304 - my_daemon - INFO - Daemon started
+2024-03-20 16:51:13,729 - my_daemon - INFO - Creating program ls
+2024-03-20 16:51:13,729 - my_daemon - INFO - Creating program ls
+2024-03-20 16:51:13,729 - my_daemon - INFO - Creating program ls
+2024-03-20 16:51:13,729 - my_daemon - INFO - Creating program idle
+2024-03-20 16:51:13,729 - my_daemon - INFO - Creating program idle
+2024-03-20 16:51:13,729 - my_daemon - INFO - Creating program idle
+2024-03-20 16:51:13,729 - my_daemon - INFO - Creating program idle
+2024-03-20 16:51:13,729 - my_daemon - INFO - Creating program idle
+2024-03-20 16:51:13,729 - my_daemon - INFO - Creating program idle
+2024-03-20 16:51:13,729 - my_daemon - INFO - Creating program idle
+2024-03-20 16:51:13,729 - my_daemon - INFO - Creating program idle
+2024-03-20 16:51:13,730 - my_daemon - INFO - program 289907: Status.STARTING will start
+2024-03-20 16:51:13,731 - my_daemon - INFO - program 289909: Status.STARTING will start
+2024-03-20 16:51:13,732 - my_daemon - INFO - program 289911: Status.STARTING will start
+2024-03-20 16:51:13,732 - my_daemon - INFO - program 289913: Status.STARTING will start
+2024-03-20 16:51:13,733 - my_daemon - INFO - program 289915: Status.STARTING will start
+2024-03-20 16:51:13,733 - my_daemon - INFO - program 289917: Status.STARTING will start
+2024-03-20 16:51:13,734 - my_daemon - INFO - program 289919: Status.STARTING will start
+2024-03-20 16:51:13,741 - my_daemon - INFO - program 289921: Status.STARTING will start
+2024-03-20 16:53:08,689 - my_daemon - INFO - Daemon started
+2024-03-20 16:53:13,477 - my_daemon - INFO - Creating program ls
+2024-03-20 16:53:13,477 - my_daemon - INFO - Creating program ls
+2024-03-20 16:53:13,477 - my_daemon - INFO - Creating program ls
+2024-03-20 16:53:13,478 - my_daemon - INFO - Creating program idle
+2024-03-20 16:53:13,478 - my_daemon - INFO - Creating program idle
+2024-03-20 16:53:13,478 - my_daemon - INFO - Creating program idle
+2024-03-20 16:53:13,478 - my_daemon - INFO - Creating program idle
+2024-03-20 16:53:13,478 - my_daemon - INFO - Creating program idle
+2024-03-20 16:53:13,478 - my_daemon - INFO - Creating program idle
+2024-03-20 16:53:13,478 - my_daemon - INFO - Creating program idle
+2024-03-20 16:53:13,478 - my_daemon - INFO - Creating program idle
+2024-03-20 16:53:13,478 - my_daemon - INFO - program 290506: Status.STARTING will start
+2024-03-20 16:53:13,479 - my_daemon - INFO - program 290508: Status.STARTING will start
+2024-03-20 16:53:13,479 - my_daemon - INFO - program 290510: Status.STARTING will start
+2024-03-20 16:53:13,480 - my_daemon - INFO - program 290512: Status.STARTING will start
+2024-03-20 16:53:13,480 - my_daemon - INFO - program 290514: Status.STARTING will start
+2024-03-20 16:53:13,481 - my_daemon - INFO - program 290516: Status.STARTING will start
+2024-03-20 16:53:13,481 - my_daemon - INFO - program 290518: Status.STARTING will start
+2024-03-20 16:53:13,482 - my_daemon - INFO - program 290520: Status.STARTING will start
+2024-03-20 16:53:44,482 - my_daemon - INFO - Daemon started
+2024-03-20 16:53:47,942 - my_daemon - INFO - Creating program ls
+2024-03-20 16:53:47,942 - my_daemon - INFO - Creating program ls
+2024-03-20 16:53:47,942 - my_daemon - INFO - Creating program ls
+2024-03-20 16:53:47,942 - my_daemon - INFO - Creating program idle
+2024-03-20 16:53:47,942 - my_daemon - INFO - Creating program idle
+2024-03-20 16:53:47,942 - my_daemon - INFO - Creating program idle
+2024-03-20 16:53:47,942 - my_daemon - INFO - Creating program idle
+2024-03-20 16:53:47,942 - my_daemon - INFO - Creating program idle
+2024-03-20 16:53:47,942 - my_daemon - INFO - Creating program idle
+2024-03-20 16:53:47,942 - my_daemon - INFO - Creating program idle
+2024-03-20 16:53:47,942 - my_daemon - INFO - Creating program idle
+2024-03-20 16:53:47,943 - my_daemon - INFO - program 290698: Status.STARTING will start
+2024-03-20 16:53:47,944 - my_daemon - INFO - program 290700: Status.STARTING will start
+2024-03-20 16:53:47,944 - my_daemon - INFO - program 290702: Status.STARTING will start
+2024-03-20 16:53:47,945 - my_daemon - INFO - program 290704: Status.STARTING will start
+2024-03-20 16:53:47,945 - my_daemon - INFO - program 290706: Status.STARTING will start
+2024-03-20 16:53:47,946 - my_daemon - INFO - program 290708: Status.STARTING will start
+2024-03-20 16:53:47,946 - my_daemon - INFO - program 290710: Status.STARTING will start
+2024-03-20 16:53:47,947 - my_daemon - INFO - program 290712: Status.STARTING will start
+2024-03-20 16:54:26,493 - my_daemon - INFO - Daemon started
+2024-03-20 16:54:29,390 - my_daemon - INFO - Creating program ls
+2024-03-20 16:54:29,390 - my_daemon - INFO - Creating program ls
+2024-03-20 16:54:29,390 - my_daemon - INFO - Creating program ls
+2024-03-20 16:54:29,390 - my_daemon - INFO - Creating program idle
+2024-03-20 16:54:29,390 - my_daemon - INFO - Creating program idle
+2024-03-20 16:54:29,390 - my_daemon - INFO - Creating program idle
+2024-03-20 16:54:29,391 - my_daemon - INFO - Creating program idle
+2024-03-20 16:54:29,391 - my_daemon - INFO - Creating program idle
+2024-03-20 16:54:29,391 - my_daemon - INFO - Creating program idle
+2024-03-20 16:54:29,391 - my_daemon - INFO - Creating program idle
+2024-03-20 16:54:29,391 - my_daemon - INFO - Creating program idle
+2024-03-20 16:54:29,391 - my_daemon - INFO - program 290919: Status.STARTING will start
+2024-03-20 16:54:29,392 - my_daemon - INFO - program 290921: Status.STARTING will start
+2024-03-20 16:54:29,393 - my_daemon - INFO - program 290923: Status.STARTING will start
+2024-03-20 16:54:29,393 - my_daemon - INFO - program 290925: Status.STARTING will start
+2024-03-20 16:54:29,394 - my_daemon - INFO - program 290927: Status.STARTING will start
+2024-03-20 16:54:29,394 - my_daemon - INFO - program 290929: Status.STARTING will start
+2024-03-20 16:54:29,395 - my_daemon - INFO - program 290931: Status.STARTING will start
+2024-03-20 16:54:29,395 - my_daemon - INFO - program 290933: Status.STARTING will start
+2024-03-20 16:55:11,040 - my_daemon - INFO - Daemon started
+2024-03-20 16:55:18,478 - my_daemon - INFO - Creating program ls
+2024-03-20 16:55:18,478 - my_daemon - INFO - Creating program ls
+2024-03-20 16:55:18,479 - my_daemon - INFO - Creating program ls
+2024-03-20 16:55:18,479 - my_daemon - INFO - Creating program idle
+2024-03-20 16:55:18,479 - my_daemon - INFO - Creating program idle
+2024-03-20 16:55:18,479 - my_daemon - INFO - Creating program idle
+2024-03-20 16:55:18,479 - my_daemon - INFO - Creating program idle
+2024-03-20 16:55:18,479 - my_daemon - INFO - Creating program idle
+2024-03-20 16:55:18,479 - my_daemon - INFO - Creating program idle
+2024-03-20 16:55:18,479 - my_daemon - INFO - Creating program idle
+2024-03-20 16:55:18,479 - my_daemon - INFO - Creating program idle
+2024-03-20 16:55:18,479 - my_daemon - INFO - program 291240: Status.STARTING will start
+2024-03-20 16:55:18,480 - my_daemon - INFO - program 291242: Status.STARTING will start
+2024-03-20 16:55:18,482 - my_daemon - INFO - program 291244: Status.STARTING will start
+2024-03-20 16:55:18,483 - my_daemon - INFO - program 291246: Status.STARTING will start
+2024-03-20 16:55:18,484 - my_daemon - INFO - program 291248: Status.STARTING will start
+2024-03-20 16:55:18,484 - my_daemon - INFO - program 291250: Status.STARTING will start
+2024-03-20 16:55:18,485 - my_daemon - INFO - program 291252: Status.STARTING will start
+2024-03-20 16:55:18,485 - my_daemon - INFO - program 291254: Status.STARTING will start
+2024-03-20 16:55:28,508 - my_daemon - INFO - Daemon started
+2024-03-20 16:55:33,314 - my_daemon - INFO - Creating program ls
+2024-03-20 16:55:33,315 - my_daemon - INFO - Creating program ls
+2024-03-20 16:55:33,315 - my_daemon - INFO - Creating program ls
+2024-03-20 16:55:33,315 - my_daemon - INFO - Creating program idle
+2024-03-20 16:55:33,315 - my_daemon - INFO - Creating program idle
+2024-03-20 16:55:33,315 - my_daemon - INFO - Creating program idle
+2024-03-20 16:55:33,315 - my_daemon - INFO - Creating program idle
+2024-03-20 16:55:33,315 - my_daemon - INFO - Creating program idle
+2024-03-20 16:55:33,315 - my_daemon - INFO - Creating program idle
+2024-03-20 16:55:33,315 - my_daemon - INFO - Creating program idle
+2024-03-20 16:55:33,315 - my_daemon - INFO - Creating program idle
+2024-03-20 16:55:33,315 - my_daemon - INFO - program 291335: Status.STARTING will start
+2024-03-20 16:55:33,316 - my_daemon - INFO - program 291337: Status.STARTING will start
+2024-03-20 16:55:33,316 - my_daemon - INFO - program 291339: Status.STARTING will start
+2024-03-20 16:55:33,317 - my_daemon - INFO - program 291341: Status.STARTING will start
+2024-03-20 16:55:33,317 - my_daemon - INFO - program 291343: Status.STARTING will start
+2024-03-20 16:55:33,318 - my_daemon - INFO - program 291345: Status.STARTING will start
+2024-03-20 16:55:33,319 - my_daemon - INFO - program 291347: Status.STARTING will start
+2024-03-20 16:55:33,322 - my_daemon - INFO - program 291349: Status.STARTING will start
+2024-03-20 16:58:35,893 - my_daemon - INFO - Daemon started
+2024-03-20 16:58:47,467 - my_daemon - INFO - Daemon started
+2024-03-20 16:59:25,246 - my_daemon - INFO - Daemon started
+2024-03-20 16:59:46,680 - my_daemon - INFO - Creating program ls
+2024-03-20 16:59:46,680 - my_daemon - INFO - Creating program ls
+2024-03-20 16:59:46,680 - my_daemon - INFO - Creating program ls
+2024-03-20 16:59:46,680 - my_daemon - INFO - Creating program idle
+2024-03-20 16:59:46,680 - my_daemon - INFO - Creating program idle
+2024-03-20 16:59:46,680 - my_daemon - INFO - Creating program idle
+2024-03-20 16:59:46,680 - my_daemon - INFO - Creating program idle
+2024-03-20 16:59:46,680 - my_daemon - INFO - Creating program idle
+2024-03-20 16:59:46,680 - my_daemon - INFO - Creating program idle
+2024-03-20 16:59:46,680 - my_daemon - INFO - Creating program idle
+2024-03-20 16:59:46,680 - my_daemon - INFO - Creating program idle
+2024-03-20 16:59:46,681 - my_daemon - INFO - program 293121: Status.STARTING will start
+2024-03-20 16:59:46,682 - my_daemon - INFO - program 293123: Status.STARTING will start
+2024-03-20 16:59:46,684 - my_daemon - INFO - program 293125: Status.STARTING will start
+2024-03-20 16:59:46,685 - my_daemon - INFO - program 293127: Status.STARTING will start
+2024-03-20 16:59:46,685 - my_daemon - INFO - program 293129: Status.STARTING will start
+2024-03-20 16:59:46,686 - my_daemon - INFO - program 293131: Status.STARTING will start
+2024-03-20 16:59:46,687 - my_daemon - INFO - program 293133: Status.STARTING will start
+2024-03-20 16:59:46,688 - my_daemon - INFO - program 293135: Status.STARTING will start
+2024-03-20 17:00:55,155 - my_daemon - INFO - Daemon started
+2024-03-20 17:00:58,306 - my_daemon - INFO - Daemon started
+2024-03-20 17:00:58,308 - my_daemon - INFO - Taskmaster daemon already running exiting...
+2024-03-20 17:01:05,641 - my_daemon - INFO - Creating program ls
+2024-03-20 17:01:05,641 - my_daemon - INFO - Creating program ls
+2024-03-20 17:01:05,641 - my_daemon - INFO - Creating program ls
+2024-03-20 17:01:05,641 - my_daemon - INFO - Creating program idle
+2024-03-20 17:01:05,641 - my_daemon - INFO - Creating program idle
+2024-03-20 17:01:05,641 - my_daemon - INFO - Creating program idle
+2024-03-20 17:01:05,641 - my_daemon - INFO - Creating program idle
+2024-03-20 17:01:05,641 - my_daemon - INFO - Creating program idle
+2024-03-20 17:01:05,641 - my_daemon - INFO - Creating program idle
+2024-03-20 17:01:05,641 - my_daemon - INFO - Creating program idle
+2024-03-20 17:01:05,641 - my_daemon - INFO - Creating program idle
+2024-03-20 17:01:05,642 - my_daemon - INFO - program 293564: Status.STARTING will start
+2024-03-20 17:01:05,642 - my_daemon - INFO - program 293566: Status.STARTING will start
+2024-03-20 17:01:05,643 - my_daemon - INFO - program 293568: Status.STARTING will start
+2024-03-20 17:01:05,643 - my_daemon - INFO - program 293570: Status.STARTING will start
+2024-03-20 17:01:05,644 - my_daemon - INFO - program 293572: Status.STARTING will start
+2024-03-20 17:01:05,645 - my_daemon - INFO - program 293574: Status.STARTING will start
+2024-03-20 17:01:05,645 - my_daemon - INFO - program 293576: Status.STARTING will start
+2024-03-20 17:01:05,646 - my_daemon - INFO - program 293578: Status.STARTING will start
+2024-03-22 18:34:38,409 - my_daemon - INFO - Daemon started
+2024-03-22 18:34:46,234 - my_daemon - INFO - Creating program ls
+2024-03-22 18:34:46,234 - my_daemon - INFO - Creating program ls
+2024-03-22 18:34:46,234 - my_daemon - INFO - Creating program ls
+2024-03-22 18:34:46,234 - my_daemon - INFO - Creating program idle
+2024-03-22 18:34:46,234 - my_daemon - INFO - Creating program idle
+2024-03-22 18:34:46,234 - my_daemon - INFO - Creating program idle
+2024-03-22 18:34:46,234 - my_daemon - INFO - Creating program idle
+2024-03-22 18:34:46,234 - my_daemon - INFO - Creating program idle
+2024-03-22 18:34:46,234 - my_daemon - INFO - Creating program idle
+2024-03-22 18:34:46,234 - my_daemon - INFO - Creating program idle
+2024-03-22 18:34:46,234 - my_daemon - INFO - Creating program idle
+2024-03-22 18:34:46,235 - my_daemon - INFO - program 333524: Status.STARTING will start
+2024-03-22 18:34:46,236 - my_daemon - INFO - program 333526: Status.STARTING will start
+2024-03-22 18:34:46,236 - my_daemon - INFO - program 333528: Status.STARTING will start
+2024-03-22 18:34:46,237 - my_daemon - INFO - program 333530: Status.STARTING will start
+2024-03-22 18:34:46,238 - my_daemon - INFO - program 333532: Status.STARTING will start
+2024-03-22 18:34:46,238 - my_daemon - INFO - program 333534: Status.STARTING will start
+2024-03-22 18:34:46,239 - my_daemon - INFO - program 333536: Status.STARTING will start
+2024-03-22 18:34:46,239 - my_daemon - INFO - program 333538: Status.STARTING will start
+2024-03-22 18:34:46,244 - my_daemon - INFO - program 333540: Status.STARTING will start
+2024-03-22 18:34:46,245 - my_daemon - INFO - program 333542: Status.STARTING will start
+2024-03-22 18:34:46,248 - my_daemon - INFO - program 333544: Status.STARTING will start
+2024-03-22 18:34:46,248 - my_daemon - INFO - program 333546: Status.STARTING will start
+2024-03-22 18:34:46,249 - my_daemon - INFO - program 333548: Status.STARTING will start
+2024-03-22 18:34:46,249 - my_daemon - INFO - program 333550: Status.STARTING will start
+2024-03-22 18:34:46,249 - my_daemon - INFO - program 333552: Status.STARTING will start
+2024-03-22 18:34:46,250 - my_daemon - INFO - program 333554: Status.STARTING will start
+2024-03-22 18:34:46,253 - my_daemon - INFO - program 333556: Status.STARTING will start
+2024-03-22 18:34:46,253 - my_daemon - INFO - program 333558: Status.STARTING will start
+2024-03-22 18:34:46,257 - my_daemon - INFO - program 333560: Status.STARTING will start
+2024-03-22 18:34:46,259 - my_daemon - INFO - program 333562: Status.STARTING will start
+2024-03-22 18:34:46,264 - my_daemon - INFO - program 333564: Status.STARTING will start
+2024-03-22 18:34:46,265 - my_daemon - INFO - program 333566: Status.STARTING will start
+2024-03-22 18:34:46,266 - my_daemon - INFO - program 333568: Status.STARTING will start
+2024-03-22 18:34:46,267 - my_daemon - INFO - program 333570: Status.STARTING will start
+2024-03-22 18:34:46,268 - my_daemon - INFO - program 333572: Status.STARTING will start
+2024-03-22 18:34:46,268 - my_daemon - INFO - program 333574: Status.STARTING will start
+2024-03-22 18:34:46,285 - my_daemon - INFO - program 333576: Status.STARTING will start
+2024-03-22 18:34:46,286 - my_daemon - INFO - program 333578: Status.STARTING will start
+2024-03-22 18:34:46,286 - my_daemon - INFO - program 333580: Status.STARTING will start
+2024-03-22 18:34:46,287 - my_daemon - INFO - program 333582: Status.STARTING will start
+2024-03-22 18:34:46,288 - my_daemon - INFO - program 333584: Status.STARTING will start
+2024-03-22 18:34:46,289 - my_daemon - INFO - program 333586: Status.STARTING will start
+2024-03-22 18:34:46,290 - my_daemon - INFO - program 333588: Status.STARTING will start
+2024-03-22 18:34:46,291 - my_daemon - INFO - program 333590: Status.STARTING will start
+2024-03-22 18:34:46,307 - my_daemon - INFO - program 333592: Status.STARTING will start
+2024-03-22 18:34:46,310 - my_daemon - INFO - program 333594: Status.STARTING will start
+2024-03-22 18:34:46,315 - my_daemon - INFO - program 333596: Status.STARTING will start
+2024-03-22 18:34:46,316 - my_daemon - INFO - program 333598: Status.STARTING will start
+2024-03-22 18:34:46,318 - my_daemon - INFO - program 333600: Status.STARTING will start
+2024-03-22 18:34:46,319 - my_daemon - INFO - program 333602: Status.STARTING will start
+2024-03-22 18:35:25,562 - my_daemon - INFO - Daemon started
+2024-03-22 18:35:32,079 - my_daemon - INFO - Creating program ls
+2024-03-22 18:35:32,079 - my_daemon - INFO - Creating program ls
+2024-03-22 18:35:32,079 - my_daemon - INFO - Creating program ls
+2024-03-22 18:35:32,079 - my_daemon - INFO - Creating program idle
+2024-03-22 18:35:32,079 - my_daemon - INFO - Creating program idle
+2024-03-22 18:35:32,079 - my_daemon - INFO - Creating program idle
+2024-03-22 18:35:32,079 - my_daemon - INFO - Creating program idle
+2024-03-22 18:35:32,079 - my_daemon - INFO - Creating program idle
+2024-03-22 18:35:32,079 - my_daemon - INFO - Creating program idle
+2024-03-22 18:35:32,079 - my_daemon - INFO - Creating program idle
+2024-03-22 18:35:32,079 - my_daemon - INFO - Creating program idle
+2024-03-22 18:36:46,162 - my_daemon - INFO - Daemon started
+2024-03-22 18:37:48,412 - my_daemon - INFO - Daemon started
+2024-03-22 18:37:50,473 - my_daemon - INFO - Daemon started
+2024-03-22 18:37:50,476 - my_daemon - INFO - Taskmaster daemon already running exiting...
+2024-03-22 18:37:56,964 - my_daemon - INFO - Creating program ls
+2024-03-22 18:37:56,965 - my_daemon - INFO - Creating program ls
+2024-03-22 18:37:56,965 - my_daemon - INFO - Creating program ls
+2024-03-22 18:37:56,965 - my_daemon - INFO - Creating program idle
+2024-03-22 18:37:56,965 - my_daemon - INFO - Creating program idle
+2024-03-22 18:37:56,965 - my_daemon - INFO - Creating program idle
+2024-03-22 18:37:56,965 - my_daemon - INFO - Creating program idle
+2024-03-22 18:37:56,965 - my_daemon - INFO - Creating program idle
+2024-03-22 18:37:56,965 - my_daemon - INFO - Creating program idle
+2024-03-22 18:37:56,965 - my_daemon - INFO - Creating program idle
+2024-03-22 18:37:56,965 - my_daemon - INFO - Creating program idle
+2024-03-22 18:38:15,254 - my_daemon - INFO - Daemon started
+2024-03-22 18:38:26,537 - my_daemon - INFO - Creating program ls
+2024-03-22 18:38:26,537 - my_daemon - INFO - Creating program ls
+2024-03-22 18:38:26,537 - my_daemon - INFO - Creating program ls
+2024-03-22 18:38:26,537 - my_daemon - INFO - Creating program idle
+2024-03-22 18:38:26,537 - my_daemon - INFO - Creating program idle
+2024-03-22 18:38:26,537 - my_daemon - INFO - Creating program idle
+2024-03-22 18:38:26,537 - my_daemon - INFO - Creating program idle
+2024-03-22 18:38:26,537 - my_daemon - INFO - Creating program idle
+2024-03-22 18:38:26,537 - my_daemon - INFO - Creating program idle
+2024-03-22 18:38:26,537 - my_daemon - INFO - Creating program idle
+2024-03-22 18:38:26,537 - my_daemon - INFO - Creating program idle
+2024-03-22 18:39:08,596 - my_daemon - INFO - Daemon started
+2024-03-22 18:39:13,105 - my_daemon - INFO - Creating program ls
+2024-03-22 18:39:13,105 - my_daemon - INFO - Creating program ls
+2024-03-22 18:39:13,105 - my_daemon - INFO - Creating program ls
+2024-03-22 18:39:13,105 - my_daemon - INFO - Creating program idle
+2024-03-22 18:39:13,105 - my_daemon - INFO - Creating program idle
+2024-03-22 18:39:13,105 - my_daemon - INFO - Creating program idle
+2024-03-22 18:39:13,105 - my_daemon - INFO - Creating program idle
+2024-03-22 18:39:13,105 - my_daemon - INFO - Creating program idle
+2024-03-22 18:39:13,105 - my_daemon - INFO - Creating program idle
+2024-03-22 18:39:13,105 - my_daemon - INFO - Creating program idle
+2024-03-22 18:39:13,105 - my_daemon - INFO - Creating program idle
+2024-03-23 18:39:22,787 - my_daemon - INFO - Daemon started
+2024-03-23 18:39:35,398 - my_daemon - INFO - Creating program ls
+2024-03-23 18:39:35,398 - my_daemon - INFO - Creating program ls
+2024-03-23 18:39:35,398 - my_daemon - INFO - Creating program ls
+2024-03-23 18:39:35,398 - my_daemon - INFO - Creating program idle
+2024-03-23 18:39:35,399 - my_daemon - INFO - Creating program idle
+2024-03-23 18:39:35,399 - my_daemon - INFO - Creating program idle
+2024-03-23 18:39:35,399 - my_daemon - INFO - Creating program idle
+2024-03-23 18:39:35,399 - my_daemon - INFO - Creating program idle
+2024-03-23 18:39:35,399 - my_daemon - INFO - Creating program idle
+2024-03-23 18:39:35,399 - my_daemon - INFO - Creating program idle
+2024-03-23 18:39:35,399 - my_daemon - INFO - Creating program idle
+2024-03-23 18:40:16,503 - my_daemon - INFO - Daemon started
+2024-03-23 18:40:20,123 - my_daemon - INFO - Creating program ls
+2024-03-23 18:40:20,123 - my_daemon - INFO - Creating program ls
+2024-03-23 18:40:20,123 - my_daemon - INFO - Creating program ls
+2024-03-23 18:40:20,123 - my_daemon - INFO - Creating program idle
+2024-03-23 18:40:20,123 - my_daemon - INFO - Creating program idle
+2024-03-23 18:40:20,123 - my_daemon - INFO - Creating program idle
+2024-03-23 18:40:20,123 - my_daemon - INFO - Creating program idle
+2024-03-23 18:40:20,123 - my_daemon - INFO - Creating program idle
+2024-03-23 18:40:20,123 - my_daemon - INFO - Creating program idle
+2024-03-23 18:40:20,123 - my_daemon - INFO - Creating program idle
+2024-03-23 18:40:20,123 - my_daemon - INFO - Creating program idle
+2024-03-23 18:40:47,265 - my_daemon - INFO - Daemon started
+2024-03-23 18:40:52,247 - my_daemon - INFO - Creating program ls
+2024-03-23 18:40:52,247 - my_daemon - INFO - Creating program ls
+2024-03-23 18:40:52,247 - my_daemon - INFO - Creating program ls
+2024-03-23 18:40:52,247 - my_daemon - INFO - Creating program idle
+2024-03-23 18:40:52,247 - my_daemon - INFO - Creating program idle
+2024-03-23 18:40:52,247 - my_daemon - INFO - Creating program idle
+2024-03-23 18:40:52,247 - my_daemon - INFO - Creating program idle
+2024-03-23 18:40:52,247 - my_daemon - INFO - Creating program idle
+2024-03-23 18:40:52,247 - my_daemon - INFO - Creating program idle
+2024-03-23 18:40:52,247 - my_daemon - INFO - Creating program idle
+2024-03-23 18:40:52,247 - my_daemon - INFO - Creating program idle
+2024-03-23 18:41:52,856 - my_daemon - INFO - Daemon started
+2024-03-23 18:42:16,243 - my_daemon - INFO - Creating program ls
+2024-03-23 18:42:16,243 - my_daemon - INFO - Creating program ls
+2024-03-23 18:42:16,243 - my_daemon - INFO - Creating program ls
+2024-03-23 18:42:16,243 - my_daemon - INFO - Creating program idle
+2024-03-23 18:42:16,243 - my_daemon - INFO - Creating program idle
+2024-03-23 18:42:16,243 - my_daemon - INFO - Creating program idle
+2024-03-23 18:42:16,243 - my_daemon - INFO - Creating program idle
+2024-03-23 18:42:16,243 - my_daemon - INFO - Creating program idle
+2024-03-23 18:42:16,243 - my_daemon - INFO - Creating program idle
+2024-03-23 18:42:16,244 - my_daemon - INFO - Creating program idle
+2024-03-23 18:42:16,244 - my_daemon - INFO - Creating program idle
+2024-03-24 01:45:14,968 - my_daemon - INFO - Daemon started
+2024-03-24 01:45:18,785 - my_daemon - INFO - Creating program ls
+2024-03-24 01:45:18,786 - my_daemon - INFO - Creating program ls
+2024-03-24 01:45:18,786 - my_daemon - INFO - Creating program ls
+2024-03-24 01:45:18,786 - my_daemon - INFO - Creating program idle
+2024-03-24 01:45:18,786 - my_daemon - INFO - Creating program idle
+2024-03-24 01:45:18,786 - my_daemon - INFO - Creating program idle
+2024-03-24 01:45:18,786 - my_daemon - INFO - Creating program idle
+2024-03-24 01:45:18,786 - my_daemon - INFO - Creating program idle
+2024-03-24 01:45:18,786 - my_daemon - INFO - Creating program idle
+2024-03-24 01:45:18,786 - my_daemon - INFO - Creating program idle
+2024-03-24 01:45:18,786 - my_daemon - INFO - Creating program idle
+2024-03-24 01:46:01,071 - my_daemon - INFO - Daemon started
+2024-03-24 01:46:04,606 - my_daemon - INFO - Creating program ls
+2024-03-24 01:46:04,606 - my_daemon - INFO - Creating program ls
+2024-03-24 01:46:04,606 - my_daemon - INFO - Creating program ls
+2024-03-24 01:46:04,606 - my_daemon - INFO - Creating program idle
+2024-03-24 01:46:04,606 - my_daemon - INFO - Creating program idle
+2024-03-24 01:46:04,606 - my_daemon - INFO - Creating program idle
+2024-03-24 01:46:04,606 - my_daemon - INFO - Creating program idle
+2024-03-24 01:46:04,606 - my_daemon - INFO - Creating program idle
+2024-03-24 01:46:04,606 - my_daemon - INFO - Creating program idle
+2024-03-24 01:46:04,606 - my_daemon - INFO - Creating program idle
+2024-03-24 01:46:04,606 - my_daemon - INFO - Creating program idle
+2024-03-24 01:46:49,802 - my_daemon - INFO - Daemon started
+2024-03-24 01:46:53,534 - my_daemon - INFO - Creating program ls
+2024-03-24 01:46:53,534 - my_daemon - INFO - Creating program ls
+2024-03-24 01:46:53,534 - my_daemon - INFO - Creating program ls
+2024-03-24 01:46:53,534 - my_daemon - INFO - Creating program idle
+2024-03-24 01:46:53,534 - my_daemon - INFO - Creating program idle
+2024-03-24 01:46:53,534 - my_daemon - INFO - Creating program idle
+2024-03-24 01:46:53,534 - my_daemon - INFO - Creating program idle
+2024-03-24 01:46:53,534 - my_daemon - INFO - Creating program idle
+2024-03-24 01:46:53,534 - my_daemon - INFO - Creating program idle
+2024-03-24 01:46:53,534 - my_daemon - INFO - Creating program idle
+2024-03-24 01:46:53,534 - my_daemon - INFO - Creating program idle
+2024-03-24 01:50:21,062 - my_daemon - INFO - Daemon started
+2024-03-24 01:50:25,254 - my_daemon - INFO - Creating program ls
+2024-03-24 01:50:25,254 - my_daemon - INFO - Creating program ls
+2024-03-24 01:50:25,254 - my_daemon - INFO - Creating program ls
+2024-03-24 01:50:25,255 - my_daemon - INFO - Creating program idle
+2024-03-24 01:50:25,255 - my_daemon - INFO - Creating program idle
+2024-03-24 01:50:25,255 - my_daemon - INFO - Creating program idle
+2024-03-24 01:50:25,255 - my_daemon - INFO - Creating program idle
+2024-03-24 01:50:25,255 - my_daemon - INFO - Creating program idle
+2024-03-24 01:50:25,255 - my_daemon - INFO - Creating program idle
+2024-03-24 01:50:25,255 - my_daemon - INFO - Creating program idle
+2024-03-24 01:50:25,255 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:06,183 - my_daemon - INFO - Reloading config and stopping everything first
+2024-03-24 01:51:06,183 - my_daemon - INFO - Creating program ls
+2024-03-24 01:51:06,183 - my_daemon - INFO - Creating program ls
+2024-03-24 01:51:06,183 - my_daemon - INFO - Creating program ls
+2024-03-24 01:51:06,183 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:06,183 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:06,183 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:06,183 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:06,183 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:06,183 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:06,183 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:06,183 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:15,767 - my_daemon - INFO - Reloading config and stopping everything first
+2024-03-24 01:51:15,767 - my_daemon - INFO - Creating program ls
+2024-03-24 01:51:15,767 - my_daemon - INFO - Creating program ls
+2024-03-24 01:51:15,767 - my_daemon - INFO - Creating program ls
+2024-03-24 01:51:15,767 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:15,767 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:15,767 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:15,767 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:15,767 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:15,767 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:15,767 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:15,767 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:16,003 - my_daemon - INFO - Reloading config and stopping everything first
+2024-03-24 01:51:16,004 - my_daemon - INFO - Creating program ls
+2024-03-24 01:51:16,004 - my_daemon - INFO - Creating program ls
+2024-03-24 01:51:16,004 - my_daemon - INFO - Creating program ls
+2024-03-24 01:51:16,004 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:16,004 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:16,004 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:16,004 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:16,004 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:16,004 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:16,004 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:16,004 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:16,230 - my_daemon - INFO - Reloading config and stopping everything first
+2024-03-24 01:51:16,230 - my_daemon - INFO - Creating program ls
+2024-03-24 01:51:16,230 - my_daemon - INFO - Creating program ls
+2024-03-24 01:51:16,230 - my_daemon - INFO - Creating program ls
+2024-03-24 01:51:16,230 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:16,231 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:16,231 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:16,231 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:16,231 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:16,231 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:16,231 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:16,231 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:16,459 - my_daemon - INFO - Reloading config and stopping everything first
+2024-03-24 01:51:16,459 - my_daemon - INFO - Creating program ls
+2024-03-24 01:51:16,459 - my_daemon - INFO - Creating program ls
+2024-03-24 01:51:16,459 - my_daemon - INFO - Creating program ls
+2024-03-24 01:51:16,459 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:16,459 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:16,459 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:16,459 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:16,459 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:16,459 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:16,459 - my_daemon - INFO - Creating program idle
+2024-03-24 01:51:16,459 - my_daemon - INFO - Creating program idle
+2024-03-24 01:54:10,562 - my_daemon - INFO - Daemon started
+2024-03-24 01:54:14,499 - my_daemon - INFO - Creating program ls
+2024-03-24 01:54:14,499 - my_daemon - INFO - Creating program ls
+2024-03-24 01:54:14,499 - my_daemon - INFO - Creating program ls
+2024-03-24 01:54:14,499 - my_daemon - INFO - Creating program idle
+2024-03-24 01:54:14,499 - my_daemon - INFO - Creating program idle
+2024-03-24 01:54:14,499 - my_daemon - INFO - Creating program idle
+2024-03-24 01:54:14,499 - my_daemon - INFO - Creating program idle
+2024-03-24 01:54:14,499 - my_daemon - INFO - Creating program idle
+2024-03-24 01:54:14,499 - my_daemon - INFO - Creating program idle
+2024-03-24 01:54:14,500 - my_daemon - INFO - Creating program idle
+2024-03-24 01:54:14,500 - my_daemon - INFO - Creating program idle
+2024-03-24 01:56:45,364 - my_daemon - INFO - Daemon started
+2024-03-24 01:56:55,468 - my_daemon - INFO - Creating program ls
+2024-03-24 01:56:55,468 - my_daemon - INFO - Creating program ls
+2024-03-24 01:56:55,468 - my_daemon - INFO - Creating program ls
+2024-03-24 01:56:55,468 - my_daemon - INFO - Creating program idle
+2024-03-24 01:56:55,468 - my_daemon - INFO - Creating program idle
+2024-03-24 01:56:55,468 - my_daemon - INFO - Creating program idle
+2024-03-24 01:56:55,468 - my_daemon - INFO - Creating program idle
+2024-03-24 01:56:55,468 - my_daemon - INFO - Creating program idle
+2024-03-24 01:56:55,468 - my_daemon - INFO - Creating program idle
+2024-03-24 01:56:55,468 - my_daemon - INFO - Creating program idle
+2024-03-24 01:56:55,469 - my_daemon - INFO - Creating program idle
+2024-03-24 01:57:30,133 - my_daemon - INFO - Daemon started
+2024-03-24 01:57:33,740 - my_daemon - INFO - Creating program ls
+2024-03-24 01:57:33,740 - my_daemon - INFO - Creating program ls
+2024-03-24 01:57:33,740 - my_daemon - INFO - Creating program ls
+2024-03-24 01:57:33,740 - my_daemon - INFO - Creating program idle
+2024-03-24 01:57:33,741 - my_daemon - INFO - Creating program idle
+2024-03-24 01:57:33,741 - my_daemon - INFO - Creating program idle
+2024-03-24 01:57:33,741 - my_daemon - INFO - Creating program idle
+2024-03-24 01:57:33,741 - my_daemon - INFO - Creating program idle
+2024-03-24 01:57:33,741 - my_daemon - INFO - Creating program idle
+2024-03-24 01:57:33,741 - my_daemon - INFO - Creating program idle
+2024-03-24 01:57:33,741 - my_daemon - INFO - Creating program idle
+2024-03-24 01:58:50,906 - my_daemon - INFO - Daemon started
+2024-03-24 01:58:58,965 - my_daemon - INFO - Creating program ls
+2024-03-24 01:58:58,965 - my_daemon - INFO - Creating program ls
+2024-03-24 01:58:58,965 - my_daemon - INFO - Creating program ls
+2024-03-24 01:58:58,965 - my_daemon - INFO - Creating program idle
+2024-03-24 01:58:58,965 - my_daemon - INFO - Creating program idle
+2024-03-24 01:58:58,965 - my_daemon - INFO - Creating program idle
+2024-03-24 01:58:58,965 - my_daemon - INFO - Creating program idle
+2024-03-24 01:58:58,965 - my_daemon - INFO - Creating program idle
+2024-03-24 01:58:58,965 - my_daemon - INFO - Creating program idle
+2024-03-24 01:58:58,965 - my_daemon - INFO - Creating program idle
+2024-03-24 01:58:58,965 - my_daemon - INFO - Creating program idle
+2024-03-24 14:49:29,750 - my_daemon - INFO - Daemon started
+2024-03-24 14:49:34,602 - my_daemon - INFO - Creating program ls
+2024-03-24 14:49:34,603 - my_daemon - INFO - Creating program ls
+2024-03-24 14:49:34,603 - my_daemon - INFO - Creating program ls
+2024-03-24 14:49:34,603 - my_daemon - INFO - Creating program idle
+2024-03-24 14:49:34,603 - my_daemon - INFO - Creating program idle
+2024-03-24 14:49:34,603 - my_daemon - INFO - Creating program idle
+2024-03-24 14:49:34,603 - my_daemon - INFO - Creating program idle
+2024-03-24 14:49:34,603 - my_daemon - INFO - Creating program idle
+2024-03-24 14:49:34,603 - my_daemon - INFO - Creating program idle
+2024-03-24 14:49:34,603 - my_daemon - INFO - Creating program idle
+2024-03-24 14:49:34,603 - my_daemon - INFO - Creating program idle
+2024-03-24 16:55:29,541 - my_daemon - INFO - Daemon started
+2024-03-24 16:55:34,305 - my_daemon - INFO - Creating program ls
+2024-03-24 16:55:34,305 - my_daemon - INFO - Creating program ls
+2024-03-24 16:55:34,305 - my_daemon - INFO - Creating program ls
+2024-03-24 16:55:34,305 - my_daemon - INFO - Creating program idle
+2024-03-24 16:55:34,305 - my_daemon - INFO - Creating program idle
+2024-03-24 16:55:34,305 - my_daemon - INFO - Creating program idle
+2024-03-24 16:55:34,305 - my_daemon - INFO - Creating program idle
+2024-03-24 16:55:34,305 - my_daemon - INFO - Creating program idle
+2024-03-24 16:55:34,306 - my_daemon - INFO - Creating program idle
+2024-03-24 16:55:34,306 - my_daemon - INFO - Creating program idle
+2024-03-24 16:55:34,306 - my_daemon - INFO - Creating program idle
+2024-03-24 16:58:59,306 - my_daemon - INFO - Daemon started
+2024-03-24 16:59:03,994 - my_daemon - INFO - Creating program ls
+2024-03-24 16:59:03,994 - my_daemon - INFO - Creating program ls
+2024-03-24 16:59:03,994 - my_daemon - INFO - Creating program ls
+2024-03-24 16:59:03,994 - my_daemon - INFO - Creating program idle
+2024-03-24 16:59:03,994 - my_daemon - INFO - Creating program idle
+2024-03-24 16:59:03,994 - my_daemon - INFO - Creating program idle
+2024-03-24 16:59:03,994 - my_daemon - INFO - Creating program idle
+2024-03-24 16:59:03,994 - my_daemon - INFO - Creating program idle
+2024-03-24 16:59:03,994 - my_daemon - INFO - Creating program idle
+2024-03-24 16:59:03,994 - my_daemon - INFO - Creating program idle
+2024-03-24 16:59:03,994 - my_daemon - INFO - Creating program idle
+2024-03-24 16:59:35,281 - my_daemon - INFO - Daemon started
+2024-03-24 16:59:40,054 - my_daemon - INFO - Creating program ls
+2024-03-24 16:59:40,055 - my_daemon - INFO - Creating program ls
+2024-03-24 16:59:40,055 - my_daemon - INFO - Creating program ls
+2024-03-24 16:59:40,055 - my_daemon - INFO - Creating program idle
+2024-03-24 16:59:40,055 - my_daemon - INFO - Creating program idle
+2024-03-24 16:59:40,055 - my_daemon - INFO - Creating program idle
+2024-03-24 16:59:40,055 - my_daemon - INFO - Creating program idle
+2024-03-24 16:59:40,055 - my_daemon - INFO - Creating program idle
+2024-03-24 16:59:40,055 - my_daemon - INFO - Creating program idle
+2024-03-24 16:59:40,055 - my_daemon - INFO - Creating program idle
+2024-03-24 16:59:40,055 - my_daemon - INFO - Creating program idle
+2024-03-24 17:01:21,261 - my_daemon - INFO - Daemon started
+2024-03-24 17:01:26,015 - my_daemon - INFO - Creating program ls
+2024-03-24 17:01:26,016 - my_daemon - INFO - Creating program ls
+2024-03-24 17:01:26,016 - my_daemon - INFO - Creating program ls
+2024-03-24 17:01:26,016 - my_daemon - INFO - Creating program idle
+2024-03-24 17:01:26,016 - my_daemon - INFO - Creating program idle
+2024-03-24 17:01:26,016 - my_daemon - INFO - Creating program idle
+2024-03-24 17:01:26,016 - my_daemon - INFO - Creating program idle
+2024-03-24 17:01:26,016 - my_daemon - INFO - Creating program idle
+2024-03-24 17:01:26,016 - my_daemon - INFO - Creating program idle
+2024-03-24 17:01:26,016 - my_daemon - INFO - Creating program idle
+2024-03-24 17:01:26,016 - my_daemon - INFO - Creating program idle
+2024-03-24 17:01:46,541 - my_daemon - INFO - Daemon started
+2024-03-24 17:01:50,079 - my_daemon - INFO - Creating program ls
+2024-03-24 17:01:50,079 - my_daemon - INFO - Creating program ls
+2024-03-24 17:01:50,079 - my_daemon - INFO - Creating program ls
+2024-03-24 17:01:50,079 - my_daemon - INFO - Creating program idle
+2024-03-24 17:01:50,079 - my_daemon - INFO - Creating program idle
+2024-03-24 17:01:50,079 - my_daemon - INFO - Creating program idle
+2024-03-24 17:01:50,079 - my_daemon - INFO - Creating program idle
+2024-03-24 17:01:50,079 - my_daemon - INFO - Creating program idle
+2024-03-24 17:01:50,079 - my_daemon - INFO - Creating program idle
+2024-03-24 17:01:50,079 - my_daemon - INFO - Creating program idle
+2024-03-24 17:01:50,079 - my_daemon - INFO - Creating program idle
+2024-03-24 18:24:22,283 - my_daemon - INFO - Daemon started
+2024-03-24 18:24:27,018 - my_daemon - INFO - Creating program ls
+2024-03-24 18:24:27,019 - my_daemon - INFO - Creating program ls
+2024-03-24 18:24:27,019 - my_daemon - INFO - Creating program ls
+2024-03-24 18:24:27,019 - my_daemon - INFO - Creating program idle
+2024-03-24 18:24:27,019 - my_daemon - INFO - Creating program idle
+2024-03-24 18:24:27,019 - my_daemon - INFO - Creating program idle
+2024-03-24 18:24:27,019 - my_daemon - INFO - Creating program idle
+2024-03-24 18:24:27,019 - my_daemon - INFO - Creating program idle
+2024-03-24 18:24:27,019 - my_daemon - INFO - Creating program idle
+2024-03-24 18:24:27,019 - my_daemon - INFO - Creating program idle
+2024-03-24 18:24:27,019 - my_daemon - INFO - Creating program idle
+2024-03-24 18:25:02,676 - my_daemon - INFO - Daemon started
+2024-03-24 18:25:10,927 - my_daemon - INFO - Creating program ls
+2024-03-24 18:25:10,927 - my_daemon - INFO - Creating program ls
+2024-03-24 18:25:10,927 - my_daemon - INFO - Creating program ls
+2024-03-24 18:25:10,927 - my_daemon - INFO - Creating program idle
+2024-03-24 18:25:10,927 - my_daemon - INFO - Creating program idle
+2024-03-24 18:25:10,927 - my_daemon - INFO - Creating program idle
+2024-03-24 18:25:10,927 - my_daemon - INFO - Creating program idle
+2024-03-24 18:25:10,927 - my_daemon - INFO - Creating program idle
+2024-03-24 18:25:10,927 - my_daemon - INFO - Creating program idle
+2024-03-24 18:25:10,927 - my_daemon - INFO - Creating program idle
+2024-03-24 18:25:10,927 - my_daemon - INFO - Creating program idle
+2024-03-24 18:26:06,883 - my_daemon - INFO - Daemon started
+2024-03-24 18:26:09,615 - my_daemon - INFO - Daemon started
+2024-03-24 18:26:13,767 - my_daemon - INFO - Creating program ls
+2024-03-24 18:26:13,767 - my_daemon - INFO - Creating program ls
+2024-03-24 18:26:13,767 - my_daemon - INFO - Creating program ls
+2024-03-24 18:26:13,767 - my_daemon - INFO - Creating program idle
+2024-03-24 18:26:13,767 - my_daemon - INFO - Creating program idle
+2024-03-24 18:26:13,767 - my_daemon - INFO - Creating program idle
+2024-03-24 18:26:13,767 - my_daemon - INFO - Creating program idle
+2024-03-24 18:26:13,767 - my_daemon - INFO - Creating program idle
+2024-03-24 18:26:13,767 - my_daemon - INFO - Creating program idle
+2024-03-24 18:26:13,767 - my_daemon - INFO - Creating program idle
+2024-03-24 18:26:13,767 - my_daemon - INFO - Creating program idle
+2024-03-24 18:33:47,594 - my_daemon - INFO - Daemon started
+2024-03-24 18:34:12,386 - my_daemon - INFO - Creating program ls
+2024-03-24 18:34:12,386 - my_daemon - INFO - Creating program ls
+2024-03-24 18:34:12,386 - my_daemon - INFO - Creating program ls
+2024-03-24 18:34:12,386 - my_daemon - INFO - Creating program idle
+2024-03-24 18:34:12,386 - my_daemon - INFO - Creating program idle
+2024-03-24 18:34:12,386 - my_daemon - INFO - Creating program idle
+2024-03-24 18:34:12,386 - my_daemon - INFO - Creating program idle
+2024-03-24 18:34:12,386 - my_daemon - INFO - Creating program idle
+2024-03-24 18:34:12,386 - my_daemon - INFO - Creating program idle
+2024-03-24 18:34:12,386 - my_daemon - INFO - Creating program idle
+2024-03-24 18:34:12,386 - my_daemon - INFO - Creating program idle
+2024-03-24 18:38:04,711 - my_daemon - INFO - Daemon started
+2024-03-24 18:38:09,283 - my_daemon - INFO - Creating program ls
+2024-03-24 18:38:09,283 - my_daemon - INFO - Creating program ls
+2024-03-24 18:38:09,283 - my_daemon - INFO - Creating program ls
+2024-03-24 18:38:09,283 - my_daemon - INFO - Creating program idle
+2024-03-24 18:38:09,283 - my_daemon - INFO - Creating program idle
+2024-03-24 18:38:09,283 - my_daemon - INFO - Creating program idle
+2024-03-24 18:38:09,283 - my_daemon - INFO - Creating program idle
+2024-03-24 18:38:09,283 - my_daemon - INFO - Creating program idle
+2024-03-24 18:38:09,283 - my_daemon - INFO - Creating program idle
+2024-03-24 18:38:09,283 - my_daemon - INFO - Creating program idle
+2024-03-24 18:38:09,283 - my_daemon - INFO - Creating program idle
+2024-03-24 18:39:10,339 - my_daemon - INFO - Daemon started
+2024-03-24 18:39:14,331 - my_daemon - INFO - Creating program ls
+2024-03-24 18:39:14,331 - my_daemon - INFO - Creating program ls
+2024-03-24 18:39:14,331 - my_daemon - INFO - Creating program ls
+2024-03-24 18:39:14,331 - my_daemon - INFO - Creating program idle
+2024-03-24 18:39:14,331 - my_daemon - INFO - Creating program idle
+2024-03-24 18:39:14,331 - my_daemon - INFO - Creating program idle
+2024-03-24 18:39:14,331 - my_daemon - INFO - Creating program idle
+2024-03-24 18:39:14,331 - my_daemon - INFO - Creating program idle
+2024-03-24 18:39:14,331 - my_daemon - INFO - Creating program idle
+2024-03-24 18:39:14,331 - my_daemon - INFO - Creating program idle
+2024-03-24 18:39:14,331 - my_daemon - INFO - Creating program idle
+2024-03-24 18:39:52,839 - my_daemon - INFO - Daemon started
+2024-03-24 18:39:56,208 - my_daemon - INFO - Creating program ls
+2024-03-24 18:39:56,208 - my_daemon - INFO - Creating program ls
+2024-03-24 18:39:56,208 - my_daemon - INFO - Creating program ls
+2024-03-24 18:39:56,208 - my_daemon - INFO - Creating program idle
+2024-03-24 18:39:56,208 - my_daemon - INFO - Creating program idle
+2024-03-24 18:39:56,208 - my_daemon - INFO - Creating program idle
+2024-03-24 18:39:56,208 - my_daemon - INFO - Creating program idle
+2024-03-24 18:39:56,208 - my_daemon - INFO - Creating program idle
+2024-03-24 18:39:56,208 - my_daemon - INFO - Creating program idle
+2024-03-24 18:39:56,208 - my_daemon - INFO - Creating program idle
+2024-03-24 18:39:56,208 - my_daemon - INFO - Creating program idle
+2024-03-24 19:26:06,376 - my_daemon - INFO - Daemon started
+2024-03-24 19:26:11,038 - my_daemon - INFO - Creating program ls
+2024-03-24 19:26:11,038 - my_daemon - INFO - Creating program ls
+2024-03-24 19:26:11,038 - my_daemon - INFO - Creating program ls
+2024-03-24 19:26:11,038 - my_daemon - INFO - Creating program idle
+2024-03-24 19:26:11,038 - my_daemon - INFO - Creating program idle
+2024-03-24 19:26:11,038 - my_daemon - INFO - Creating program idle
+2024-03-24 19:26:11,038 - my_daemon - INFO - Creating program idle
+2024-03-24 19:26:11,038 - my_daemon - INFO - Creating program idle
+2024-03-24 19:26:11,038 - my_daemon - INFO - Creating program idle
+2024-03-24 19:26:11,038 - my_daemon - INFO - Creating program idle
+2024-03-24 19:26:11,038 - my_daemon - INFO - Creating program idle
+2024-03-29 20:42:01,934 - my_daemon - INFO - Daemon started
+2024-03-29 20:42:07,598 - my_daemon - INFO - Creating program ls
+2024-03-29 20:42:07,598 - my_daemon - INFO - Creating program ls
+2024-03-29 20:42:07,598 - my_daemon - INFO - Creating program ls
+2024-03-29 20:42:07,598 - my_daemon - INFO - Creating program idle
+2024-03-29 20:42:07,598 - my_daemon - INFO - Creating program idle
+2024-03-29 20:42:07,598 - my_daemon - INFO - Creating program idle
+2024-03-29 20:42:07,598 - my_daemon - INFO - Creating program idle
+2024-03-29 20:42:07,598 - my_daemon - INFO - Creating program idle
+2024-03-29 20:42:07,598 - my_daemon - INFO - Creating program idle
+2024-03-29 20:42:07,598 - my_daemon - INFO - Creating program idle
+2024-03-29 20:42:07,598 - my_daemon - INFO - Creating program idle
+2024-03-30 17:14:06,848 - my_daemon - INFO - Daemon started
+2024-03-30 17:14:17,845 - my_daemon - INFO - Creating program ls
+2024-03-30 17:14:17,845 - my_daemon - INFO - Creating program ls
+2024-03-30 17:14:17,845 - my_daemon - INFO - Creating program ls
+2024-03-30 17:14:17,845 - my_daemon - INFO - Creating program idle
+2024-03-30 17:14:17,845 - my_daemon - INFO - Creating program idle
+2024-03-30 17:14:17,845 - my_daemon - INFO - Creating program idle
+2024-03-30 17:14:17,845 - my_daemon - INFO - Creating program idle
+2024-03-30 17:14:17,845 - my_daemon - INFO - Creating program idle
+2024-03-30 17:14:17,845 - my_daemon - INFO - Creating program idle
+2024-03-30 17:14:17,845 - my_daemon - INFO - Creating program idle
+2024-03-30 17:14:17,845 - my_daemon - INFO - Creating program idle
+2024-03-30 17:46:00,919 - my_daemon - INFO - Daemon started
+2024-03-30 17:46:40,554 - my_daemon - INFO - Creating program ls
+2024-03-30 17:46:40,554 - my_daemon - INFO - Creating program ls
+2024-03-30 17:46:40,554 - my_daemon - INFO - Creating program ls
+2024-03-30 17:46:40,554 - my_daemon - INFO - Creating program idle
+2024-03-30 17:46:40,555 - my_daemon - INFO - Creating program idle
+2024-03-30 17:46:40,555 - my_daemon - INFO - Creating program idle
+2024-03-30 17:46:40,555 - my_daemon - INFO - Creating program idle
+2024-03-30 17:46:40,555 - my_daemon - INFO - Creating program idle
+2024-03-30 17:46:40,555 - my_daemon - INFO - Creating program idle
+2024-03-30 17:46:40,555 - my_daemon - INFO - Creating program idle
+2024-03-30 17:46:40,555 - my_daemon - INFO - Creating program idle
+2024-03-30 17:50:59,381 - my_daemon - INFO - Daemon started
+2024-03-30 17:51:18,924 - my_daemon - INFO - Creating program ls
+2024-03-30 17:51:18,924 - my_daemon - INFO - Creating program ls
+2024-03-30 17:51:18,924 - my_daemon - INFO - Creating program ls
+2024-03-30 17:51:18,924 - my_daemon - INFO - Creating program idle
+2024-03-30 17:51:18,924 - my_daemon - INFO - Creating program idle
+2024-03-30 17:51:18,924 - my_daemon - INFO - Creating program idle
+2024-03-30 17:51:18,924 - my_daemon - INFO - Creating program idle
+2024-03-30 17:51:18,924 - my_daemon - INFO - Creating program idle
+2024-03-30 17:51:18,924 - my_daemon - INFO - Creating program idle
+2024-03-30 17:51:18,924 - my_daemon - INFO - Creating program idle
+2024-03-30 17:51:18,924 - my_daemon - INFO - Creating program idle
+2024-03-31 13:37:41,552 - my_daemon - INFO - Daemon started
+2024-03-31 13:37:45,991 - my_daemon - INFO - Creating program ls
+2024-03-31 13:37:45,991 - my_daemon - INFO - Creating program ls
+2024-03-31 13:37:45,991 - my_daemon - INFO - Creating program ls
+2024-03-31 13:37:45,991 - my_daemon - INFO - Creating program idle
+2024-03-31 13:37:45,991 - my_daemon - INFO - Creating program idle
+2024-03-31 13:37:45,991 - my_daemon - INFO - Creating program idle
+2024-03-31 13:37:45,991 - my_daemon - INFO - Creating program idle
+2024-03-31 13:37:45,991 - my_daemon - INFO - Creating program idle
+2024-03-31 13:37:45,991 - my_daemon - INFO - Creating program idle
+2024-03-31 13:37:45,991 - my_daemon - INFO - Creating program idle
+2024-03-31 13:37:45,991 - my_daemon - INFO - Creating program idle
+2024-04-09 16:16:01,783 - my_daemon - INFO - Daemon started
+2024-04-09 16:16:24,391 - my_daemon - INFO - Creating program ls
+2024-04-09 16:16:24,391 - my_daemon - INFO - Creating program ls
+2024-04-09 16:16:24,392 - my_daemon - INFO - Creating program ls
+2024-04-09 16:16:24,392 - my_daemon - INFO - Creating program idle
+2024-04-09 16:16:24,392 - my_daemon - INFO - Creating program idle
+2024-04-09 16:16:24,392 - my_daemon - INFO - Creating program idle
+2024-04-09 16:16:24,392 - my_daemon - INFO - Creating program idle
+2024-04-09 16:16:24,392 - my_daemon - INFO - Creating program idle
+2024-04-09 16:16:24,392 - my_daemon - INFO - Creating program idle
+2024-04-09 16:16:24,392 - my_daemon - INFO - Creating program idle
+2024-04-09 16:16:24,392 - my_daemon - INFO - Creating program idle
+2024-04-09 16:17:16,904 - my_daemon - INFO - Daemon started
+2024-04-09 16:17:21,948 - my_daemon - INFO - Creating program ls
+2024-04-09 16:17:21,948 - my_daemon - INFO - Creating program ls
+2024-04-09 16:17:21,948 - my_daemon - INFO - Creating program ls
+2024-04-09 16:17:21,948 - my_daemon - INFO - Creating program idle
+2024-04-09 16:17:21,948 - my_daemon - INFO - Creating program idle
+2024-04-09 16:17:21,948 - my_daemon - INFO - Creating program idle
+2024-04-09 16:17:21,948 - my_daemon - INFO - Creating program idle
+2024-04-09 16:17:21,948 - my_daemon - INFO - Creating program idle
+2024-04-09 16:17:21,948 - my_daemon - INFO - Creating program idle
+2024-04-09 16:17:21,948 - my_daemon - INFO - Creating program idle
+2024-04-09 16:17:21,948 - my_daemon - INFO - Creating program idle
+2024-04-09 16:53:37,148 - my_daemon - INFO - Daemon started
+2024-04-09 16:53:42,628 - my_daemon - INFO - Creating program ls
+2024-04-09 16:53:42,628 - my_daemon - INFO - Creating program ls
+2024-04-09 16:53:42,628 - my_daemon - INFO - Creating program ls
+2024-04-09 16:53:42,628 - my_daemon - INFO - Creating program idle
+2024-04-09 16:53:42,628 - my_daemon - INFO - Creating program idle
+2024-04-09 16:53:42,628 - my_daemon - INFO - Creating program idle
+2024-04-09 16:53:42,628 - my_daemon - INFO - Creating program idle
+2024-04-09 16:53:42,628 - my_daemon - INFO - Creating program idle
+2024-04-09 16:53:42,628 - my_daemon - INFO - Creating program idle
+2024-04-09 16:53:42,628 - my_daemon - INFO - Creating program idle
+2024-04-09 16:53:42,628 - my_daemon - INFO - Creating program idle
+2024-04-10 12:18:46,033 - my_daemon - INFO - Daemon started
+2024-04-10 12:18:49,963 - my_daemon - INFO - Creating program ls
+2024-04-10 12:18:49,963 - my_daemon - INFO - Creating program ls
+2024-04-10 12:18:49,963 - my_daemon - INFO - Creating program ls
+2024-04-10 12:18:49,963 - my_daemon - INFO - Creating program idle
+2024-04-10 12:18:49,963 - my_daemon - INFO - Creating program idle
+2024-04-10 12:18:49,963 - my_daemon - INFO - Creating program idle
+2024-04-10 12:18:49,964 - my_daemon - INFO - Creating program idle
+2024-04-10 12:18:49,964 - my_daemon - INFO - Creating program idle
+2024-04-10 12:18:49,964 - my_daemon - INFO - Creating program idle
+2024-04-10 12:18:49,964 - my_daemon - INFO - Creating program idle
+2024-04-10 12:18:49,964 - my_daemon - INFO - Creating program idle
+2024-04-10 12:55:50,876 - my_daemon - INFO - Daemon started
+2024-04-10 12:55:53,936 - my_daemon - INFO - Creating program ls
+2024-04-10 12:55:53,936 - my_daemon - INFO - Creating program ls
+2024-04-10 12:55:53,936 - my_daemon - INFO - Creating program ls
+2024-04-10 12:55:53,936 - my_daemon - INFO - Creating program idle
+2024-04-10 12:55:53,936 - my_daemon - INFO - Creating program idle
+2024-04-10 12:55:53,936 - my_daemon - INFO - Creating program idle
+2024-04-10 12:55:53,936 - my_daemon - INFO - Creating program idle
+2024-04-10 12:55:53,936 - my_daemon - INFO - Creating program idle
+2024-04-10 12:55:53,936 - my_daemon - INFO - Creating program idle
+2024-04-10 12:55:53,936 - my_daemon - INFO - Creating program idle
+2024-04-10 12:55:53,936 - my_daemon - INFO - Creating program idle
+2024-04-10 12:56:56,671 - my_daemon - INFO - Daemon started
+2024-04-10 12:57:00,224 - my_daemon - INFO - Creating program ls
+2024-04-10 12:57:00,224 - my_daemon - INFO - Creating program ls
+2024-04-10 12:57:00,224 - my_daemon - INFO - Creating program ls
+2024-04-10 12:57:00,224 - my_daemon - INFO - Creating program idle
+2024-04-10 12:57:00,224 - my_daemon - INFO - Creating program idle
+2024-04-10 12:57:00,224 - my_daemon - INFO - Creating program idle
+2024-04-10 12:57:00,224 - my_daemon - INFO - Creating program idle
+2024-04-10 12:57:00,224 - my_daemon - INFO - Creating program idle
+2024-04-10 12:57:00,224 - my_daemon - INFO - Creating program idle
+2024-04-10 12:57:00,224 - my_daemon - INFO - Creating program idle
+2024-04-10 12:57:00,224 - my_daemon - INFO - Creating program idle
+2024-04-10 12:57:25,481 - my_daemon - INFO - Daemon started
+2024-04-10 12:57:28,989 - my_daemon - INFO - Creating program ls
+2024-04-10 12:57:28,989 - my_daemon - INFO - Creating program ls
+2024-04-10 12:57:28,989 - my_daemon - INFO - Creating program ls
+2024-04-10 12:57:28,989 - my_daemon - INFO - Creating program idle
+2024-04-10 12:57:28,989 - my_daemon - INFO - Creating program idle
+2024-04-10 12:57:28,989 - my_daemon - INFO - Creating program idle
+2024-04-10 12:57:28,989 - my_daemon - INFO - Creating program idle
+2024-04-10 12:57:28,989 - my_daemon - INFO - Creating program idle
+2024-04-10 12:57:28,989 - my_daemon - INFO - Creating program idle
+2024-04-10 12:57:28,990 - my_daemon - INFO - Creating program idle
+2024-04-10 12:57:28,990 - my_daemon - INFO - Creating program idle
+2024-04-10 12:57:47,226 - my_daemon - INFO - Daemon started
+2024-04-10 12:57:54,425 - my_daemon - INFO - Creating program ls
+2024-04-10 12:57:54,425 - my_daemon - INFO - Creating program ls
+2024-04-10 12:57:54,425 - my_daemon - INFO - Creating program ls
+2024-04-10 12:57:54,425 - my_daemon - INFO - Creating program idle
+2024-04-10 12:57:54,425 - my_daemon - INFO - Creating program idle
+2024-04-10 12:57:54,425 - my_daemon - INFO - Creating program idle
+2024-04-10 12:57:54,425 - my_daemon - INFO - Creating program idle
+2024-04-10 12:57:54,425 - my_daemon - INFO - Creating program idle
+2024-04-10 12:57:54,425 - my_daemon - INFO - Creating program idle
+2024-04-10 12:57:54,425 - my_daemon - INFO - Creating program idle
+2024-04-10 12:57:54,425 - my_daemon - INFO - Creating program idle
+2024-04-10 13:13:44,051 - my_daemon - INFO - Daemon started
+2024-04-10 13:13:47,270 - my_daemon - INFO - Creating program ls
+2024-04-10 13:13:47,270 - my_daemon - INFO - Creating program ls
+2024-04-10 13:13:47,270 - my_daemon - INFO - Creating program ls
+2024-04-10 13:13:47,270 - my_daemon - INFO - Creating program idle
+2024-04-10 13:13:47,270 - my_daemon - INFO - Creating program idle
+2024-04-10 13:13:47,270 - my_daemon - INFO - Creating program idle
+2024-04-10 13:13:47,270 - my_daemon - INFO - Creating program idle
+2024-04-10 13:13:47,270 - my_daemon - INFO - Creating program idle
+2024-04-10 13:13:47,270 - my_daemon - INFO - Creating program idle
+2024-04-10 13:13:47,270 - my_daemon - INFO - Creating program idle
+2024-04-10 13:13:47,270 - my_daemon - INFO - Creating program idle
+2024-04-10 13:14:02,543 - my_daemon - INFO - Daemon started
+2024-04-10 13:14:05,722 - my_daemon - INFO - Creating program ls
+2024-04-10 13:14:05,722 - my_daemon - INFO - Creating program ls
+2024-04-10 13:14:05,722 - my_daemon - INFO - Creating program ls
+2024-04-10 13:14:05,722 - my_daemon - INFO - Creating program idle
+2024-04-10 13:14:05,722 - my_daemon - INFO - Creating program idle
+2024-04-10 13:14:05,722 - my_daemon - INFO - Creating program idle
+2024-04-10 13:14:05,723 - my_daemon - INFO - Creating program idle
+2024-04-10 13:14:05,723 - my_daemon - INFO - Creating program idle
+2024-04-10 13:14:05,723 - my_daemon - INFO - Creating program idle
+2024-04-10 13:14:05,723 - my_daemon - INFO - Creating program idle
+2024-04-10 13:14:05,723 - my_daemon - INFO - Creating program idle
+2024-04-10 13:15:27,539 - my_daemon - INFO - Daemon started
+2024-04-10 13:15:32,295 - my_daemon - INFO - Creating program ls
+2024-04-10 13:15:32,295 - my_daemon - INFO - Creating program ls
+2024-04-10 13:15:32,295 - my_daemon - INFO - Creating program ls
+2024-04-10 13:15:32,295 - my_daemon - INFO - Creating program idle
+2024-04-10 13:15:32,295 - my_daemon - INFO - Creating program idle
+2024-04-10 13:15:32,295 - my_daemon - INFO - Creating program idle
+2024-04-10 13:15:32,295 - my_daemon - INFO - Creating program idle
+2024-04-10 13:15:32,295 - my_daemon - INFO - Creating program idle
+2024-04-10 13:15:32,295 - my_daemon - INFO - Creating program idle
+2024-04-10 13:15:32,295 - my_daemon - INFO - Creating program idle
+2024-04-10 13:15:32,295 - my_daemon - INFO - Creating program idle
+2024-04-10 13:16:26,896 - my_daemon - INFO - Daemon started
+2024-04-10 13:16:33,266 - my_daemon - INFO - Daemon started
+2024-04-10 13:16:59,597 - my_daemon - INFO - Daemon started
+2024-04-10 13:17:03,676 - my_daemon - INFO - Creating program ls
+2024-04-10 13:17:03,676 - my_daemon - INFO - Creating program ls
+2024-04-10 13:17:03,676 - my_daemon - INFO - Creating program ls
+2024-04-10 13:17:03,676 - my_daemon - INFO - Creating program idle
+2024-04-10 13:17:03,676 - my_daemon - INFO - Creating program idle
+2024-04-10 13:17:03,676 - my_daemon - INFO - Creating program idle
+2024-04-10 13:17:03,676 - my_daemon - INFO - Creating program idle
+2024-04-10 13:17:03,676 - my_daemon - INFO - Creating program idle
+2024-04-10 13:17:03,676 - my_daemon - INFO - Creating program idle
+2024-04-10 13:17:03,676 - my_daemon - INFO - Creating program idle
+2024-04-10 13:17:03,676 - my_daemon - INFO - Creating program idle
+2024-04-10 13:17:37,284 - my_daemon - INFO - Daemon started
+2024-04-10 13:17:43,388 - my_daemon - INFO - Creating program ls
+2024-04-10 13:17:43,389 - my_daemon - INFO - Creating program ls
+2024-04-10 13:17:43,389 - my_daemon - INFO - Creating program ls
+2024-04-10 13:17:43,389 - my_daemon - INFO - Creating program idle
+2024-04-10 13:17:43,389 - my_daemon - INFO - Creating program idle
+2024-04-10 13:17:43,389 - my_daemon - INFO - Creating program idle
+2024-04-10 13:17:43,389 - my_daemon - INFO - Creating program idle
+2024-04-10 13:17:43,389 - my_daemon - INFO - Creating program idle
+2024-04-10 13:17:43,389 - my_daemon - INFO - Creating program idle
+2024-04-10 13:17:43,389 - my_daemon - INFO - Creating program idle
+2024-04-10 13:17:43,389 - my_daemon - INFO - Creating program idle
+2024-04-10 13:17:59,586 - my_daemon - INFO - Daemon started
+2024-04-10 13:18:03,764 - my_daemon - INFO - Creating program ls
+2024-04-10 13:18:03,765 - my_daemon - INFO - Creating program ls
+2024-04-10 13:18:03,765 - my_daemon - INFO - Creating program ls
+2024-04-10 13:18:03,765 - my_daemon - INFO - Creating program idle
+2024-04-10 13:18:03,765 - my_daemon - INFO - Creating program idle
+2024-04-10 13:18:03,765 - my_daemon - INFO - Creating program idle
+2024-04-10 13:18:03,765 - my_daemon - INFO - Creating program idle
+2024-04-10 13:18:03,765 - my_daemon - INFO - Creating program idle
+2024-04-10 13:18:03,765 - my_daemon - INFO - Creating program idle
+2024-04-10 13:18:03,765 - my_daemon - INFO - Creating program idle
+2024-04-10 13:18:03,765 - my_daemon - INFO - Creating program idle
+2024-04-10 13:18:27,741 - my_daemon - INFO - Daemon started
+2024-04-10 13:18:43,505 - my_daemon - INFO - Creating program ls
+2024-04-10 13:18:43,506 - my_daemon - INFO - Creating program ls
+2024-04-10 13:18:43,506 - my_daemon - INFO - Creating program ls
+2024-04-10 13:18:43,506 - my_daemon - INFO - Creating program idle
+2024-04-10 13:18:43,506 - my_daemon - INFO - Creating program idle
+2024-04-10 13:18:43,506 - my_daemon - INFO - Creating program idle
+2024-04-10 13:18:43,506 - my_daemon - INFO - Creating program idle
+2024-04-10 13:18:43,506 - my_daemon - INFO - Creating program idle
+2024-04-10 13:18:43,507 - my_daemon - INFO - Creating program idle
+2024-04-10 13:18:43,507 - my_daemon - INFO - Creating program idle
+2024-04-10 13:18:43,507 - my_daemon - INFO - Creating program idle
+2024-04-10 13:18:52,927 - my_daemon - INFO - Daemon started
+2024-04-10 13:18:57,833 - my_daemon - INFO - Creating program ls
+2024-04-10 13:18:57,833 - my_daemon - INFO - Creating program ls
+2024-04-10 13:18:57,833 - my_daemon - INFO - Creating program ls
+2024-04-10 13:18:57,833 - my_daemon - INFO - Creating program idle
+2024-04-10 13:18:57,833 - my_daemon - INFO - Creating program idle
+2024-04-10 13:18:57,833 - my_daemon - INFO - Creating program idle
+2024-04-10 13:18:57,833 - my_daemon - INFO - Creating program idle
+2024-04-10 13:18:57,833 - my_daemon - INFO - Creating program idle
+2024-04-10 13:18:57,833 - my_daemon - INFO - Creating program idle
+2024-04-10 13:18:57,833 - my_daemon - INFO - Creating program idle
+2024-04-10 13:18:57,833 - my_daemon - INFO - Creating program idle
+2024-04-10 13:19:54,523 - my_daemon - INFO - Daemon started
+2024-04-10 13:19:58,378 - my_daemon - INFO - Creating program ls
+2024-04-10 13:19:58,378 - my_daemon - INFO - Creating program ls
+2024-04-10 13:19:58,378 - my_daemon - INFO - Creating program ls
+2024-04-10 13:19:58,378 - my_daemon - INFO - Creating program idle
+2024-04-10 13:19:58,378 - my_daemon - INFO - Creating program idle
+2024-04-10 13:19:58,378 - my_daemon - INFO - Creating program idle
+2024-04-10 13:19:58,378 - my_daemon - INFO - Creating program idle
+2024-04-10 13:19:58,378 - my_daemon - INFO - Creating program idle
+2024-04-10 13:19:58,378 - my_daemon - INFO - Creating program idle
+2024-04-10 13:19:58,378 - my_daemon - INFO - Creating program idle
+2024-04-10 13:19:58,378 - my_daemon - INFO - Creating program idle
+2024-04-10 13:20:09,898 - my_daemon - INFO - Daemon started
+2024-04-10 13:20:13,581 - my_daemon - INFO - Creating program ls
+2024-04-10 13:20:13,582 - my_daemon - INFO - Creating program ls
+2024-04-10 13:20:13,582 - my_daemon - INFO - Creating program ls
+2024-04-10 13:20:13,582 - my_daemon - INFO - Creating program idle
+2024-04-10 13:20:13,582 - my_daemon - INFO - Creating program idle
+2024-04-10 13:20:13,582 - my_daemon - INFO - Creating program idle
+2024-04-10 13:20:13,582 - my_daemon - INFO - Creating program idle
+2024-04-10 13:20:13,582 - my_daemon - INFO - Creating program idle
+2024-04-10 13:20:13,582 - my_daemon - INFO - Creating program idle
+2024-04-10 13:20:13,582 - my_daemon - INFO - Creating program idle
+2024-04-10 13:20:13,582 - my_daemon - INFO - Creating program idle
+2024-04-10 13:34:03,401 - my_daemon - INFO - Daemon started
+2024-04-10 13:34:08,529 - my_daemon - INFO - Creating program ls
+2024-04-10 13:34:08,530 - my_daemon - INFO - Creating program ls
+2024-04-10 13:34:08,530 - my_daemon - INFO - Creating program ls
+2024-04-10 13:34:08,530 - my_daemon - INFO - Creating program idle
+2024-04-10 13:34:08,530 - my_daemon - INFO - Creating program idle
+2024-04-10 13:34:08,530 - my_daemon - INFO - Creating program idle
+2024-04-10 13:34:08,530 - my_daemon - INFO - Creating program idle
+2024-04-10 13:34:08,530 - my_daemon - INFO - Creating program idle
+2024-04-10 13:34:08,530 - my_daemon - INFO - Creating program idle
+2024-04-10 13:34:08,530 - my_daemon - INFO - Creating program idle
+2024-04-10 13:34:08,530 - my_daemon - INFO - Creating program idle
+2024-04-10 13:42:47,045 - my_daemon - INFO - Daemon started
+2024-04-10 13:42:51,422 - my_daemon - INFO - Creating program ls
+2024-04-10 13:42:51,422 - my_daemon - INFO - Creating program ls
+2024-04-10 13:42:51,422 - my_daemon - INFO - Creating program ls
+2024-04-10 13:42:51,422 - my_daemon - INFO - Creating program idle
+2024-04-10 13:42:51,422 - my_daemon - INFO - Creating program idle
+2024-04-10 13:42:51,422 - my_daemon - INFO - Creating program idle
+2024-04-10 13:42:51,422 - my_daemon - INFO - Creating program idle
+2024-04-10 13:42:51,422 - my_daemon - INFO - Creating program idle
+2024-04-10 13:42:51,422 - my_daemon - INFO - Creating program idle
+2024-04-10 13:42:51,422 - my_daemon - INFO - Creating program idle
+2024-04-10 13:42:51,422 - my_daemon - INFO - Creating program idle
+2024-04-10 13:43:55,212 - my_daemon - INFO - Daemon started
+2024-04-10 13:43:58,802 - my_daemon - INFO - Creating program ls
+2024-04-10 13:43:58,803 - my_daemon - INFO - Creating program ls
+2024-04-10 13:43:58,803 - my_daemon - INFO - Creating program ls
+2024-04-10 13:43:58,803 - my_daemon - INFO - Creating program idle
+2024-04-10 13:43:58,803 - my_daemon - INFO - Creating program idle
+2024-04-10 13:43:58,803 - my_daemon - INFO - Creating program idle
+2024-04-10 13:43:58,803 - my_daemon - INFO - Creating program idle
+2024-04-10 13:43:58,803 - my_daemon - INFO - Creating program idle
+2024-04-10 13:43:58,803 - my_daemon - INFO - Creating program idle
+2024-04-10 13:43:58,803 - my_daemon - INFO - Creating program idle
+2024-04-10 13:43:58,803 - my_daemon - INFO - Creating program idle
+2024-04-10 13:48:14,656 - my_daemon - INFO - Daemon started
+2024-04-10 13:48:18,413 - my_daemon - INFO - Creating program ls
+2024-04-10 13:48:18,413 - my_daemon - INFO - Creating program ls
+2024-04-10 13:48:18,413 - my_daemon - INFO - Creating program ls
+2024-04-10 13:48:18,413 - my_daemon - INFO - Creating program idle
+2024-04-10 13:48:18,413 - my_daemon - INFO - Creating program idle
+2024-04-10 13:48:18,414 - my_daemon - INFO - Creating program idle
+2024-04-10 13:48:18,414 - my_daemon - INFO - Creating program idle
+2024-04-10 13:48:18,414 - my_daemon - INFO - Creating program idle
+2024-04-10 13:48:18,414 - my_daemon - INFO - Creating program idle
+2024-04-10 13:48:18,414 - my_daemon - INFO - Creating program idle
+2024-04-10 13:48:18,414 - my_daemon - INFO - Creating program idle
+2024-04-10 14:08:47,191 - my_daemon - INFO - Daemon started
+2024-04-10 14:08:51,846 - my_daemon - INFO - Creating program ls
+2024-04-10 14:08:51,846 - my_daemon - INFO - Creating program ls
+2024-04-10 14:08:51,846 - my_daemon - INFO - Creating program ls
+2024-04-10 14:08:51,846 - my_daemon - INFO - Creating program idle
+2024-04-10 14:08:51,846 - my_daemon - INFO - Creating program idle
+2024-04-10 14:08:51,846 - my_daemon - INFO - Creating program idle
+2024-04-10 14:08:51,846 - my_daemon - INFO - Creating program idle
+2024-04-10 14:08:51,846 - my_daemon - INFO - Creating program idle
+2024-04-10 14:08:51,846 - my_daemon - INFO - Creating program idle
+2024-04-10 14:08:51,847 - my_daemon - INFO - Creating program idle
+2024-04-10 14:08:51,847 - my_daemon - INFO - Creating program idle
+2024-04-10 14:14:30,647 - my_daemon - INFO - Daemon started
+2024-04-10 14:14:36,958 - my_daemon - INFO - Creating program ls
+2024-04-10 14:14:36,958 - my_daemon - INFO - Creating program ls
+2024-04-10 14:14:36,958 - my_daemon - INFO - Creating program ls
+2024-04-10 14:14:36,958 - my_daemon - INFO - Creating program idle
+2024-04-10 14:14:36,958 - my_daemon - INFO - Creating program idle
+2024-04-10 14:14:36,958 - my_daemon - INFO - Creating program idle
+2024-04-10 14:14:36,958 - my_daemon - INFO - Creating program idle
+2024-04-10 14:14:36,958 - my_daemon - INFO - Creating program idle
+2024-04-10 14:14:36,958 - my_daemon - INFO - Creating program idle
+2024-04-10 14:14:36,958 - my_daemon - INFO - Creating program idle
+2024-04-10 14:14:36,958 - my_daemon - INFO - Creating program idle
+2024-04-10 14:14:52,803 - my_daemon - INFO - Daemon started
+2024-04-10 14:14:56,110 - my_daemon - INFO - Creating program ls
+2024-04-10 14:14:56,110 - my_daemon - INFO - Creating program ls
+2024-04-10 14:14:56,111 - my_daemon - INFO - Creating program ls
+2024-04-10 14:14:56,111 - my_daemon - INFO - Creating program idle
+2024-04-10 14:14:56,111 - my_daemon - INFO - Creating program idle
+2024-04-10 14:14:56,111 - my_daemon - INFO - Creating program idle
+2024-04-10 14:14:56,111 - my_daemon - INFO - Creating program idle
+2024-04-10 14:14:56,111 - my_daemon - INFO - Creating program idle
+2024-04-10 14:14:56,111 - my_daemon - INFO - Creating program idle
+2024-04-10 14:14:56,111 - my_daemon - INFO - Creating program idle
+2024-04-10 14:14:56,111 - my_daemon - INFO - Creating program idle
+2024-04-10 14:16:26,509 - my_daemon - INFO - Daemon started
+2024-04-10 14:16:50,335 - my_daemon - INFO - Creating program ls
+2024-04-10 14:16:50,335 - my_daemon - INFO - Creating program ls
+2024-04-10 14:16:50,335 - my_daemon - INFO - Creating program ls
+2024-04-10 14:16:50,335 - my_daemon - INFO - Creating program idle
+2024-04-10 14:16:50,335 - my_daemon - INFO - Creating program idle
+2024-04-10 14:16:50,335 - my_daemon - INFO - Creating program idle
+2024-04-10 14:16:50,335 - my_daemon - INFO - Creating program idle
+2024-04-10 14:16:50,335 - my_daemon - INFO - Creating program idle
+2024-04-10 14:16:50,335 - my_daemon - INFO - Creating program idle
+2024-04-10 14:16:50,335 - my_daemon - INFO - Creating program idle
+2024-04-10 14:16:50,335 - my_daemon - INFO - Creating program idle
+2024-04-10 19:10:13,312 - my_daemon - INFO - Daemon started
+2024-04-10 19:10:17,482 - my_daemon - INFO - Creating program ls
+2024-04-10 19:10:17,482 - my_daemon - INFO - Creating program ls
+2024-04-10 19:10:17,483 - my_daemon - INFO - Creating program ls
+2024-04-10 19:10:17,483 - my_daemon - INFO - Creating program idle
+2024-04-10 19:10:17,483 - my_daemon - INFO - Creating program idle
+2024-04-10 19:10:17,483 - my_daemon - INFO - Creating program idle
+2024-04-10 19:10:17,483 - my_daemon - INFO - Creating program idle
+2024-04-10 19:10:17,483 - my_daemon - INFO - Creating program idle
+2024-04-10 19:10:17,483 - my_daemon - INFO - Creating program idle
+2024-04-10 19:10:17,483 - my_daemon - INFO - Creating program idle
+2024-04-10 19:10:17,483 - my_daemon - INFO - Creating program idle
+2024-04-10 19:12:24,481 - my_daemon - INFO - Daemon started
+2024-04-10 19:12:28,559 - my_daemon - INFO - Creating program ls
+2024-04-10 19:12:28,559 - my_daemon - INFO - Creating program ls
+2024-04-10 19:12:28,559 - my_daemon - INFO - Creating program ls
+2024-04-10 19:12:28,559 - my_daemon - INFO - Creating program idle
+2024-04-10 19:12:28,559 - my_daemon - INFO - Creating program idle
+2024-04-10 19:12:28,559 - my_daemon - INFO - Creating program idle
+2024-04-10 19:12:28,559 - my_daemon - INFO - Creating program idle
+2024-04-10 19:12:28,559 - my_daemon - INFO - Creating program idle
+2024-04-10 19:12:28,559 - my_daemon - INFO - Creating program idle
+2024-04-10 19:12:28,559 - my_daemon - INFO - Creating program idle
+2024-04-10 19:12:28,559 - my_daemon - INFO - Creating program idle
+2024-04-10 19:12:49,303 - my_daemon - INFO - Daemon started
+2024-04-10 19:12:52,644 - my_daemon - INFO - Creating program ls
+2024-04-10 19:12:52,644 - my_daemon - INFO - Creating program ls
+2024-04-10 19:12:52,644 - my_daemon - INFO - Creating program ls
+2024-04-10 19:12:52,644 - my_daemon - INFO - Creating program idle
+2024-04-10 19:12:52,644 - my_daemon - INFO - Creating program idle
+2024-04-10 19:12:52,644 - my_daemon - INFO - Creating program idle
+2024-04-10 19:12:52,644 - my_daemon - INFO - Creating program idle
+2024-04-10 19:12:52,644 - my_daemon - INFO - Creating program idle
+2024-04-10 19:12:52,644 - my_daemon - INFO - Creating program idle
+2024-04-10 19:12:52,644 - my_daemon - INFO - Creating program idle
+2024-04-10 19:12:52,644 - my_daemon - INFO - Creating program idle
+2024-04-10 19:13:23,133 - my_daemon - INFO - Daemon started
+2024-04-10 19:13:26,248 - my_daemon - INFO - Creating program ls
+2024-04-10 19:13:26,248 - my_daemon - INFO - Creating program ls
+2024-04-10 19:13:26,248 - my_daemon - INFO - Creating program ls
+2024-04-10 19:13:26,248 - my_daemon - INFO - Creating program idle
+2024-04-10 19:13:26,248 - my_daemon - INFO - Creating program idle
+2024-04-10 19:13:26,248 - my_daemon - INFO - Creating program idle
+2024-04-10 19:13:26,248 - my_daemon - INFO - Creating program idle
+2024-04-10 19:13:26,248 - my_daemon - INFO - Creating program idle
+2024-04-10 19:13:26,248 - my_daemon - INFO - Creating program idle
+2024-04-10 19:13:26,248 - my_daemon - INFO - Creating program idle
+2024-04-10 19:13:26,248 - my_daemon - INFO - Creating program idle
+2024-04-10 19:44:50,368 - my_daemon - INFO - Daemon started
+2024-04-10 19:44:54,285 - my_daemon - INFO - Creating program ls
+2024-04-10 19:44:54,285 - my_daemon - INFO - Creating program ls
+2024-04-10 19:44:54,285 - my_daemon - INFO - Creating program ls
+2024-04-10 19:44:54,285 - my_daemon - INFO - Creating program idle
+2024-04-10 19:44:54,285 - my_daemon - INFO - Creating program idle
+2024-04-10 19:44:54,285 - my_daemon - INFO - Creating program idle
+2024-04-10 19:44:54,285 - my_daemon - INFO - Creating program idle
+2024-04-10 19:44:54,285 - my_daemon - INFO - Creating program idle
+2024-04-10 19:44:54,285 - my_daemon - INFO - Creating program idle
+2024-04-10 19:44:54,285 - my_daemon - INFO - Creating program idle
+2024-04-10 19:44:54,285 - my_daemon - INFO - Creating program idle
+2024-04-10 19:53:27,964 - my_daemon - INFO - Daemon started
+2024-04-10 19:53:31,525 - my_daemon - INFO - Creating program ls
+2024-04-10 19:53:31,525 - my_daemon - INFO - Creating program ls
+2024-04-10 19:53:31,525 - my_daemon - INFO - Creating program ls
+2024-04-10 19:53:31,525 - my_daemon - INFO - Creating program idle
+2024-04-10 19:53:31,525 - my_daemon - INFO - Creating program idle
+2024-04-10 19:53:31,525 - my_daemon - INFO - Creating program idle
+2024-04-10 19:53:31,526 - my_daemon - INFO - Creating program idle
+2024-04-10 19:53:31,526 - my_daemon - INFO - Creating program idle
+2024-04-10 19:53:31,526 - my_daemon - INFO - Creating program idle
+2024-04-10 19:53:31,526 - my_daemon - INFO - Creating program idle
+2024-04-10 19:53:31,526 - my_daemon - INFO - Creating program idle
+2024-04-10 19:53:49,125 - my_daemon - INFO - Daemon started
+2024-04-10 19:53:52,497 - my_daemon - INFO - Creating program ls
+2024-04-10 19:53:52,497 - my_daemon - INFO - Creating program ls
+2024-04-10 19:53:52,497 - my_daemon - INFO - Creating program ls
+2024-04-10 19:53:52,497 - my_daemon - INFO - Creating program idle
+2024-04-10 19:53:52,497 - my_daemon - INFO - Creating program idle
+2024-04-10 19:53:52,497 - my_daemon - INFO - Creating program idle
+2024-04-10 19:53:52,497 - my_daemon - INFO - Creating program idle
+2024-04-10 19:53:52,497 - my_daemon - INFO - Creating program idle
+2024-04-10 19:53:52,497 - my_daemon - INFO - Creating program idle
+2024-04-10 19:53:52,497 - my_daemon - INFO - Creating program idle
+2024-04-10 19:53:52,497 - my_daemon - INFO - Creating program idle
+2024-04-10 19:54:39,632 - my_daemon - INFO - Daemon started
+2024-04-10 19:54:48,313 - my_daemon - INFO - Creating program ls
+2024-04-10 19:54:48,313 - my_daemon - INFO - Creating program ls
+2024-04-10 19:54:48,313 - my_daemon - INFO - Creating program ls
+2024-04-10 19:54:48,313 - my_daemon - INFO - Creating program idle
+2024-04-10 19:54:48,313 - my_daemon - INFO - Creating program idle
+2024-04-10 19:54:48,313 - my_daemon - INFO - Creating program idle
+2024-04-10 19:54:48,313 - my_daemon - INFO - Creating program idle
+2024-04-10 19:54:48,313 - my_daemon - INFO - Creating program idle
+2024-04-10 19:54:48,313 - my_daemon - INFO - Creating program idle
+2024-04-10 19:54:48,314 - my_daemon - INFO - Creating program idle
+2024-04-10 19:54:48,314 - my_daemon - INFO - Creating program idle
+2024-04-10 19:55:09,648 - my_daemon - INFO - Daemon started
+2024-04-10 19:55:12,825 - my_daemon - INFO - Creating program ls
+2024-04-10 19:55:12,825 - my_daemon - INFO - Creating program ls
+2024-04-10 19:55:12,825 - my_daemon - INFO - Creating program ls
+2024-04-10 19:55:12,825 - my_daemon - INFO - Creating program idle
+2024-04-10 19:55:12,825 - my_daemon - INFO - Creating program idle
+2024-04-10 19:55:12,825 - my_daemon - INFO - Creating program idle
+2024-04-10 19:55:12,825 - my_daemon - INFO - Creating program idle
+2024-04-10 19:55:12,825 - my_daemon - INFO - Creating program idle
+2024-04-10 19:55:12,826 - my_daemon - INFO - Creating program idle
+2024-04-10 19:55:12,826 - my_daemon - INFO - Creating program idle
+2024-04-10 19:55:12,826 - my_daemon - INFO - Creating program idle
+2024-04-10 20:01:24,697 - my_daemon - INFO - Daemon started
+2024-04-10 20:01:27,940 - my_daemon - INFO - Creating program ls
+2024-04-10 20:01:27,940 - my_daemon - INFO - Creating program ls
+2024-04-10 20:01:27,940 - my_daemon - INFO - Creating program ls
+2024-04-10 20:01:27,940 - my_daemon - INFO - Creating program idle
+2024-04-10 20:01:27,940 - my_daemon - INFO - Creating program idle
+2024-04-10 20:01:27,940 - my_daemon - INFO - Creating program idle
+2024-04-10 20:01:27,940 - my_daemon - INFO - Creating program idle
+2024-04-10 20:01:27,940 - my_daemon - INFO - Creating program idle
+2024-04-10 20:01:27,941 - my_daemon - INFO - Creating program idle
+2024-04-10 20:01:27,941 - my_daemon - INFO - Creating program idle
+2024-04-10 20:01:27,941 - my_daemon - INFO - Creating program idle
+2024-04-10 20:01:39,041 - my_daemon - INFO - Daemon started
+2024-04-10 20:01:40,698 - my_daemon - INFO - Daemon started
+2024-04-10 20:01:40,700 - my_daemon - INFO - Taskmaster daemon already running exiting...
+2024-04-10 20:01:46,405 - my_daemon - INFO - Creating program ls
+2024-04-10 20:01:46,405 - my_daemon - INFO - Creating program ls
+2024-04-10 20:01:46,405 - my_daemon - INFO - Creating program ls
+2024-04-10 20:01:46,405 - my_daemon - INFO - Creating program idle
+2024-04-10 20:01:46,405 - my_daemon - INFO - Creating program idle
+2024-04-10 20:01:46,405 - my_daemon - INFO - Creating program idle
+2024-04-10 20:01:46,405 - my_daemon - INFO - Creating program idle
+2024-04-10 20:01:46,405 - my_daemon - INFO - Creating program idle
+2024-04-10 20:01:46,405 - my_daemon - INFO - Creating program idle
+2024-04-10 20:01:46,405 - my_daemon - INFO - Creating program idle
+2024-04-10 20:01:46,405 - my_daemon - INFO - Creating program idle
+2024-04-10 20:01:58,388 - my_daemon - INFO - Daemon started
+2024-04-10 20:02:02,408 - my_daemon - INFO - Creating program ls
+2024-04-10 20:02:02,409 - my_daemon - INFO - Creating program ls
+2024-04-10 20:02:02,409 - my_daemon - INFO - Creating program ls
+2024-04-10 20:02:02,409 - my_daemon - INFO - Creating program idle
+2024-04-10 20:02:02,409 - my_daemon - INFO - Creating program idle
+2024-04-10 20:02:02,409 - my_daemon - INFO - Creating program idle
+2024-04-10 20:02:02,409 - my_daemon - INFO - Creating program idle
+2024-04-10 20:02:02,409 - my_daemon - INFO - Creating program idle
+2024-04-10 20:02:02,409 - my_daemon - INFO - Creating program idle
+2024-04-10 20:02:02,409 - my_daemon - INFO - Creating program idle
+2024-04-10 20:02:02,409 - my_daemon - INFO - Creating program idle
+2024-04-10 20:10:35,807 - my_daemon - INFO - Daemon started
+2024-04-10 20:10:39,485 - my_daemon - INFO - Creating program ls
+2024-04-10 20:10:39,485 - my_daemon - INFO - Creating program ls
+2024-04-10 20:10:39,485 - my_daemon - INFO - Creating program ls
+2024-04-10 20:10:39,485 - my_daemon - INFO - Creating program idle
+2024-04-10 20:10:39,485 - my_daemon - INFO - Creating program idle
+2024-04-10 20:10:39,485 - my_daemon - INFO - Creating program idle
+2024-04-10 20:10:39,485 - my_daemon - INFO - Creating program idle
+2024-04-10 20:10:39,485 - my_daemon - INFO - Creating program idle
+2024-04-10 20:10:39,485 - my_daemon - INFO - Creating program idle
+2024-04-10 20:10:39,485 - my_daemon - INFO - Creating program idle
+2024-04-10 20:10:39,485 - my_daemon - INFO - Creating program idle
+2024-04-12 17:10:51,570 - my_daemon - INFO - Daemon started
+2024-04-12 17:10:56,897 - my_daemon - INFO - Creating program ls
+2024-04-12 17:10:56,898 - my_daemon - INFO - Creating program ls
+2024-04-12 17:10:56,898 - my_daemon - INFO - Creating program ls
+2024-04-12 17:10:56,898 - my_daemon - INFO - Creating program idle
+2024-04-12 17:10:56,898 - my_daemon - INFO - Creating program idle
+2024-04-12 17:10:56,898 - my_daemon - INFO - Creating program idle
+2024-04-12 17:10:56,898 - my_daemon - INFO - Creating program idle
+2024-04-12 17:10:56,898 - my_daemon - INFO - Creating program idle
+2024-04-12 17:10:56,898 - my_daemon - INFO - Creating program idle
+2024-04-12 17:10:56,898 - my_daemon - INFO - Creating program idle
+2024-04-12 17:10:56,898 - my_daemon - INFO - Creating program idle
+2024-04-12 17:32:29,132 - my_daemon - INFO - Daemon started
+2024-04-12 17:32:33,107 - my_daemon - INFO - Creating program ls
+2024-04-12 17:32:33,107 - my_daemon - INFO - Creating program ls
+2024-04-12 17:32:33,108 - my_daemon - INFO - Creating program ls
+2024-04-12 17:32:33,108 - my_daemon - INFO - Creating program idle
+2024-04-12 17:32:33,108 - my_daemon - INFO - Creating program idle
+2024-04-12 17:32:33,108 - my_daemon - INFO - Creating program idle
+2024-04-12 17:32:33,108 - my_daemon - INFO - Creating program idle
+2024-04-12 17:32:33,108 - my_daemon - INFO - Creating program idle
+2024-04-12 17:32:33,108 - my_daemon - INFO - Creating program idle
+2024-04-12 17:32:33,108 - my_daemon - INFO - Creating program idle
+2024-04-12 17:32:33,108 - my_daemon - INFO - Creating program idle
+2024-04-12 17:33:08,484 - my_daemon - INFO - Daemon started
+2024-04-12 17:33:11,659 - my_daemon - INFO - Creating program ls
+2024-04-12 17:33:11,659 - my_daemon - INFO - Creating program ls
+2024-04-12 17:33:11,659 - my_daemon - INFO - Creating program ls
+2024-04-12 17:33:11,659 - my_daemon - INFO - Creating program idle
+2024-04-12 17:33:11,660 - my_daemon - INFO - Creating program idle
+2024-04-12 17:33:11,660 - my_daemon - INFO - Creating program idle
+2024-04-12 17:33:11,660 - my_daemon - INFO - Creating program idle
+2024-04-12 17:33:11,660 - my_daemon - INFO - Creating program idle
+2024-04-12 17:33:11,660 - my_daemon - INFO - Creating program idle
+2024-04-12 17:33:11,660 - my_daemon - INFO - Creating program idle
+2024-04-12 17:33:11,660 - my_daemon - INFO - Creating program idle
+2024-04-12 17:33:28,285 - my_daemon - INFO - Daemon started
+2024-04-12 17:33:32,164 - my_daemon - INFO - Creating program ls
+2024-04-12 17:33:32,164 - my_daemon - INFO - Creating program ls
+2024-04-12 17:33:32,164 - my_daemon - INFO - Creating program ls
+2024-04-12 17:33:32,164 - my_daemon - INFO - Creating program idle
+2024-04-12 17:33:32,164 - my_daemon - INFO - Creating program idle
+2024-04-12 17:33:32,164 - my_daemon - INFO - Creating program idle
+2024-04-12 17:33:32,164 - my_daemon - INFO - Creating program idle
+2024-04-12 17:33:32,164 - my_daemon - INFO - Creating program idle
+2024-04-12 17:33:32,164 - my_daemon - INFO - Creating program idle
+2024-04-12 17:33:32,164 - my_daemon - INFO - Creating program idle
+2024-04-12 17:33:32,165 - my_daemon - INFO - Creating program idle
+2024-04-12 17:41:20,729 - my_daemon - INFO - Daemon started
+2024-04-12 17:41:23,970 - my_daemon - INFO - Creating program ls
+2024-04-12 17:41:23,970 - my_daemon - INFO - Creating program ls
+2024-04-12 17:41:23,971 - my_daemon - INFO - Creating program ls
+2024-04-12 17:41:23,971 - my_daemon - INFO - Creating program idle
+2024-04-12 17:41:23,971 - my_daemon - INFO - Creating program idle
+2024-04-12 17:41:23,971 - my_daemon - INFO - Creating program idle
+2024-04-12 17:41:23,971 - my_daemon - INFO - Creating program idle
+2024-04-12 17:41:23,971 - my_daemon - INFO - Creating program idle
+2024-04-12 17:41:23,971 - my_daemon - INFO - Creating program idle
+2024-04-12 17:41:23,971 - my_daemon - INFO - Creating program idle
+2024-04-12 17:41:23,971 - my_daemon - INFO - Creating program idle
+2024-04-12 20:33:01,832 - my_daemon - INFO - Daemon started
+2024-04-12 20:33:05,471 - my_daemon - INFO - Creating program ls
+2024-04-12 20:33:05,471 - my_daemon - INFO - Creating program ls
+2024-04-12 20:33:05,471 - my_daemon - INFO - Creating program ls
+2024-04-12 20:33:05,471 - my_daemon - INFO - Creating program idle
+2024-04-12 20:33:05,471 - my_daemon - INFO - Creating program idle
+2024-04-12 20:33:05,472 - my_daemon - INFO - Creating program idle
+2024-04-12 20:33:05,472 - my_daemon - INFO - Creating program idle
+2024-04-12 20:33:05,472 - my_daemon - INFO - Creating program idle
+2024-04-12 20:33:05,472 - my_daemon - INFO - Creating program idle
+2024-04-12 20:33:05,472 - my_daemon - INFO - Creating program idle
+2024-04-12 20:33:05,472 - my_daemon - INFO - Creating program idle
+2024-04-13 16:11:27,895 - my_daemon - INFO - Daemon started
+2024-04-13 16:11:34,867 - my_daemon - INFO - Creating program ls
+2024-04-13 16:11:34,868 - my_daemon - INFO - Creating program ls
+2024-04-13 16:11:34,868 - my_daemon - INFO - Creating program ls
+2024-04-13 16:11:34,868 - my_daemon - INFO - Creating program idle
+2024-04-13 16:11:34,868 - my_daemon - INFO - Creating program idle
+2024-04-13 16:11:34,868 - my_daemon - INFO - Creating program idle
+2024-04-13 16:11:34,868 - my_daemon - INFO - Creating program idle
+2024-04-13 16:11:34,868 - my_daemon - INFO - Creating program idle
+2024-04-13 16:11:34,868 - my_daemon - INFO - Creating program idle
+2024-04-13 16:11:34,868 - my_daemon - INFO - Creating program idle
+2024-04-13 16:11:34,868 - my_daemon - INFO - Creating program idle
+2024-04-13 16:12:10,144 - my_daemon - INFO - Daemon started
+2024-04-13 16:12:17,027 - my_daemon - INFO - Creating program ls
+2024-04-13 16:12:17,027 - my_daemon - INFO - Creating program ls
+2024-04-13 16:12:17,027 - my_daemon - INFO - Creating program ls
+2024-04-13 16:12:17,027 - my_daemon - INFO - Creating program idle
+2024-04-13 16:12:17,027 - my_daemon - INFO - Creating program idle
+2024-04-13 16:12:17,027 - my_daemon - INFO - Creating program idle
+2024-04-13 16:12:17,027 - my_daemon - INFO - Creating program idle
+2024-04-13 16:12:17,027 - my_daemon - INFO - Creating program idle
+2024-04-13 16:12:17,027 - my_daemon - INFO - Creating program idle
+2024-04-13 16:12:17,027 - my_daemon - INFO - Creating program idle
+2024-04-13 16:12:17,028 - my_daemon - INFO - Creating program idle
+2024-04-13 16:13:17,552 - my_daemon - INFO - Daemon started
+2024-04-13 16:13:26,756 - my_daemon - INFO - Creating program ls
+2024-04-13 16:13:26,756 - my_daemon - INFO - Creating program ls
+2024-04-13 16:13:26,756 - my_daemon - INFO - Creating program ls
+2024-04-13 16:13:26,756 - my_daemon - INFO - Creating program idle
+2024-04-13 16:13:26,756 - my_daemon - INFO - Creating program idle
+2024-04-13 16:13:26,756 - my_daemon - INFO - Creating program idle
+2024-04-13 16:13:26,756 - my_daemon - INFO - Creating program idle
+2024-04-13 16:13:26,756 - my_daemon - INFO - Creating program idle
+2024-04-13 16:13:26,756 - my_daemon - INFO - Creating program idle
+2024-04-13 16:13:26,756 - my_daemon - INFO - Creating program idle
+2024-04-13 16:13:26,756 - my_daemon - INFO - Creating program idle
+2024-04-16 12:19:11,268 - my_daemon - INFO - Daemon started
+2024-04-16 12:19:19,563 - my_daemon - INFO - Creating program ls
+2024-04-16 12:19:19,563 - my_daemon - INFO - Creating program ls
+2024-04-16 12:19:19,563 - my_daemon - INFO - Creating program ls
+2024-04-16 12:19:19,563 - my_daemon - INFO - Creating program idle
+2024-04-16 12:19:19,563 - my_daemon - INFO - Creating program idle
+2024-04-16 12:19:19,563 - my_daemon - INFO - Creating program idle
+2024-04-16 12:19:19,563 - my_daemon - INFO - Creating program idle
+2024-04-16 12:19:19,563 - my_daemon - INFO - Creating program idle
+2024-04-16 12:19:19,563 - my_daemon - INFO - Creating program idle
+2024-04-16 12:19:19,563 - my_daemon - INFO - Creating program idle
+2024-04-16 12:19:19,563 - my_daemon - INFO - Creating program idle
+2024-04-16 12:20:39,997 - my_daemon - INFO - Daemon started
+2024-04-16 12:20:45,067 - my_daemon - INFO - Creating program ls
+2024-04-16 12:20:45,067 - my_daemon - INFO - Creating program ls
+2024-04-16 12:20:45,067 - my_daemon - INFO - Creating program ls
+2024-04-16 12:20:45,067 - my_daemon - INFO - Creating program idle
+2024-04-16 12:20:45,068 - my_daemon - INFO - Creating program idle
+2024-04-16 12:20:45,068 - my_daemon - INFO - Creating program idle
+2024-04-16 12:20:45,068 - my_daemon - INFO - Creating program idle
+2024-04-16 12:20:45,068 - my_daemon - INFO - Creating program idle
+2024-04-16 12:20:45,068 - my_daemon - INFO - Creating program idle
+2024-04-16 12:20:45,068 - my_daemon - INFO - Creating program idle
+2024-04-16 12:20:45,068 - my_daemon - INFO - Creating program idle
+2024-04-16 12:22:13,458 - my_daemon - INFO - Daemon started
+2024-04-16 12:22:18,452 - my_daemon - INFO - Creating program ls
+2024-04-16 12:22:18,452 - my_daemon - INFO - Creating program ls
+2024-04-16 12:22:18,452 - my_daemon - INFO - Creating program ls
+2024-04-16 12:22:18,452 - my_daemon - INFO - Creating program idle
+2024-04-16 12:22:18,452 - my_daemon - INFO - Creating program idle
+2024-04-16 12:22:18,452 - my_daemon - INFO - Creating program idle
+2024-04-16 12:22:18,452 - my_daemon - INFO - Creating program idle
+2024-04-16 12:22:18,452 - my_daemon - INFO - Creating program idle
+2024-04-16 12:22:18,452 - my_daemon - INFO - Creating program idle
+2024-04-16 12:22:18,452 - my_daemon - INFO - Creating program idle
+2024-04-16 12:22:18,452 - my_daemon - INFO - Creating program idle
+2024-04-16 12:29:21,776 - my_daemon - INFO - Daemon started
+2024-04-16 12:31:42,699 - my_daemon - INFO - Daemon started
+2024-04-16 12:31:42,700 - my_daemon - INFO - Taskmaster daemon already running exiting...
+2024-04-16 12:31:45,957 - my_daemon - INFO - Creating program ls
+2024-04-16 12:31:45,957 - my_daemon - INFO - Creating program ls
+2024-04-16 12:31:45,957 - my_daemon - INFO - Creating program ls
+2024-04-16 12:31:45,958 - my_daemon - INFO - Creating program idle
+2024-04-16 12:31:45,958 - my_daemon - INFO - Creating program idle
+2024-04-16 12:31:45,958 - my_daemon - INFO - Creating program idle
+2024-04-16 12:31:45,958 - my_daemon - INFO - Creating program idle
+2024-04-16 12:31:45,958 - my_daemon - INFO - Creating program idle
+2024-04-16 12:31:45,958 - my_daemon - INFO - Creating program idle
+2024-04-16 12:31:45,958 - my_daemon - INFO - Creating program idle
+2024-04-16 12:31:45,958 - my_daemon - INFO - Creating program idle
+2024-04-16 12:42:18,918 - my_daemon - INFO - Daemon started
+2024-04-16 12:42:28,556 - my_daemon - INFO - Creating program ls
+2024-04-16 12:42:28,557 - my_daemon - INFO - Creating program ls
+2024-04-16 12:42:28,557 - my_daemon - INFO - Creating program ls
+2024-04-16 12:42:28,557 - my_daemon - INFO - Creating program idle
+2024-04-16 12:42:28,557 - my_daemon - INFO - Creating program idle
+2024-04-16 12:42:28,557 - my_daemon - INFO - Creating program idle
+2024-04-16 12:42:28,557 - my_daemon - INFO - Creating program idle
+2024-04-16 12:42:28,557 - my_daemon - INFO - Creating program idle
+2024-04-16 12:42:28,557 - my_daemon - INFO - Creating program idle
+2024-04-16 12:42:28,557 - my_daemon - INFO - Creating program idle
+2024-04-16 12:42:28,557 - my_daemon - INFO - Creating program idle
+2024-04-16 12:58:53,374 - my_daemon - INFO - Daemon started
+2024-04-16 12:58:58,736 - my_daemon - INFO - Creating program ls
+2024-04-16 12:58:58,736 - my_daemon - INFO - Creating program ls
+2024-04-16 12:58:58,736 - my_daemon - INFO - Creating program ls
+2024-04-16 12:58:58,736 - my_daemon - INFO - Creating program idle
+2024-04-16 12:58:58,736 - my_daemon - INFO - Creating program idle
+2024-04-16 12:58:58,736 - my_daemon - INFO - Creating program idle
+2024-04-16 12:58:58,736 - my_daemon - INFO - Creating program idle
+2024-04-16 12:58:58,736 - my_daemon - INFO - Creating program idle
+2024-04-16 12:58:58,736 - my_daemon - INFO - Creating program idle
+2024-04-16 12:58:58,736 - my_daemon - INFO - Creating program idle
+2024-04-16 12:58:58,736 - my_daemon - INFO - Creating program idle
+2024-04-16 13:08:21,791 - my_daemon - INFO - Daemon started
+2024-04-16 13:08:26,464 - my_daemon - INFO - Creating program ls
+2024-04-16 13:08:26,464 - my_daemon - INFO - Creating program ls
+2024-04-16 13:08:26,464 - my_daemon - INFO - Creating program ls
+2024-04-16 13:08:26,464 - my_daemon - INFO - Creating program idle
+2024-04-16 13:08:26,464 - my_daemon - INFO - Creating program idle
+2024-04-16 13:08:26,464 - my_daemon - INFO - Creating program idle
+2024-04-16 13:08:26,464 - my_daemon - INFO - Creating program idle
+2024-04-16 13:08:26,464 - my_daemon - INFO - Creating program idle
+2024-04-16 13:08:26,464 - my_daemon - INFO - Creating program idle
+2024-04-16 13:08:26,464 - my_daemon - INFO - Creating program idle
+2024-04-16 13:08:26,464 - my_daemon - INFO - Creating program idle
+2024-04-16 13:08:35,545 - my_daemon - INFO - Daemon started
+2024-04-16 13:08:37,713 - my_daemon - INFO - Daemon started
+2024-04-16 13:08:37,714 - my_daemon - INFO - Taskmaster daemon already running exiting...
+2024-04-16 13:08:41,373 - my_daemon - INFO - Daemon started
+2024-04-16 13:08:41,374 - my_daemon - INFO - Taskmaster daemon already running exiting...
+2024-04-16 13:08:46,092 - my_daemon - INFO - Creating program ls
+2024-04-16 13:08:46,092 - my_daemon - INFO - Creating program ls
+2024-04-16 13:08:46,093 - my_daemon - INFO - Creating program ls
+2024-04-16 13:08:46,093 - my_daemon - INFO - Creating program idle
+2024-04-16 13:08:46,093 - my_daemon - INFO - Creating program idle
+2024-04-16 13:08:46,093 - my_daemon - INFO - Creating program idle
+2024-04-16 13:08:46,093 - my_daemon - INFO - Creating program idle
+2024-04-16 13:08:46,093 - my_daemon - INFO - Creating program idle
+2024-04-16 13:08:46,093 - my_daemon - INFO - Creating program idle
+2024-04-16 13:08:46,093 - my_daemon - INFO - Creating program idle
+2024-04-16 13:08:46,093 - my_daemon - INFO - Creating program idle
+2024-04-16 13:22:01,332 - my_daemon - INFO - Daemon started
+2024-04-16 13:22:08,118 - my_daemon - INFO - Creating program ls
+2024-04-16 13:22:08,118 - my_daemon - INFO - Creating program ls
+2024-04-16 13:22:08,118 - my_daemon - INFO - Creating program ls
+2024-04-16 13:22:08,118 - my_daemon - INFO - Creating program idle
+2024-04-16 13:22:08,118 - my_daemon - INFO - Creating program idle
+2024-04-16 13:22:08,118 - my_daemon - INFO - Creating program idle
+2024-04-16 13:22:08,118 - my_daemon - INFO - Creating program idle
+2024-04-16 13:22:08,118 - my_daemon - INFO - Creating program idle
+2024-04-16 13:22:08,118 - my_daemon - INFO - Creating program idle
+2024-04-16 13:22:08,118 - my_daemon - INFO - Creating program idle
+2024-04-16 13:22:08,118 - my_daemon - INFO - Creating program idle
+2024-04-16 13:22:23,947 - my_daemon - INFO - Daemon started
+2024-04-16 13:22:29,574 - my_daemon - INFO - Creating program ls
+2024-04-16 13:22:29,574 - my_daemon - INFO - Creating program ls
+2024-04-16 13:22:29,574 - my_daemon - INFO - Creating program ls
+2024-04-16 13:22:29,574 - my_daemon - INFO - Creating program idle
+2024-04-16 13:22:29,574 - my_daemon - INFO - Creating program idle
+2024-04-16 13:22:29,574 - my_daemon - INFO - Creating program idle
+2024-04-16 13:22:29,574 - my_daemon - INFO - Creating program idle
+2024-04-16 13:22:29,574 - my_daemon - INFO - Creating program idle
+2024-04-16 13:22:29,574 - my_daemon - INFO - Creating program idle
+2024-04-16 13:22:29,574 - my_daemon - INFO - Creating program idle
+2024-04-16 13:22:29,574 - my_daemon - INFO - Creating program idle
+2024-04-16 13:22:54,959 - my_daemon - INFO - Daemon started
+2024-04-16 13:23:03,330 - my_daemon - INFO - Creating program ls
+2024-04-16 13:23:03,330 - my_daemon - INFO - Creating program ls
+2024-04-16 13:23:03,330 - my_daemon - INFO - Creating program ls
+2024-04-16 13:23:03,330 - my_daemon - INFO - Creating program idle
+2024-04-16 13:23:03,330 - my_daemon - INFO - Creating program idle
+2024-04-16 13:23:03,330 - my_daemon - INFO - Creating program idle
+2024-04-16 13:23:03,330 - my_daemon - INFO - Creating program idle
+2024-04-16 13:23:03,330 - my_daemon - INFO - Creating program idle
+2024-04-16 13:23:03,330 - my_daemon - INFO - Creating program idle
+2024-04-16 13:23:03,330 - my_daemon - INFO - Creating program idle
+2024-04-16 13:23:03,330 - my_daemon - INFO - Creating program idle
+2024-04-16 13:29:09,011 - my_daemon - INFO - Daemon started
+2024-04-16 13:29:14,005 - my_daemon - INFO - Creating program ls
+2024-04-16 13:29:14,006 - my_daemon - INFO - Creating program ls
+2024-04-16 13:29:14,006 - my_daemon - INFO - Creating program ls
+2024-04-16 13:29:14,006 - my_daemon - INFO - Creating program idle
+2024-04-16 13:29:14,006 - my_daemon - INFO - Creating program idle
+2024-04-16 13:29:14,006 - my_daemon - INFO - Creating program idle
+2024-04-16 13:29:14,006 - my_daemon - INFO - Creating program idle
+2024-04-16 13:29:14,006 - my_daemon - INFO - Creating program idle
+2024-04-16 13:29:14,006 - my_daemon - INFO - Creating program idle
+2024-04-16 13:29:14,006 - my_daemon - INFO - Creating program idle
+2024-04-16 13:29:14,006 - my_daemon - INFO - Creating program idle
+2024-04-16 13:30:27,580 - my_daemon - INFO - Daemon started
+2024-04-16 13:30:34,205 - my_daemon - INFO - Creating program hanger
+2024-04-16 13:30:34,206 - my_daemon - INFO - Creating program hanger
+2024-04-16 13:31:51,546 - my_daemon - INFO - Daemon started
+2024-04-16 13:32:08,600 - my_daemon - INFO - Daemon started
+2024-04-16 13:32:13,738 - my_daemon - INFO - Creating program hanger
+2024-04-16 13:32:13,738 - my_daemon - INFO - Creating program hanger
+2024-04-16 13:38:08,377 - my_daemon - INFO - Daemon started
+2024-04-16 13:38:13,169 - my_daemon - INFO - Creating program ls
+2024-04-16 13:38:13,169 - my_daemon - INFO - Creating program ls
+2024-04-16 13:38:13,169 - my_daemon - INFO - Creating program ls
+2024-04-16 13:38:13,169 - my_daemon - INFO - Creating program idle
+2024-04-16 13:38:13,169 - my_daemon - INFO - Creating program idle
+2024-04-16 13:38:13,169 - my_daemon - INFO - Creating program idle
+2024-04-16 13:38:13,169 - my_daemon - INFO - Creating program idle
+2024-04-16 13:38:13,169 - my_daemon - INFO - Creating program idle
+2024-04-16 13:38:13,170 - my_daemon - INFO - Creating program idle
+2024-04-16 13:38:13,170 - my_daemon - INFO - Creating program idle
+2024-04-16 13:38:13,170 - my_daemon - INFO - Creating program idle
+2024-04-16 13:38:55,736 - my_daemon - INFO - Daemon started
+2024-04-16 13:39:00,775 - my_daemon - INFO - Creating program ls
+2024-04-16 13:39:00,775 - my_daemon - INFO - Creating program ls
+2024-04-16 13:39:00,775 - my_daemon - INFO - Creating program ls
+2024-04-16 13:39:00,775 - my_daemon - INFO - Creating program idle
+2024-04-16 13:39:00,775 - my_daemon - INFO - Creating program idle
+2024-04-16 13:39:00,775 - my_daemon - INFO - Creating program idle
+2024-04-16 13:39:00,776 - my_daemon - INFO - Creating program idle
+2024-04-16 13:39:00,776 - my_daemon - INFO - Creating program idle
+2024-04-16 13:39:00,776 - my_daemon - INFO - Creating program idle
+2024-04-16 13:39:00,776 - my_daemon - INFO - Creating program idle
+2024-04-16 13:39:00,776 - my_daemon - INFO - Creating program idle
+2024-04-16 13:39:22,164 - my_daemon - INFO - Daemon started
+2024-04-16 13:39:32,634 - my_daemon - INFO - Creating program hanger
+2024-04-16 13:39:32,635 - my_daemon - INFO - Creating program hanger
+2024-04-16 13:40:27,623 - my_daemon - INFO - Daemon started
+2024-04-16 13:40:34,696 - my_daemon - INFO - Creating program ls
+2024-04-16 13:40:34,696 - my_daemon - INFO - Creating program ls
+2024-04-16 13:40:34,696 - my_daemon - INFO - Creating program ls
+2024-04-16 13:40:34,696 - my_daemon - INFO - Creating program idle
+2024-04-16 13:40:34,696 - my_daemon - INFO - Creating program idle
+2024-04-16 13:40:34,696 - my_daemon - INFO - Creating program idle
+2024-04-16 13:40:34,696 - my_daemon - INFO - Creating program idle
+2024-04-16 13:40:34,696 - my_daemon - INFO - Creating program idle
+2024-04-16 13:40:34,696 - my_daemon - INFO - Creating program idle
+2024-04-16 13:40:34,696 - my_daemon - INFO - Creating program idle
+2024-04-16 13:40:34,696 - my_daemon - INFO - Creating program idle
+2024-04-16 13:41:13,165 - my_daemon - INFO - Daemon started
+2024-04-16 13:41:17,736 - my_daemon - INFO - Creating program ls
+2024-04-16 13:41:17,736 - my_daemon - INFO - Creating program ls
+2024-04-16 13:41:17,736 - my_daemon - INFO - Creating program ls
+2024-04-16 13:41:17,736 - my_daemon - INFO - Creating program idle
+2024-04-16 13:41:17,736 - my_daemon - INFO - Creating program idle
+2024-04-16 13:41:17,736 - my_daemon - INFO - Creating program idle
+2024-04-16 13:41:17,736 - my_daemon - INFO - Creating program idle
+2024-04-16 13:41:17,736 - my_daemon - INFO - Creating program idle
+2024-04-16 13:41:17,736 - my_daemon - INFO - Creating program idle
+2024-04-16 13:41:17,736 - my_daemon - INFO - Creating program idle
+2024-04-16 13:41:17,736 - my_daemon - INFO - Creating program idle
+2024-04-16 14:03:29,616 - my_daemon - INFO - Daemon started
+2024-04-16 14:03:29,616 - my_daemon - INFO - Taskmaster daemon already running exiting...
+2024-04-16 14:03:39,268 - my_daemon - INFO - Daemon started
+2024-04-16 14:03:52,014 - my_daemon - INFO - Creating program ls
+2024-04-16 14:03:52,014 - my_daemon - INFO - Creating program ls
+2024-04-16 14:03:52,014 - my_daemon - INFO - Creating program ls
+2024-04-16 14:03:52,014 - my_daemon - INFO - Creating program idle
+2024-04-16 14:03:52,014 - my_daemon - INFO - Creating program idle
+2024-04-16 14:03:52,014 - my_daemon - INFO - Creating program idle
+2024-04-16 14:03:52,014 - my_daemon - INFO - Creating program idle
+2024-04-16 14:03:52,014 - my_daemon - INFO - Creating program idle
+2024-04-16 14:03:52,014 - my_daemon - INFO - Creating program idle
+2024-04-16 14:03:52,014 - my_daemon - INFO - Creating program idle
+2024-04-16 14:03:52,014 - my_daemon - INFO - Creating program idle
+2024-04-16 14:47:23,585 - my_daemon - INFO - Daemon started
+2024-04-16 14:47:29,472 - my_daemon - INFO - Creating program ls
+2024-04-16 14:47:29,472 - my_daemon - INFO - Creating program ls
+2024-04-16 14:47:29,472 - my_daemon - INFO - Creating program ls
+2024-04-16 14:47:29,472 - my_daemon - INFO - Creating program idle
+2024-04-16 14:47:29,473 - my_daemon - INFO - Creating program idle
+2024-04-16 14:47:29,473 - my_daemon - INFO - Creating program idle
+2024-04-16 14:47:29,473 - my_daemon - INFO - Creating program idle
+2024-04-16 14:47:29,473 - my_daemon - INFO - Creating program idle
+2024-04-16 14:47:29,473 - my_daemon - INFO - Creating program idle
+2024-04-16 14:47:29,473 - my_daemon - INFO - Creating program idle
+2024-04-16 14:47:29,473 - my_daemon - INFO - Creating program idle
+2024-04-16 14:50:11,356 - my_daemon - INFO - Daemon started
+2024-04-16 14:50:20,886 - my_daemon - INFO - Creating program ls
+2024-04-16 14:50:20,886 - my_daemon - INFO - Creating program ls
+2024-04-16 14:50:20,887 - my_daemon - INFO - Creating program ls
+2024-04-16 14:50:20,887 - my_daemon - INFO - Creating program idle
+2024-04-16 14:50:20,887 - my_daemon - INFO - Creating program idle
+2024-04-16 14:50:20,887 - my_daemon - INFO - Creating program idle
+2024-04-16 14:50:20,887 - my_daemon - INFO - Creating program idle
+2024-04-16 14:50:20,887 - my_daemon - INFO - Creating program idle
+2024-04-16 14:50:20,888 - my_daemon - INFO - Creating program idle
+2024-04-16 14:50:20,888 - my_daemon - INFO - Creating program idle
+2024-04-16 14:50:20,888 - my_daemon - INFO - Creating program idle
+2024-04-18 15:22:14,357 - my_daemon - INFO - Daemon started
+2024-04-18 15:22:21,856 - my_daemon - INFO - Creating program ls
+2024-04-18 15:22:21,856 - my_daemon - INFO - Creating program ls
+2024-04-18 15:22:21,857 - my_daemon - INFO - Creating program ls
+2024-04-18 15:22:21,857 - my_daemon - INFO - Creating program idle
+2024-04-18 15:22:21,857 - my_daemon - INFO - Creating program idle
+2024-04-18 15:22:21,857 - my_daemon - INFO - Creating program idle
+2024-04-18 15:22:21,857 - my_daemon - INFO - Creating program idle
+2024-04-18 15:22:21,857 - my_daemon - INFO - Creating program idle
+2024-04-18 15:22:21,857 - my_daemon - INFO - Creating program idle
+2024-04-18 15:22:21,857 - my_daemon - INFO - Creating program idle
+2024-04-18 15:22:21,857 - my_daemon - INFO - Creating program idle
+2024-04-18 15:41:02,439 - my_daemon - INFO - Daemon started
+2024-04-18 15:41:47,406 - my_daemon - INFO - Daemon started
+2024-04-18 15:41:53,296 - my_daemon - INFO - Creating program ls
+2024-04-18 15:41:53,296 - my_daemon - INFO - Creating program ls
+2024-04-18 15:41:53,296 - my_daemon - INFO - Creating program ls
+2024-04-18 15:41:53,296 - my_daemon - INFO - Creating program idle
+2024-04-18 15:41:53,296 - my_daemon - INFO - Creating program idle
+2024-04-18 15:41:53,296 - my_daemon - INFO - Creating program idle
+2024-04-18 15:41:53,296 - my_daemon - INFO - Creating program idle
+2024-04-18 15:41:53,296 - my_daemon - INFO - Creating program idle
+2024-04-18 15:41:53,296 - my_daemon - INFO - Creating program idle
+2024-04-18 15:41:53,296 - my_daemon - INFO - Creating program idle
+2024-04-18 15:41:53,296 - my_daemon - INFO - Creating program idle
+2024-04-18 15:47:51,777 - my_daemon - INFO - Daemon started
+2024-04-18 15:47:55,607 - my_daemon - INFO - Creating program ls
+2024-04-18 15:47:55,607 - my_daemon - INFO - Creating program ls
+2024-04-18 15:47:55,607 - my_daemon - INFO - Creating program ls
+2024-04-18 15:47:55,607 - my_daemon - INFO - Creating program idle
+2024-04-18 15:47:55,607 - my_daemon - INFO - Creating program idle
+2024-04-18 15:47:55,607 - my_daemon - INFO - Creating program idle
+2024-04-18 15:47:55,607 - my_daemon - INFO - Creating program idle
+2024-04-18 15:47:55,607 - my_daemon - INFO - Creating program idle
+2024-04-18 15:47:55,607 - my_daemon - INFO - Creating program idle
+2024-04-18 15:47:55,607 - my_daemon - INFO - Creating program idle
+2024-04-18 15:47:55,607 - my_daemon - INFO - Creating program idle
+2024-04-18 15:54:08,251 - my_daemon - INFO - Daemon started
+2024-04-18 15:54:11,405 - my_daemon - INFO - Creating program ls
+2024-04-18 15:54:11,405 - my_daemon - INFO - Creating program ls
+2024-04-18 15:54:11,405 - my_daemon - INFO - Creating program ls
+2024-04-18 15:54:11,405 - my_daemon - INFO - Creating program idle
+2024-04-18 15:54:11,405 - my_daemon - INFO - Creating program idle
+2024-04-18 15:54:11,406 - my_daemon - INFO - Creating program idle
+2024-04-18 15:54:11,406 - my_daemon - INFO - Creating program idle
+2024-04-18 15:54:11,406 - my_daemon - INFO - Creating program idle
+2024-04-18 15:54:11,406 - my_daemon - INFO - Creating program idle
+2024-04-18 15:54:11,406 - my_daemon - INFO - Creating program idle
+2024-04-18 15:54:11,406 - my_daemon - INFO - Creating program idle
+2024-04-18 16:05:36,148 - my_daemon - INFO - Daemon started
+2024-04-18 16:05:43,677 - my_daemon - INFO - Creating program ls
+2024-04-18 16:05:43,677 - my_daemon - INFO - Creating program ls
+2024-04-18 16:05:43,677 - my_daemon - INFO - Creating program ls
+2024-04-18 16:05:43,677 - my_daemon - INFO - Creating program idle
+2024-04-18 16:05:43,677 - my_daemon - INFO - Creating program idle
+2024-04-18 16:05:43,677 - my_daemon - INFO - Creating program idle
+2024-04-18 16:05:43,677 - my_daemon - INFO - Creating program idle
+2024-04-18 16:05:43,677 - my_daemon - INFO - Creating program idle
+2024-04-18 16:05:43,677 - my_daemon - INFO - Creating program idle
+2024-04-18 16:05:43,677 - my_daemon - INFO - Creating program idle
+2024-04-18 16:05:43,677 - my_daemon - INFO - Creating program idle
+2024-04-18 16:12:19,008 - my_daemon - INFO - Daemon started
+2024-04-18 16:12:22,203 - my_daemon - INFO - Creating program ls
+2024-04-18 16:12:22,203 - my_daemon - INFO - Creating program ls
+2024-04-18 16:12:22,203 - my_daemon - INFO - Creating program ls
+2024-04-18 16:12:22,203 - my_daemon - INFO - Creating program idle
+2024-04-18 16:12:22,203 - my_daemon - INFO - Creating program idle
+2024-04-18 16:12:22,203 - my_daemon - INFO - Creating program idle
+2024-04-18 16:12:22,203 - my_daemon - INFO - Creating program idle
+2024-04-18 16:12:22,203 - my_daemon - INFO - Creating program idle
+2024-04-18 16:12:22,203 - my_daemon - INFO - Creating program idle
+2024-04-18 16:12:22,203 - my_daemon - INFO - Creating program idle
+2024-04-18 16:12:22,203 - my_daemon - INFO - Creating program idle
+2024-04-18 16:13:42,524 - my_daemon - INFO - Daemon started
+2024-04-18 16:13:45,528 - my_daemon - INFO - Creating program ls
+2024-04-18 16:13:45,528 - my_daemon - INFO - Creating program ls
+2024-04-18 16:13:45,528 - my_daemon - INFO - Creating program ls
+2024-04-18 16:13:45,528 - my_daemon - INFO - Creating program idle
+2024-04-18 16:13:45,528 - my_daemon - INFO - Creating program idle
+2024-04-18 16:13:45,528 - my_daemon - INFO - Creating program idle
+2024-04-18 16:13:45,528 - my_daemon - INFO - Creating program idle
+2024-04-18 16:13:45,528 - my_daemon - INFO - Creating program idle
+2024-04-18 16:13:45,528 - my_daemon - INFO - Creating program idle
+2024-04-18 16:13:45,528 - my_daemon - INFO - Creating program idle
+2024-04-18 16:13:45,528 - my_daemon - INFO - Creating program idle
+2024-04-18 16:17:59,853 - my_daemon - INFO - Daemon started
+2024-04-18 16:18:04,878 - my_daemon - INFO - Creating program ls
+2024-04-18 16:18:04,878 - my_daemon - INFO - Creating program ls
+2024-04-18 16:18:04,878 - my_daemon - INFO - Creating program ls
+2024-04-18 16:18:04,878 - my_daemon - INFO - Creating program idle
+2024-04-18 16:18:04,878 - my_daemon - INFO - Creating program idle
+2024-04-18 16:18:04,878 - my_daemon - INFO - Creating program idle
+2024-04-18 16:18:04,878 - my_daemon - INFO - Creating program idle
+2024-04-18 16:18:04,878 - my_daemon - INFO - Creating program idle
+2024-04-18 16:18:04,878 - my_daemon - INFO - Creating program idle
+2024-04-18 16:18:04,878 - my_daemon - INFO - Creating program idle
+2024-04-18 16:18:04,878 - my_daemon - INFO - Creating program idle
+2024-04-18 17:58:06,217 - my_daemon - INFO - Daemon started
+2024-04-18 17:58:28,731 - my_daemon - INFO - Daemon started
+2024-04-18 17:58:46,605 - my_daemon - INFO - Daemon started
+2024-04-18 17:58:51,996 - my_daemon - INFO - Creating program ls
+2024-04-18 17:58:51,996 - my_daemon - INFO - Creating program ls
+2024-04-18 17:58:51,996 - my_daemon - INFO - Creating program ls
+2024-04-18 17:58:51,996 - my_daemon - INFO - Creating program idle
+2024-04-18 17:58:51,996 - my_daemon - INFO - Creating program idle
+2024-04-18 17:58:51,996 - my_daemon - INFO - Creating program idle
+2024-04-18 17:58:51,996 - my_daemon - INFO - Creating program idle
+2024-04-18 17:58:51,996 - my_daemon - INFO - Creating program idle
+2024-04-18 17:58:51,996 - my_daemon - INFO - Creating program idle
+2024-04-18 17:58:51,996 - my_daemon - INFO - Creating program idle
+2024-04-18 17:58:51,996 - my_daemon - INFO - Creating program idle
+2024-04-18 18:00:34,063 - my_daemon - INFO - Daemon started
+2024-04-18 18:00:36,580 - my_daemon - INFO - Creating program ls
+2024-04-18 18:00:36,580 - my_daemon - INFO - Creating program ls
+2024-04-18 18:00:36,580 - my_daemon - INFO - Creating program ls
+2024-04-18 18:00:36,580 - my_daemon - INFO - Creating program idle
+2024-04-18 18:00:36,580 - my_daemon - INFO - Creating program idle
+2024-04-18 18:00:36,580 - my_daemon - INFO - Creating program idle
+2024-04-18 18:00:36,580 - my_daemon - INFO - Creating program idle
+2024-04-18 18:00:36,580 - my_daemon - INFO - Creating program idle
+2024-04-18 18:00:36,581 - my_daemon - INFO - Creating program idle
+2024-04-18 18:00:36,581 - my_daemon - INFO - Creating program idle
+2024-04-18 18:00:36,581 - my_daemon - INFO - Creating program idle
+2024-04-19 15:55:39,860 - my_daemon - INFO - Daemon started
+2024-04-19 15:55:42,988 - my_daemon - INFO - Creating program ls
+2024-04-19 15:55:42,988 - my_daemon - INFO - Creating program ls
+2024-04-19 15:55:42,988 - my_daemon - INFO - Creating program ls
+2024-04-19 15:55:42,988 - my_daemon - INFO - Creating program idle
+2024-04-19 15:55:42,988 - my_daemon - INFO - Creating program idle
+2024-04-19 15:55:42,988 - my_daemon - INFO - Creating program idle
+2024-04-19 15:55:42,988 - my_daemon - INFO - Creating program idle
+2024-04-19 15:55:42,989 - my_daemon - INFO - Creating program idle
+2024-04-19 15:55:42,989 - my_daemon - INFO - Creating program idle
+2024-04-19 15:55:42,989 - my_daemon - INFO - Creating program idle
+2024-04-19 15:55:42,989 - my_daemon - INFO - Creating program idle

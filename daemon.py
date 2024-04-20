@@ -253,8 +253,6 @@ def socket_thread(daemon):
 
 
 ### TIMED EVENTS ##
-evs = PriorityQueue()	
-
 class ScheduledEvent:
 	def __init__(self, ts, func):
 		self.ts = ts
@@ -275,23 +273,53 @@ class ScheduledEvent:
 			print("scheduled event was executed", self.ts, time.time())
 			self.func()
 
+has_new_event = threading.Event()
+new_event = None
+
 def schedule_event(s, func):
+	global new_event
+	global has_new_event
+
 	e = ScheduledEvent(time.time() + s, func)
-	evs.put(e)
+	has_new_event.set()
+	new_event = e
 	return e
 
+# TODO: Test this
 def scheduler_thread():
+	global new_event
+	global has_new_event
+
 	signal.pthread_sigmask(signal.SIG_BLOCK, [signal.SIGCHLD]) 
+
+	evs = PriorityQueue()	
 
 	# Wait for every event to happen and perform its logic, off by miliseconds errors are OK here.
 	while True:
-		event = evs.get()
+		most_recent = None
 
-		if time.time() < event.timestamp():
-			time.sleep(event.timestamp() - time.time())
-		event.exec()
+		# Compute the time for next event
+		if not evs.empty():
+			# TODO: Protect this, from being written to and read from at the same time
+			most_recent = evs.queue[0].timestamp() - time.time()
 
-		evs.task_done()
+		# Wait for next event or new event
+		try:
+			has_timeout = not has_new_event.wait(most_recent)
+		except ValueError:
+			# If we tried to sleep negative time, it means we have something to do instantly, which means we can apply the `timeout` logic
+			has_timeout = True
+
+		# Execute the most recent event
+		if has_timeout:
+			e = evs.get_nowait()
+			e.exec()
+			evs.task_done()
+		# New event, add it to the queue
+		else:
+			has_new_event.clear()
+			evs.put_nowait(new_event)
+			new_event = None
 
 
 def at_least_one_arg(f):
@@ -334,9 +362,7 @@ def block_signals(siglist):
 	def decorator(f):
 		def wrapper(*args, **kwargs):
 			signal.pthread_sigmask(signal.SIG_BLOCK, siglist)
-			os.write(1, bytes(f"no mroe signals for {threading.get_ident()} {os.getpid()}\n", "utf-8"))
 			res = f(*args, **kwargs)
-			os.write(1, bytes(f"signals back for {threading.get_ident()} {os.getpid()}\n", "utf-8"))
 			signal.pthread_sigmask(signal.SIG_UNBLOCK, siglist)
 			return res
 		return wrapper
@@ -347,7 +373,7 @@ def status(d: Daemon):
 	"""
 	Shows the status of all the programs
 	"""
-	return {name: [proc.status.name for proc in procs] for name, procs in d.programs.items()}
+	return {name: [(id(proc), proc.status.name) for proc in procs] for name, procs in d.programs.items()}
 
 @at_least_one_arg
 def start_program(d: Daemon, programs: List[str]):
@@ -366,7 +392,6 @@ def start_program(d: Daemon, programs: List[str]):
 		if any(proc.status == Status.STARTING or proc.status == Status.RUNNING for proc in d.programs[to_start]):
 			continue
 		for proc in d.programs[to_start]:
-			proc.stack = traceback.format_stack()
 			d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [proc], -1)))
 		ret[to_start]["starting"] = True
 	return ret
@@ -436,18 +461,15 @@ def internal_start_proc(d: Daemon, program: Program):
 	"""
 	Start a program "proc"
 	"""
-	os.write(1, bytes(f"in internal start proc {program.stack}\n", "utf-8"))
+	os.write(1, bytes(f"in internal start proc\n", "utf-8"))
 	if program is None:
 		return
 	if program.status is not None:
 		if program.status != Status.BACKOFF and program.status != Status.STOPPED and program.status != Status.EXITED and program.status != Status.FATAL:
-			os.write(1, bytes(f"program {program.pid}: {program.status} will start after a kill ({id(program)})\n", "utf-8"))
 			try:
-				os.write(1, bytes("before kill in try\n", "utf-8"))
+				os.write(1, bytes(f"killing {id(program)} {program.status}\n", "utf-8"))
 				os.kill(program.pid, signal.SIGKILL)
-				os.write(1, bytes("after kill in try\n", "utf-8"))
 			except:
-				os.write(1, bytes("after kill in except\n", "utf-8"))
 				pass
 
 	old_umask = os.umask(0)
@@ -501,7 +523,6 @@ def handle_sigchld(d: Daemon):
 	Handles the stop a process managed by the daemon, task to restart is scheduled to make sure this function executes as fast as possible.
 	Maybe make it smaller if it keeps missing SIGCHLD?
 	"""
-	os.write(1, bytes(f"sigchld nigga {threading.get_ident()} {os.getpid()}\n", "utf-8"))
 	stopped = []
 
 	# Wait all of processes that stopped
@@ -526,6 +547,7 @@ def handle_sigchld(d: Daemon):
 				if proc.pid == pid:
 					elprograma = proc
 					break
+
 		# Handle what needs to be done next after its stop
 		if elprograma != None:
 			os.write(1, bytes(f"found in programs ({id(elprograma)})\n", "utf-8"))
@@ -540,7 +562,6 @@ def handle_sigchld(d: Daemon):
 				if elprograma.start_retries < config["startretries"]:
 					#d.logger.info(f"program {elprograma.pid}: {elprograma.status} will restart")
 					elprograma.status = Status.BACKOFF
-					elprograma.stack = "".join(traceback.format_stack()) + str(id(elprograma))
 					schedule_event(elprograma.start_retries, lambda: d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1))))
 				else:
 					elprograma.clear()
@@ -554,7 +575,6 @@ def handle_sigchld(d: Daemon):
 				elprograma.exit_code = exit_code
 				if elprograma.should_auto_restart(exit_code):
 					os.write(1, bytes(f"program {elprograma.pid} was {elprograma.status}\n", "utf-8"))
-					elprograma.stack = "".join(traceback.format_stack()) + str(id(elprograma))
 					d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1)))
 
 			# It was running and we stopped it
