@@ -6,7 +6,7 @@ import os
 import signal
 
 
-from common import CommandRequest, CommandResponse, CommandType
+from ..common import CommandRequest, CommandResponse, CommandType
 
 class DaemonConnection():
 	class TimeoutError(Exception): ...
@@ -80,7 +80,10 @@ def get_text_command():
 		"stop": (CommandType.STOP_PROGRAM, at_least_one_arg, None),
 		"restart": (CommandType.RESTART_PROGRAM, at_least_one_arg, None),
 
-		"reload": (CommandType.RELOAD_CONFIG, one_arg, lambda args: [open(args[0], 'r').read()])
+		"reload": (CommandType.RELOAD_CONFIG, one_arg, lambda args: [open(args[0], 'r').read()]),
+
+		# Alias for `reload config.json`
+		"rc": (CommandType.RELOAD_CONFIG, no_args, lambda args: [open("config.json", 'r').read()])
 	}
 
 	argv = input(">> ").split(" ")
@@ -102,8 +105,6 @@ def get_text_command():
 		args = data(args)
 	
 	return daemon_cmd_type, args
-
-
 
 def shell():
 	def sa_handler(_, __):
