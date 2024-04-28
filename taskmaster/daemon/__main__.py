@@ -16,7 +16,9 @@ def handle_sigchld(d: Daemon):
 	"""
 	os.write(1, bytes(f"SIGCHLD received\n", "utf-8"))
 
-	# Wait all of processes that stopped
+	elprograma = None
+
+	# Wait all of processes which terminated
 	for program in d.programs.values():
 		for proc in program:
 			# It might not have started yet, so it can be None, by definition
@@ -26,21 +28,48 @@ def handle_sigchld(d: Daemon):
 				if exit_code is not None and exit_code != -signal.SIGKILL:
 					elprograma = proc
 					if elprograma != None:
-						# os.write(1, bytes(f"found in programs ({id(elprograma)})\n", "utf-8"))
-						elprograma.start_timer.cancel()
+						os.write(1, bytes(f"found in programs ({id(elprograma)})\n", "utf-8"))
+						if elprograma.start_timer:
+							elprograma.start_timer.cancel()
+
 						config = elprograma.config
 						# It was tried to be started, did not run for long enough to be considered running
 						if elprograma.status == Status.STARTING:
+							os.write(1, bytes(f"program {id(elprograma)} was {elprograma.status}\n", "utf-8"))
 							# We should restart it if it did not exceed startretries
 							if elprograma.start_retries < config["startretries"]:
 								#d.logger.info(f"program {elprograma.pid}: {elprograma.status} will restart")
-								elprograma.status = Status.BACKOFF
-								os.write(1, bytes(f"program {id(elprograma)} was {elprograma.status}\n", "utf-8"))
 
 								elprograma.stack = "".join(traceback.format_stack())
-								scheduler.schedule_event(elprograma.start_retries * 3, lambda: d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1))))
+
+								# TODO: There is a real problem here of unknown nature, logs for this version of the code, 3 procs:
+								# in internal start proc BEGIN
+								# in internal start proc END
+								# in internal start proc BEGIN
+								# in internal start proc END
+								# in internal start proc BEGIN
+								# in internal start proc END
+								# SIGCHLD received
+								# found in programs (139993342494480)
+								# program 139993342494480 was Status.STARTING
+								# SIGCHLD received
+								# found in programs (139993342494480)
+								# program 139993342494480 was Status.STARTING
+								# SIGCHLD received
+								# found in programs (139993342494480)
+								# program 139993342494480 was Status.STARTING
+								# found in programs (139993342494576)
+								# program 139993342494576 was Status.STARTING
+								# found in programs (139993342494624)
+								# program 139993342494624 was Status.STARTING
 
 								elprograma.clear()
+								elprograma.status = Status.BACKOFF
+
+								# TODO: There is a problem here, try switcing around with proc
+								# scheduler.schedule_event(elprograma.start_retries, lambda: d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1))))
+								# appears to work when some internal start proc is in between the sigchld's, maybe [proc] pass the variable from here and not the object or smth??
+								# d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [proc], -1)))
 							else:
 								elprograma.clear()
 								elprograma.status = Status.FATAL
@@ -51,14 +80,17 @@ def handle_sigchld(d: Daemon):
 							elprograma.clear()
 							elprograma.status = Status.EXITED
 							elprograma.exit_code = exit_code
+							os.write(1, bytes(f"program {elprograma.pid} was {elprograma.status}\n", "utf-8"))
 							if elprograma.should_auto_restart(exit_code):
-								os.write(1, bytes(f"program {elprograma.pid} was {elprograma.status}\n", "utf-8"))
 								elprograma.stack = "".join(traceback.format_stack())
 								d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1)))
 
 						# It was running and we stopped it
 						elif elprograma.status == Status.STOPPING:
+							os.write(1, bytes(f"program {elprograma.pid} was {elprograma.status}\n", "utf-8"))
 							elprograma.clear()
+						else:
+							os.write(1, bytes(f"program {elprograma.pid} was {elprograma.status}\n", "utf-8"))
 					else:
 						os.write(1, bytes(f"was not found in programs\n", "utf-8"))
 				elif exit_code == -signal.SIGKILL:

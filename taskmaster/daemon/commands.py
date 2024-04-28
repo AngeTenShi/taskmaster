@@ -53,7 +53,7 @@ def status(d: Daemon):
 	"""
 	Shows the status of all the programs
 	"""
-	return {name: [(id(proc), proc.status.name) for proc in procs] for name, procs in d.programs.items()}
+	return {name: [(id(proc), proc.status.name, proc.start_retries) for proc in procs] for name, procs in d.programs.items()}
 
 @at_least_one_arg
 def start_program(d: Daemon, programs: List[str]):
@@ -152,7 +152,8 @@ def internal_start_proc(d: Daemon, program: Program):
 				ansi_reset = "\033[0m"
 				os.write(1, bytes(f"{ansi_red}killing {id(program)} {program.status} {ansi_reset}\n", "utf-8"))
 				os.kill(program.pid, signal.SIGKILL)
-			except:
+			except Exception as e:
+				os.write(1, bytes(f"failed to kill {id(program)} {program.status}\n", "utf-8"))
 				pass
 
 	old_umask = os.umask(0)
@@ -176,7 +177,8 @@ def internal_start_proc(d: Daemon, program: Program):
 				program.set_process(process)
 
 				if program.config["starttime"] != 0:
-					program.start_timer = scheduler.schedule_event(program.config["starttime"], lambda: program.set_running())
+					#program.start_timer = scheduler.schedule_event(program.config["starttime"], lambda: program.set_running())
+					program.start_timer = None
 				else:
 					program.set_running()
 			except Exception as e:
