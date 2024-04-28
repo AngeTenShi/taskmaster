@@ -2,14 +2,14 @@
 	"programs": {
 		"idle": {
 			"cmd": "/usr/bin/python3 time.py",
-			"numprocs": 7,
+			"numprocs": 3,
 			"workingdir": "/tmp",
 			"autostart": true,
 			"autorestart": true,
 			"exitcodes": [
 				0
 			],
-			"startretries": 2,
+			"startretries": 5,
 			"starttime": 3,
 			"stopsignal": "USR1",
 			"stoptime": 3,

@@ -2,6 +2,7 @@ from ..common import CommandRequest, CommandResponse, CommandType, CommandQueue
 
 from . import commands, connection, scheduler
 from .daemon import *
+from .decorators import block_signals
 
 import signal
 import os
@@ -9,6 +10,7 @@ import threading
 import time 
 import traceback
 
+@block_signals([signal.SIGCHLD])
 def handle_sigchld(d: Daemon):
 	"""
 	Handles the stop a process managed by the daemon, task to restart is scheduled to make sure this function executes as fast as possible.
@@ -21,55 +23,36 @@ def handle_sigchld(d: Daemon):
 	# Wait all of processes which terminated
 	for program in d.programs.values():
 		for proc in program:
+			#os.write(1, bytes(f"trying proc: {proc}, {hex(id(proc))}\n", "utf-8"))
 			# It might not have started yet, so it can be None, by definition
 			if proc.process:
+				#os.write(1, bytes(f"found proc.process: {proc.process}, {hex(id(proc.process))}\n", "utf-8"))
 				exit_code = proc.process.poll()
 				# DO NOT restart if not terminated / terminated by a SIGKILL
 				if exit_code is not None and exit_code != -signal.SIGKILL:
 					elprograma = proc
 					if elprograma != None:
-						os.write(1, bytes(f"found in programs ({id(elprograma)})\n", "utf-8"))
+						os.write(1, bytes(f"found in programs ({hex(id(proc))})\n", "utf-8"))
 						if elprograma.start_timer:
 							elprograma.start_timer.cancel()
 
 						config = elprograma.config
 						# It was tried to be started, did not run for long enough to be considered running
 						if elprograma.status == Status.STARTING:
-							os.write(1, bytes(f"program {id(elprograma)} was {elprograma.status}\n", "utf-8"))
+							os.write(1, bytes(f"program {hex(id(elprograma))} was {elprograma.status}\n", "utf-8"))
 							# We should restart it if it did not exceed startretries
 							if elprograma.start_retries < config["startretries"]:
 								#d.logger.info(f"program {elprograma.pid}: {elprograma.status} will restart")
 
-								elprograma.stack = "".join(traceback.format_stack())
-
-								# TODO: There is a real problem here of unknown nature, logs for this version of the code, 3 procs:
-								# in internal start proc BEGIN
-								# in internal start proc END
-								# in internal start proc BEGIN
-								# in internal start proc END
-								# in internal start proc BEGIN
-								# in internal start proc END
-								# SIGCHLD received
-								# found in programs (139993342494480)
-								# program 139993342494480 was Status.STARTING
-								# SIGCHLD received
-								# found in programs (139993342494480)
-								# program 139993342494480 was Status.STARTING
-								# SIGCHLD received
-								# found in programs (139993342494480)
-								# program 139993342494480 was Status.STARTING
-								# found in programs (139993342494576)
-								# program 139993342494576 was Status.STARTING
-								# found in programs (139993342494624)
-								# program 139993342494624 was Status.STARTING
-
+								#os.write(1, bytes(f"before clear: elprograma.process: {elprograma.process}, {hex(id(elprograma.process))}\n", "utf-8"))
 								elprograma.clear()
 								elprograma.status = Status.BACKOFF
+								#os.write(1, bytes(f"after clear: elprograma.process: {elprograma.process}, {hex(id(elprograma.process))}, preparing new iteration\n", "utf-8"))
 
 								# TODO: There is a problem here, try switcing around with proc
-								# scheduler.schedule_event(elprograma.start_retries, lambda: d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1))))
+								#scheduler.schedule_event(elprograma.start_retries, lambda: d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1))))
 								# appears to work when some internal start proc is in between the sigchld's, maybe [proc] pass the variable from here and not the object or smth??
-								# d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [proc], -1)))
+								#d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [proc], -1)))
 							else:
 								elprograma.clear()
 								elprograma.status = Status.FATAL
@@ -156,7 +139,7 @@ def check_and_logger_debug_if_already_running():
 	"""
 	try:
 		if (os.path.exists("/tmp/taskmaster.pid")):
-			logger.info(f"Taskmaster daemon already running exiting...")
+			daemon.logger.info(f"Taskmaster daemon already running exiting...")
 			return True
 	except:
 		return False
@@ -170,7 +153,7 @@ if __name__ == "__main__":
 			#d.start()
 			daemon_entry()
 		except Exception as e:
-			logger.info("Daemon entry error: ", e)
+			daemon.logger.info("Daemon entry error: ", e)
 			pass
 		finally : 
 			os.unlink("/tmp/taskmaster.pid")

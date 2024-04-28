@@ -68,4 +68,8 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 logger.info('Daemon started')
-daemon.logger = logger
+#daemon.logger = logger
+class DummyLogger():
+	def info(self, str):
+		pass
+daemon.logger = DummyLogger()
