@@ -52,28 +52,33 @@ def handle_sigchld(d: Daemon):
 								# TODO: There is a problem here, try switcing around with proc
 								#scheduler.schedule_event(elprograma.start_retries, lambda: d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1))))
 								# appears to work when some internal start proc is in between the sigchld's, maybe [proc] pass the variable from here and not the object or smth??
-								#d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [proc], -1)))
+								# this can be blocking, why? is it because of the .get in main() ?
+								# d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [proc], -1)))
+								# TODO: FACT CHECK: Do not use the locking mechanism, it might block since it might have been held before going into the signal handler
+								#d.command_queue._put((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [proc], -1)))
+								#d.command_queue.unfinished_tasks += 1
+								#d.command_queue.not_empty.notify()
 							else:
 								elprograma.clear()
 								elprograma.status = Status.FATAL
 								elprograma.exit_code = exit_code
 
 						# It was running and exited itself
-						elif elprograma.status == Status.RUNNING:
-							elprograma.clear()
-							elprograma.status = Status.EXITED
-							elprograma.exit_code = exit_code
-							os.write(1, bytes(f"program {elprograma.pid} was {elprograma.status}\n", "utf-8"))
-							if elprograma.should_auto_restart(exit_code):
-								elprograma.stack = "".join(traceback.format_stack())
-								d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1)))
+						#elif elprograma.status == Status.RUNNING:
+						#	elprograma.clear()
+						#	elprograma.status = Status.EXITED
+						#	elprograma.exit_code = exit_code
+						#	os.write(1, bytes(f"program {elprograma.pid} was {elprograma.status}\n", "utf-8"))
+						#	if elprograma.should_auto_restart(exit_code):
+						#		elprograma.stack = "".join(traceback.format_stack())
+						#		d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1)))
 
 						# It was running and we stopped it
-						elif elprograma.status == Status.STOPPING:
-							os.write(1, bytes(f"program {elprograma.pid} was {elprograma.status}\n", "utf-8"))
-							elprograma.clear()
-						else:
-							os.write(1, bytes(f"program {elprograma.pid} was {elprograma.status}\n", "utf-8"))
+						#elif elprograma.status == Status.STOPPING:
+						#	os.write(1, bytes(f"program {elprograma.pid} was {elprograma.status}\n", "utf-8"))
+						#	elprograma.clear()
+						#else:
+						#	os.write(1, bytes(f"program {elprograma.pid} was {elprograma.status}\n", "utf-8"))
 					else:
 						os.write(1, bytes(f"was not found in programs\n", "utf-8"))
 				elif exit_code == -signal.SIGKILL:

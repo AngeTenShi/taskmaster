@@ -35,6 +35,7 @@ interrupted = False
 #		super().run()
 
 # TODO: Fix race condition with the consumer in the scheduler_thread, maybe some kind of locking on the set() ?
+# Sounds like it's fixed ? -> check
 def schedule_event(s, func):
 	global new_events
 	global has_new_event
