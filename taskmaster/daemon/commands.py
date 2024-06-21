@@ -83,6 +83,18 @@ def stop_program(d: Daemon, programs: List[str]):
 	Stops whole programs (all processes)
 	"""
 	ret = {}
+	if len(programs) == 0:
+		return "Invalid program"
+	if (type(programs) == str):
+		ret[programs] = {"stopping": False}
+		for proc in d.programs[programs]:
+			if proc.status == Status.STOPPING:
+				continue
+			if proc.status == Status.STOPPED:
+				continue
+			d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_STOP_PROC, [proc], -1)))
+		ret[programs]["stopping"] = True
+		return ret
 	for to_stop in programs:
 		ret[to_stop] = {"stopping": False}
 		if not any(proc.status == Status.STOPPING for proc in d.programs[to_stop]):
@@ -123,23 +135,29 @@ def reload_config(d: Daemon, config_content: str):
 	Reloads the configuration
 	"""
 	# One already running, we need to stop everything first
+
+	# TODO HOT RELOAD CONFIG we shouldn't stop everything and not delete all programs keep status of others
 	if config_content[0] is None:
 		return "Invalid config file"
-	if d.config != None:
+	if d.config is not None:
 		d.logger.info("Reloading config and stopping everything first")
 		second_config = json.loads(config_content[0])
 		for program_name, program_list in d.programs.items():
 			if program_name in second_config["programs"]:
-				for program in program_list:
-					if program.status == Status.RUNNING or program.status == Status.STARTING or program.status == Status.BACKOFF: 
-						d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_STOP_PROC, [program], -1)))
-	d.config = json.loads(config_content[0])
-	d.programs = defaultdict(list)
-	for program_name, program_config in d.config["programs"].items():
-		for _ in range(program_config["numprocs"]):
-			d.logger.info(f"Creating program {program_name}")
-			d.programs[program_name].append(Program(program_name, program_config))
-	d.command_queue.put_nowait((-1, CommandRequest(CommandType.START_PROGRAM, [name for name, conf in d.config["programs"].items() if conf["autostart"] == True], -1)))
+				if d.config["programs"][program_name] != second_config["programs"][program_name]:
+					for proc in program_list:
+						d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_STOP_PROC, [proc], -1)))
+			else:
+				for proc in program_list:
+					d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_STOP_PROC, [proc], -1)))
+	else:	
+		d.config = json.loads(config_content[0])
+		d.programs = defaultdict(list)
+		for program_name, program_config in d.config["programs"].items():
+			for _ in range(program_config["numprocs"]):
+				d.logger.info(f"Creating program {program_name}")
+				d.programs[program_name].append(Program(program_name, program_config))
+		d.command_queue.put_nowait((-1, CommandRequest(CommandType.START_PROGRAM, [name for name, conf in d.config["programs"].items() if conf["autostart"] == True], -1)))
 	return "Config reloaded"
 
 @one_arg
@@ -204,8 +222,18 @@ def internal_stop_proc(d: Daemon, program: Program):
 	"""
 	Stop a program "proc"
 	"""
-	signal = getattr(signal, f"SIG{program.config['stopsignal']}")
+	if program is None:
+		return
+	if program.status == Status.STOPPED:
+		return
+	if program.status == Status.EXITED:
+		return
+	if program.status == Status.FATAL:
+		return
+	if program.status == Status.BACKOFF:
+		return
+	signale = getattr(signal, f"SIG{program.config['stopsignal']}")
 
-	os.kill(program.pid, signal)
+	os.kill(program.pid, signale)
 	program.status = Status.STOPPING
 	program.exit_timer = scheduler.schedule_event(program.config["stoptime"], lambda: os.kill(program.pid, signal.SIGKILL))

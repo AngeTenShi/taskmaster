@@ -101,7 +101,6 @@ def daemon_loop(daemon: Daemon):
 		client_id, cmd = daemon.command_queue.get()
 		if cmd.cmd_type not in handlers.keys():
 			continue
-
 		abort, response = handlers[cmd.cmd_type](cmd.args)
 		if client_id != -1 and cmd.id != -1: # Internal IDs used for commands issued by the daemon itself
 			daemon.output_queue.put_nowait((client_id, CommandResponse(cmd.cmd_type, response, cmd.id)))
