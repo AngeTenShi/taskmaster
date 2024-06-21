@@ -150,7 +150,7 @@ def internal_start_proc(d: Daemon, program: Program):
 			try:
 				ansi_red = "\033[91m"
 				ansi_reset = "\033[0m"
-				os.write(1, bytes(f"{ansi_red}killing {id(program)} {program.status} {ansi_reset}\n", "utf-8"))
+				os.write(1, bytes(f"{ansi_red}killing {hex(id(program))} {program.status} {ansi_reset}\n", "utf-8"))
 				os.kill(program.pid, signal.SIGKILL)
 			except Exception as e:
 				os.write(1, bytes(f"failed to kill {id(program)} {program.status}\n", "utf-8"))

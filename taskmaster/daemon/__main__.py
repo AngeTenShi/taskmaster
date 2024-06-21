@@ -50,7 +50,10 @@ def handle_sigchld(d: Daemon):
 								#os.write(1, bytes(f"after clear: elprograma.process: {elprograma.process}, {hex(id(elprograma.process))}, preparing new iteration\n", "utf-8"))
 
 								# TODO: There is a problem here, try switcing around with proc
-								#scheduler.schedule_event(elprograma.start_retries, lambda: d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1))))
+								os.write(1, bytes(f"scheduling {hex(id(proc))}\n", "utf-8"))
+								def schedule(p):
+									scheduler.schedule_event(elprograma.start_retries, lambda: d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [p], -1))))
+								schedule(elprograma)
 								# appears to work when some internal start proc is in between the sigchld's, maybe [proc] pass the variable from here and not the object or smth??
 								# this can be blocking, why? is it because of the .get in main() ?
 								# d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [proc], -1)))
