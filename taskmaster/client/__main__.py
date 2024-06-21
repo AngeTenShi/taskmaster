@@ -50,7 +50,7 @@ class ShouldExit(Exception): ...
 
 def get_text_command():
 	no_args = lambda args: len(args) == 0
-	one_arg = lambda args: len(args) == 1
+	one_arg = lambda args: len(args) == 1 
 	at_least_one_arg = lambda args: len(args) > 0
 
 	def exit():
@@ -80,7 +80,7 @@ def get_text_command():
 		"stop": (CommandType.STOP_PROGRAM, at_least_one_arg, None),
 		"restart": (CommandType.RESTART_PROGRAM, at_least_one_arg, None),
 
-		"reload": (CommandType.RELOAD_CONFIG, one_arg, lambda args: [open(args[0], 'r').read()]),
+		"reload": (CommandType.RELOAD_CONFIG, one_arg, lambda args: [open(args[0], 'r').read() if os.path.isfile(args[0]) and args[0].endswith('.json') else None]),
 
 		# Alias for `reload config.json`
 		"rc": (CommandType.RELOAD_CONFIG, no_args, lambda args: [open("config.json", 'r').read()])

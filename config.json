@@ -1,16 +1,16 @@
 {
 	"programs": {
 		"idle": {
-			"cmd": "/usr/bin/python3 time.py",
-			"numprocs": 128,
+			"cmd": "/usr/bin/ls",
+			"numprocs": 3,
 			"workingdir": "/tmp",
 			"autostart": true,
-			"autorestart": true,
+			"autorestart": "unexpected",
 			"exitcodes": [
 				0
 			],
-			"startretries": 10,
-			"starttime": 3,
+			"startretries": 5,
+			"starttime": 0,
 			"stopsignal": "USR1",
 			"stoptime": 3,
 			"stdout": "/tmp/idle.log",

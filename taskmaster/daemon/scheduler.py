@@ -27,15 +27,6 @@ has_new_event = threading.Event()
 new_events = []
 interrupted = False
 
-#In case we want to use threading.Timer without allowing SIGCHLD to be raised in the thread
-#run is the function that gets called inside of the thread once it has been started, super().run() is the original function that does the waiting of the timer we set; see Thread and Timer classes in threading.py
-#class ImprovedTimer(threading.Timer):
-#	def run(self):
-#		signal.pthread_sigmask(signal.SIG_BLOCK, [signal.SIGCHLD])
-#		super().run()
-
-# TODO: Fix race condition with the consumer in the scheduler_thread, maybe some kind of locking on the set() ?
-# Sounds like it's fixed ? -> check
 def schedule_event(s, func):
 	global new_events
 	global has_new_event
