@@ -1,0 +1,20 @@
+{
+	"programs": {
+		"idle": {
+			"cmd": "/usr/bin/ls",
+			"numprocs": 3,
+			"workingdir": "/tmp",
+			"autostart": true,
+			"autorestart": "unexpected",
+			"exitcodes": [
+				1
+			],
+			"startretries": 5,
+			"starttime": 0,
+			"stopsignal": "USR1",
+			"stoptime": 3,
+			"stdout": "/tmp/idle.log",
+			"stderr": "/tmp/idle.err"
+		}
+	}
+}
