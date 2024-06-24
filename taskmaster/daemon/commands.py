@@ -173,8 +173,8 @@ def internal_start_proc(d: Daemon, program: Program):
 	if program.status is not None:
 		if program.status != Status.BACKOFF and program.status != Status.STOPPED and program.status != Status.EXITED and program.status != Status.FATAL:
 			try:
-				ansi_red = "\033[91m"
-				ansi_reset = "\033[0m"
+				# ansi_red = "\033[91m"
+				# ansi_reset = "\033[0m"
 				# os.write(1, bytes(f"{ansi_red}killing {hex(id(program))} {program.status} {ansi_reset}\n", "utf-8"))
 				os.kill(program.pid, signal.SIGKILL)
 			except Exception as e:

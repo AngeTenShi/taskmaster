@@ -51,10 +51,6 @@ def handle_sigchld(d: Daemon):
 								def schedule(p):
 									scheduler.schedule_event(elprograma.start_retries, lambda: d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [p], -1))))
 								schedule(elprograma)
-								# TODO: FACT CHECK: Do not use the locking mechanism, it might block since it might have been held before going into the signal handler
-								#d.command_queue._put((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [proc], -1)))
-								#d.command_queue.unfinished_tasks += 1
-								#d.command_queue.not_empty.notify()
 							else:
 								elprograma.clear()
 								elprograma.status = Status.FATAL
@@ -68,7 +64,9 @@ def handle_sigchld(d: Daemon):
 							os.write(1, bytes(f"program {elprograma.pid} was {elprograma.status}\n", "utf-8"))
 							if elprograma.should_auto_restart(exit_code):
 								elprograma.stack = "".join(traceback.format_stack())
-								d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [elprograma], -1)))
+								def schedule(p):
+									scheduler.schedule_event(1, lambda: d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_START_PROC, [p], -1))))
+								schedule(elprograma)
 
 						#It was running and we stopped it
 						elif elprograma.status == Status.STOPPING:
