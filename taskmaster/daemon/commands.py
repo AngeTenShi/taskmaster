@@ -134,22 +134,28 @@ def reload_config(d: Daemon, config_content: str):
 	"""
 	Reloads the configuration
 	"""
-	# One already running, we need to stop everything first
-
-	# TODO HOT RELOAD CONFIG we shouldn't stop everything and not delete all programs keep status of others
 	if config_content[0] is None:
 		return "Invalid config file"
 	if d.config is not None:
-		d.logger.info("Reloading config and stopping everything first")
-		second_config = json.loads(config_content[0])
-		for program_name, program_list in d.programs.items():
-			if program_name in second_config["programs"]:
-				if d.config["programs"][program_name] != second_config["programs"][program_name]:
-					for proc in program_list:
-						d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_STOP_PROC, [proc], -1)))
-			else:
-				for proc in program_list:
-					d.command_queue.put_nowait((-1, CommandRequest(CommandType.INTERNAL_STOP_PROC, [proc], -1)))
+		old_config = d.config
+		d.logger.info("Reloading config ...")
+		d.config = json.loads(config_content[0])
+		for key, value in old_config["programs"].items():
+			if value != d.config["programs"].get(key):
+				d.logger.info(f"Program {key} has changed")
+				d.command_queue.put_nowait((-1, CommandRequest(CommandType.STOP_PROGRAM, [key], -1)))
+				if (d.config["programs"].get(key)["autostart"] == True):
+					d.command_queue.put_nowait((-1, CommandRequest(CommandType.START_PROGRAM, [key], -1)))
+			if key not in d.config["programs"]:
+				d.logger.info(f"Program {key} has been removed")
+				d.command_queue.put_nowait((-1, CommandRequest(CommandType.STOP_PROGRAM, [key], -1)))
+		for key, value in d.config["programs"].items():
+			if key not in old_config["programs"]:
+				for _ in range(value["numprocs"]):
+					d.programs[key].append(Program(key, value))
+				d.logger.info(f"Program {key} has been added")
+				if (value["autostart"] == True):
+					d.command_queue.put_nowait((-1, CommandRequest(CommandType.START_PROGRAM, [key], -1)))
 	else:	
 		d.config = json.loads(config_content[0])
 		d.programs = defaultdict(list)
@@ -166,8 +172,7 @@ def internal_start_proc(d: Daemon, program: Program):
 	"""
 	Start a program "proc"
 	"""
-	os.write(1, bytes(f"in internal start proc BEGIN\n", "utf-8"))
-	# os.write(1, bytes(f"in internal start proc {program.stack}\n", "utf-8"))
+	os.write(1, bytes(f"in internal start proc {program.name}\n", "utf-8"))
 	if program is None:
 		return
 	if program.status is not None:
@@ -214,7 +219,6 @@ def internal_start_proc(d: Daemon, program: Program):
 		print("failed to open stdout/stderr")
 
 	os.umask(old_umask)
-	os.write(1, bytes(f"in internal start proc END\n", "utf-8"))
 
 
 @one_arg

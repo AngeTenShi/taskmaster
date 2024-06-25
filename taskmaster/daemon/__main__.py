@@ -16,8 +16,6 @@ def handle_sigchld(d: Daemon):
 	Handles the stop a process managed by the daemon, task to restart is scheduled to make sure this function executes as fast as possible.
 	Maybe make it smaller if it keeps missing SIGCHLD?
 	"""
-	os.write(1, bytes(f"SIGCHLD received\n", "utf-8"))
-
 	elprograma = None
 
 	# Wait all of processes which terminated
@@ -32,14 +30,13 @@ def handle_sigchld(d: Daemon):
 				if exit_code is not None and exit_code != -signal.SIGKILL:
 					elprograma = proc
 					if elprograma != None:
-						os.write(1, bytes(f"found in programs ({hex(id(proc))})\n", "utf-8"))
+						# os.write(1, bytes(f"found in programs ({hex(id(proc))})\n", "utf-8"))
 						if elprograma.start_timer:
 							elprograma.start_timer.cancel()
 
 						config = elprograma.config
 						# It was tried to be started, did not run for long enough to be considered running
 						if elprograma.status == Status.STARTING:
-							os.write(1, bytes(f"program {hex(id(elprograma))} was {elprograma.status}\n", "utf-8"))
 							# We should restart it if it did not exceed startretries
 							if elprograma.start_retries < config["startretries"]:
 								d.logger.info(f"program {elprograma.pid}: {elprograma.status} will restart")
